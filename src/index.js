@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+
 // React router dom
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // redux condig

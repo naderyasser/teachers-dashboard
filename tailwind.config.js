@@ -1,7 +1,14 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/**/*.{html,js}"],
-    theme: {
-      extend: {},
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    fontFamily: {
+      noto: "'Noto Sans Arabic', sans-serif",
     },
-    plugins: [],
-  }
+    colors: {
+      white: "#F6F8FC",
+      blue: "#D4E7FF",
+    },
+  },
+  plugins: [],
+};
