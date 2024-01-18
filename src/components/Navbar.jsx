@@ -1,18 +1,30 @@
 import React from "react";
-import logo from "../img/avatar.png";
+import avatar from "../img/avatar.png";
+import logo from "../img/logo.png";
 const Navbar = () => {
   return (
-    <div className="bg-white h-16 w-full flex justify-between items-center ">
-      <div className="flex justify-between items-center gap-2">
-        <div className="w-8 rounded-full overflow-hidden">
+    <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center ">
+      {/* منصتي */}
+      <div className="w-[300px] main-logo lg:flex gap-2 hidden ">
+        <h1 className="text-2xl not-italic font-semibold  text-darckBlue">
+          منصتي
+        </h1>
+        <div className="w-8 h-8">
           <img src={logo} alt="" />
         </div>
+      </div>
+      {/* لوجو و الاسم */}
+      <div className="flex  gap-2 lg:flex-grow">
+        <div className="w-8 rounded-full overflow-hidden">
+          <img src={avatar} alt="" />
+        </div>
         <div className="subname">
-          <p className="font-normal text-xs">مساء الخير</p>
-          <h3 className="font-medium">محمد هاني احمد</h3>
+          {/* <p className="font-normal text-xs">مساء الخير</p> */}
+          <h3 className="text-lg">محمد هاني احمد</h3>
         </div>
       </div>
-      <div className="notify">
+      {/* الاشعارات */}
+      <div className="notify w-8 h-8 bg-gray flex justify-center items-center rounded-full cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

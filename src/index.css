@@ -9,3 +9,7 @@
   direction: rtl;
   font-family: "Noto Sans Arabic", sans-serif;
 }
+/* nav-bar */
+.nav-bar {
+  box-shadow: 0px 2px 10px 0px rgba(46, 111, 244, 0.2);
+}
