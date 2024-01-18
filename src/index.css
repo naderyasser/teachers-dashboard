@@ -9,6 +9,10 @@
   direction: rtl;
   font-family: "Noto Sans Arabic", sans-serif;
 }
+
+#root {
+  height: 100vh;
+}
 /* nav-bar */
 .nav-bar {
   box-shadow: 0px 2px 10px 0px rgba(46, 111, 244, 0.2);

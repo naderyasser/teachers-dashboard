@@ -3,7 +3,7 @@ import avatar from "../img/avatar.png";
 import logo from "../img/logo.png";
 const Navbar = () => {
   return (
-    <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center ">
+    <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center z-20">
       {/* منصتي */}
       <div className="w-[300px] main-logo lg:flex gap-2 hidden ">
         <h1 className="text-2xl not-italic font-semibold  text-darckBlue">
