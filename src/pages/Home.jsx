@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <div>
-      <button onClick={() => dispatch(sayHello("userthree"))}>chlichme</button>
+      <button onClick={() => dispatch(sayHello("userthree"))}>home</button>
     </div>
   );
 };

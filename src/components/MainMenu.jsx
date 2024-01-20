@@ -1,10 +1,13 @@
 import React from "react";
 
-const MainMenu = () => {
+const MainMenu = ({ openMenu }) => {
   return (
-    <div className=" flex flex-col justify-between bg-lightGray h-full">
-      <div className=" flex flex-col py-3">
-        <div className=" flex justify-end items-center px-6 ">
+    <div className=" flex flex-col justify-between bg-lightGray h-full lg:w-full calc-height">
+      <div className=" flex flex-col ">
+        <div
+          onClick={() => openMenu(false)}
+          className="lg:hidden flex justify-end items-center px-6  hover:bg-gray cursor-pointer py-4"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -19,7 +22,7 @@ const MainMenu = () => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">رجوع</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center px-6">
+        <div className=" flex gap-7 py-3 items-center px-6 hover:bg-gray cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -34,7 +37,7 @@ const MainMenu = () => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الرئيسية</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6">
+        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -57,7 +60,7 @@ const MainMenu = () => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الكورسات</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-b px-6">
+        <div className=" flex gap-7 py-3 items-center hover:bg-b px-6 hover:bg-gray cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -72,7 +75,7 @@ const MainMenu = () => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">المستخدمين</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6">
+        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -87,7 +90,7 @@ const MainMenu = () => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الإختبارات</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6">
+        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -102,7 +105,7 @@ const MainMenu = () => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الإحصائيات</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6">
+        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -135,9 +138,45 @@ const MainMenu = () => {
           <h1 className="text-xl font-medium text-darkGray">الأكواد</h1>
         </div>
       </div>
-      <div>
-        <div></div>
-        <div></div>
+      <div className="flex flex-col pb-4 ">
+        <div className="flex items-center py-3 gap-7 px-6  hover:bg-gray cursor-pointer border-t-2 border-gray">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+          >
+            <path
+              d="M26.9993 16.76V15.23L28.9193 13.55C29.2732 13.238 29.5055 12.811 29.575 12.3444C29.6445 11.8778 29.5469 11.4016 29.2993 11L26.9393 6.99999C26.7639 6.69626 26.5118 6.44397 26.2081 6.26846C25.9045 6.09294 25.56 6.00035 25.2093 5.99999C24.9919 5.99833 24.7758 6.03211 24.5693 6.09999L22.1393 6.91999C21.7197 6.6412 21.2821 6.39065 20.8293 6.16999L20.3193 3.64999C20.2278 3.1896 19.9774 2.77604 19.6117 2.4817C19.2461 2.18736 18.7886 2.031 18.3193 2.03999H13.6393C13.17 2.031 12.7125 2.18736 12.3468 2.4817C11.9812 2.77604 11.7307 3.1896 11.6393 3.64999L11.1293 6.16999C10.6732 6.39059 10.2322 6.64114 9.80928 6.91999L7.42928 6.05999C7.22057 6.00562 7.00445 5.98536 6.78928 5.99999C6.43855 6.00035 6.09409 6.09294 5.79044 6.26846C5.48679 6.44397 5.23464 6.69626 5.05928 6.99999L2.69928 11C2.46586 11.401 2.37913 11.8707 2.45393 12.3286C2.52872 12.7865 2.7604 13.2041 3.10928 13.51L4.99928 15.24V16.77L3.10928 18.45C2.75054 18.758 2.51253 19.1831 2.43747 19.6499C2.36242 20.1168 2.45517 20.5951 2.69928 21L5.05928 25C5.23464 25.3037 5.48679 25.556 5.79044 25.7315C6.09409 25.9071 6.43855 25.9996 6.78928 26C7.00663 26.0017 7.22279 25.9679 7.42928 25.9L9.85928 25.08C10.2788 25.3588 10.7165 25.6093 11.1693 25.83L11.6793 28.35C11.7707 28.8104 12.0212 29.224 12.3868 29.5183C12.7525 29.8126 13.21 29.969 13.6793 29.96H18.3993C18.8686 29.969 19.3261 29.8126 19.6917 29.5183C20.0574 29.224 20.3078 28.8104 20.3993 28.35L20.9093 25.83C21.3653 25.6094 21.8063 25.3588 22.2293 25.08L24.6493 25.9C24.8558 25.9679 25.0719 26.0017 25.2893 26C25.64 25.9996 25.9845 25.9071 26.2881 25.7315C26.5918 25.556 26.8439 25.3037 27.0193 25L29.2993 21C29.5327 20.599 29.6194 20.1293 29.5446 19.6714C29.4698 19.2135 29.2382 18.7959 28.8893 18.49L26.9993 16.76ZM25.2093 24L21.7793 22.84C20.9763 23.5201 20.0587 24.0517 19.0693 24.41L18.3593 28H13.6393L12.9293 24.45C11.9477 24.0816 11.035 23.5508 10.2293 22.88L6.78928 24L4.42928 20L7.14928 17.6C6.96437 16.5649 6.96437 15.5051 7.14928 14.47L4.42928 12L6.78928 7.99999L10.2193 9.15999C11.0222 8.47989 11.9399 7.94825 12.9293 7.58999L13.6393 3.99999H18.3593L19.0693 7.54999C20.0509 7.91842 20.9636 8.44914 21.7693 9.11999L25.2093 7.99999L27.5693 12L24.8493 14.4C25.0342 15.4351 25.0342 16.4949 24.8493 17.53L27.5693 20L25.2093 24Z"
+              fill="#58647C"
+            />
+            <path
+              d="M16 22C14.8133 22 13.6533 21.6481 12.6666 20.9888C11.6799 20.3295 10.9109 19.3925 10.4567 18.2961C10.0026 17.1997 9.88378 15.9933 10.1153 14.8295C10.3468 13.6656 10.9182 12.5965 11.7574 11.7574C12.5965 10.9182 13.6656 10.3468 14.8295 10.1153C15.9933 9.88378 17.1997 10.0026 18.2961 10.4567C19.3925 10.9109 20.3295 11.6799 20.9888 12.6666C21.6481 13.6533 22 14.8133 22 16C22.008 16.7902 21.8583 17.574 21.5596 18.3056C21.2609 19.0371 20.8193 19.7018 20.2605 20.2605C19.7018 20.8193 19.0371 21.2609 18.3056 21.5596C17.574 21.8583 16.7902 22.008 16 22ZM16 12C15.4713 11.9877 14.9457 12.0827 14.4548 12.2794C13.9639 12.4761 13.5181 12.7702 13.1442 13.1442C12.7702 13.5181 12.4761 13.9639 12.2794 14.4548C12.0827 14.9457 11.9877 15.4713 12 16C11.9877 16.5287 12.0827 17.0543 12.2794 17.5452C12.4761 18.0361 12.7702 18.4819 13.1442 18.8559C13.5181 19.2298 13.9639 19.524 14.4548 19.7206C14.9457 19.9173 15.4713 20.0123 16 20C16.5287 20.0123 17.0543 19.9173 17.5452 19.7206C18.0361 19.524 18.4819 19.2298 18.8559 18.8559C19.2298 18.4819 19.524 18.0361 19.7206 17.5452C19.9173 17.0543 20.0123 16.5287 20 16C20.0123 15.4713 19.9173 14.9457 19.7206 14.4548C19.524 13.9639 19.2298 13.5181 18.8559 13.1442C18.4819 12.7702 18.0361 12.4761 17.5452 12.2794C17.0543 12.0827 16.5287 11.9877 16 12Z"
+              fill="#58647C"
+            />
+          </svg>
+          <h1 className="text-xl font-medium text-darkGray  ">الإعدادات</h1>
+        </div>
+
+        <div className=" flex items-center py-3 px-6 gap-7 hover:bg-gray cursor-pointer">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+          >
+            <path
+              d="M16.0006 20L20.0006 16M20.0006 16L16.0006 12M20.0006 16H5.33398M5.33398 9.66399V9.59999C5.33398 8.10666 5.33398 7.35999 5.62465 6.78933C5.88065 6.28666 6.28732 5.87999 6.78998 5.62399C7.36065 5.33333 8.10732 5.33333 9.60065 5.33333H22.4006C23.894 5.33333 24.6406 5.33333 25.21 5.62399C25.7126 5.87999 26.1206 6.28666 26.3766 6.78933C26.6673 7.35866 26.6673 8.10533 26.6673 9.59599V22.4053C26.6673 23.896 26.6673 24.6413 26.3766 25.2107C26.1205 25.7125 25.7121 26.1204 25.21 26.376C24.6406 26.6667 23.8953 26.6667 22.4046 26.6667H9.59665C8.10598 26.6667 7.35932 26.6667 6.78998 26.376C6.28824 26.1203 5.88031 25.7124 5.62465 25.2107C5.33398 24.64 5.33398 23.8933 5.33398 22.4V22.3333"
+              stroke="#58647C"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <h1 className="text-xl font-medium text-darkGray ">خروج</h1>
+        </div>
       </div>
     </div>
   );
