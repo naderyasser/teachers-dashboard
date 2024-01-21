@@ -23,7 +23,7 @@ function App() {
         <div className="hidden w-[300px] lg:flex">
           <MainMenu />
         </div>
-        <div className="flex justify-center items-center ">
+        <div className="flex justify-center items-center flex-grow">
           <Outlet />
         </div>
       </div>

@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const MainMenu = ({ openMenu }) => {
+  const navigate = useNavigate();
+
   return (
     <div className=" flex flex-col justify-between bg-lightGray h-full lg:w-full calc-height">
       <div className=" flex flex-col ">
@@ -22,7 +25,10 @@ const MainMenu = ({ openMenu }) => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">رجوع</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center px-6 hover:bg-gray cursor-pointer">
+        <div
+          onClick={() => navigate("/home")}
+          className=" flex gap-7 py-3 items-center px-6 hover:bg-gray cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -37,7 +43,10 @@ const MainMenu = ({ openMenu }) => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الرئيسية</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
+        <div
+          onClick={() => navigate("/courses")}
+          className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -60,7 +69,10 @@ const MainMenu = ({ openMenu }) => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الكورسات</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-b px-6 hover:bg-gray cursor-pointer">
+        <div
+          onClick={() => navigate("/users")}
+          className=" flex gap-7 py-3 items-center hover:bg-b px-6 hover:bg-gray cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -75,7 +87,10 @@ const MainMenu = ({ openMenu }) => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">المستخدمين</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
+        <div
+          onClick={() => navigate("/exams")}
+          className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -90,7 +105,10 @@ const MainMenu = ({ openMenu }) => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الإختبارات</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
+        <div
+          onClick={() => navigate("/analysis")}
+          className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -105,7 +123,10 @@ const MainMenu = ({ openMenu }) => {
           </svg>
           <h1 className="text-xl font-medium text-darkGray">الإحصائيات</h1>
         </div>
-        <div className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer">
+        <div
+          onClick={() => navigate("/codes")}
+          className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"

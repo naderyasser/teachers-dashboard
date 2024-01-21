@@ -17,6 +17,8 @@ import Settings from "./pages/Settings.jsx";
 import Exams from "./pages/Exams.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 
+import { ThemeProvider } from "@material-tailwind/react";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <Home />,
+      },
+      {
+        path: "home",
         element: <Home />,
       },
       {
@@ -58,7 +64,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );
