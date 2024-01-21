@@ -24,13 +24,23 @@
 }
 
 /* users */
-td,
+table {
+  border-radius: 30px;
+  overflow: hidden;
+}
 th {
-  padding: 13px 32px;
+  padding: 10px 32px;
+}
+td {
+  padding: 5px 32px;
 }
 tbody tr:not(:last-child) {
   border-bottom: 1px solid #c6d0e0;
 }
 table {
   border: 1px solid #c6d0e0;
+}
+
+.med-outlet {
+  height: calc(100vh - 128px);
 }

@@ -30,11 +30,11 @@ const Pagination = () => {
   console.log(currentRecords);
 
   return (
-    <div className="flex gap-2  items-center">
+    <div className="flex gap-2  items-center mt-3">
       <Button
         onClick={() => setCurrentPage(currentPage - 1)}
         variant="text"
-        className="flex items-center gap-2 bg-gray "
+        className="flex items-center gap-2 bg-gray py-2 px-3"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +59,8 @@ const Pagination = () => {
             onClick={() => setCurrentPage(num)}
             key={inex}
             className={`${
-              currentPage === num ? "bg-blue-gray-300" : ""
-            } cursor-pointer flex justify-center items-center w-10 h-10 rounded-full  bg-lightGray`}
+              currentPage === num ? "bg-darkGray text-white" : ""
+            }  cursor-pointer flex justify-center items-center w-10 h-10 rounded-full  `}
           >
             <h1 className="">{num}</h1>
           </div>
@@ -69,7 +69,7 @@ const Pagination = () => {
       <Button
         onClick={() => setCurrentPage(currentPage + 1)}
         variant="text"
-        className="flex items-center gap-2 bg-gray"
+        className="flex items-center gap-2 bg-gray py-2 px-3"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
