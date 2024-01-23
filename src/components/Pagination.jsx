@@ -27,8 +27,6 @@ const Pagination = () => {
   currentPage > pageNumbers[pageNumbers.length - 1] &&
     setCurrentPage(pageNumbers[pageNumbers.length - 1]);
 
-  console.log(currentRecords);
-
   return (
     <div className="flex gap-2  items-center mt-3">
       <Button

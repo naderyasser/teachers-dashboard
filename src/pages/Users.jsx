@@ -1,12 +1,23 @@
-import React from "react";
 import avatar from "../img/avatar.png";
 import Pagination from "../components/Pagination";
 import UsersFilter from "../components/UsersFilter";
+import { getAllUsers } from "../store/usersSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Users = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  const allUsers = useSelector((state) => state.users.users.users);
+  console.log(allUsers);
   return (
     <div className="flex flex-col">
-      <UsersFilter />
+      <div>
+        <UsersFilter />
+      </div>
+
       <table className="overflow-auto sm:max-h-[602px] w-full mx-8 text-center rounded-xl boeder border-borderTable ">
         <thead className="bg-lightGray text-tableHead">
           <tr>

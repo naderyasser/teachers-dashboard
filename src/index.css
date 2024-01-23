@@ -44,3 +44,7 @@ table {
 .med-outlet {
   height: calc(100vh - 128px);
 }
+
+.calc-menu {
+  top: calc(100% + 10px);
+}
