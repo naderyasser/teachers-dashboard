@@ -14,7 +14,9 @@ import Course from "./pages/Course.jsx";
 import Users from "./pages/Users.jsx";
 import Codes from "./pages/Codes.jsx";
 import Settings from "./pages/Settings.jsx";
+import Analysis from "./pages/Analysis.jsx";
 import Exams from "./pages/Exams.jsx";
+
 import PageNotFound from "./pages/PageNotFound.jsx";
 
 import { ThemeProvider } from "@material-tailwind/react";
@@ -54,8 +56,8 @@ const router = createBrowserRouter([
         element: <Exams />,
       },
       {
-        path: "/exams",
-        element: <Exams />,
+        path: "/analysis",
+        element: <Analysis />,
       },
     ],
   },

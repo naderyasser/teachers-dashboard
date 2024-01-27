@@ -19,7 +19,7 @@ function App() {
         <MainMenu openMenu={setOpenMenu} />
       </div>
       {/* main content */}
-      <div className="flex flex-grow w-full overflow-auto">
+      <div className="flex flex-grow w-full overflow-auto med-outlet">
         <div className="hidden w-[300px] lg:flex">
           <MainMenu />
         </div>
@@ -27,7 +27,7 @@ function App() {
           <Outlet />
         </div>
       </div>
-      <div className="md:hidden fixed bottom-0 right-0 w-full bg-gray ">
+      <div className="md:hidden fixed bottom-0 right-0 w-full bg-white mobile-menu">
         <MobilMenu openMenu={setOpenMenu} />
       </div>
     </div>

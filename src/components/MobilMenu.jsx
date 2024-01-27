@@ -1,9 +1,13 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const MobilMenu = ({ openMenu }) => {
   return (
-    <div className="flex justify-between items-center px-6 py-3 ">
-      <div className="flex flex-col cursor-pointer justify-center items-center ">
+    <div className="flex justify-between items-center   ">
+      <NavLink
+        to={"/" || "/home"}
+        className="flex flex-col cursor-pointer justify-center items-center w-1/5 py-3 px-3"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -17,8 +21,11 @@ const MobilMenu = ({ openMenu }) => {
           />
         </svg>
         <p className="font-medium text-[10px] text-center">الرئيسية</p>
-      </div>
-      <div className="flex flex-col cursor-pointer justify-center items-center ">
+      </NavLink>
+      <NavLink
+        to={"/courses"}
+        className="flex flex-col cursor-pointer justify-center items-center w-1/5 py-3 px-3"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -40,8 +47,11 @@ const MobilMenu = ({ openMenu }) => {
           />
         </svg>
         <p className="font-medium text-[10px] text-center">الكورسات</p>
-      </div>
-      <div className="flex flex-col cursor-pointer justify-center items-center ">
+      </NavLink>
+      <NavLink
+        to={"/analysis"}
+        className="flex flex-col cursor-pointer justify-center items-center w-1/5 py-3 px-3"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -55,8 +65,11 @@ const MobilMenu = ({ openMenu }) => {
           />
         </svg>
         <p className="font-medium text-[10px] text-center">الإحصائيات</p>
-      </div>
-      <div className="flex flex-col cursor-pointer justify-center items-center ">
+      </NavLink>
+      <NavLink
+        to={"/exams"}
+        className="flex flex-col cursor-pointer justify-center items-center  w-1/5 py-3 px-3"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -69,11 +82,11 @@ const MobilMenu = ({ openMenu }) => {
             fill="#262F44"
           />
         </svg>
-        <p className="font-medium text-[10px] text-center">الإختبارات</p>
-      </div>
+        <p className="font-medium text-[10px] text-center ">الإختبارات</p>
+      </NavLink>
       <div
         onClick={() => openMenu(true)}
-        className="flex flex-col cursor-pointer justify-center items-center "
+        className="flex flex-col cursor-pointer justify-center items-center w-1/5 py-3 px-3 "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
