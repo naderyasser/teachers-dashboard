@@ -3,7 +3,7 @@ import Table from "../components/Table";
 
 const Exams = () => {
   return (
-    <div>
+    <div className="med-outlet">
       <Table type={"exams"} />
     </div>
   );

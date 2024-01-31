@@ -5,10 +5,12 @@ import MobilMenu from "./components/MobilMenu";
 import MainMenu from "./components/MainMenu";
 import { useState } from "react";
 function App() {
+  const screenWidth = window.innerWidth;
+
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <div className="flex flex-col  h-full relative overflow-hidden lg:block">
+    <div className="flex flex-col  h-full relative ">
       <Navbar />
       {/* slid menu */}
       <div
@@ -19,11 +21,15 @@ function App() {
         <MainMenu openMenu={setOpenMenu} />
       </div>
       {/* main content */}
-      <div className="flex flex-grow w-full overflow-auto med-outlet">
+      <div
+        className={`flex  w-full overflow-x-hidden     ${
+          screenWidth > 960 ? "calc-height" : "med-outlet"
+        }`}
+      >
         <div className="hidden w-[300px] lg:flex">
           <MainMenu />
         </div>
-        <div className="flex justify-center items-center flex-grow med-outlet">
+        <div className="bg-[#F6F8FC] flex-grow ">
           <Outlet />
         </div>
       </div>

@@ -2,11 +2,18 @@ import React from "react";
 // import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 const MainMenu = ({ openMenu }) => {
+  console.log(window.innerWidth);
+  const windowWidth = window.innerWidth;
+  const closeMenu = () => {
+    if (windowWidth < 992) {
+      openMenu(false);
+    }
+  };
   return (
     <div className=" flex flex-col justify-between bg-lightGray h-full lg:w-full calc-height">
       <div className=" flex flex-col ">
         <div
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           className="lg:hidden flex justify-end items-center px-6  hover:bg-gray cursor-pointer py-4"
         >
           <svg
@@ -26,7 +33,7 @@ const MainMenu = ({ openMenu }) => {
         <NavLink
           to={"/home"}
           className=" flex gap-7 py-3 items-center px-6 hover:bg-gray cursor-pointer"
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,15 +47,12 @@ const MainMenu = ({ openMenu }) => {
               fill="#262F44"
             />
           </svg>
-          <h2
-            onClick={() => console.log("wow")}
-            className="text-xl font-medium text-darkGray"
-          >
+          <h2 onClick={closeMenu} className="text-xl font-medium text-darkGray">
             الرئيسية
           </h2>
         </NavLink>
         <NavLink
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           to={"/courses"}
           className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
         >
@@ -75,7 +79,7 @@ const MainMenu = ({ openMenu }) => {
           <h1 className="text-xl font-medium text-darkGray">الكورسات</h1>
         </NavLink>
         <NavLink
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           to={"/users"}
           className=" flex gap-7 py-3 items-center hover:bg-b px-6 hover:bg-gray cursor-pointer"
         >
@@ -94,7 +98,7 @@ const MainMenu = ({ openMenu }) => {
           <h1 className="text-xl font-medium text-darkGray">المستخدمين</h1>
         </NavLink>
         <NavLink
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           to={"/exams"}
           className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
         >
@@ -113,7 +117,7 @@ const MainMenu = ({ openMenu }) => {
           <h1 className="text-xl font-medium text-darkGray">الإختبارات</h1>
         </NavLink>
         <NavLink
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           to={"/analysis"}
           className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
         >
@@ -132,7 +136,7 @@ const MainMenu = ({ openMenu }) => {
           <h1 className="text-xl font-medium text-darkGray">الإحصائيات</h1>
         </NavLink>
         <NavLink
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           to={"/codes"}
           className=" flex gap-7 py-3 items-center hover:bg-gray px-6 cursor-pointer"
         >
@@ -170,7 +174,7 @@ const MainMenu = ({ openMenu }) => {
       </div>
       <div className="flex flex-col pb-4 ">
         <NavLink
-          onClick={() => openMenu(false)}
+          onClick={closeMenu}
           to={"/settings"}
           className="flex items-center py-3 gap-7 px-6  hover:bg-gray cursor-pointer border-t-2 border-gray"
         >

@@ -16,6 +16,7 @@ module.exports = withMT({
     colors: {
       white: "#F6F8FC",
       blue: "#D4E7FF",
+      buttonBlue: "#2E6FF4",
       darckBlue: "#2E6FF4",
       gray: "#E0E6EE",
       darkGray: "#262F44",
@@ -29,5 +30,6 @@ module.exports = withMT({
     },
   },
   darkMode: "class",
+
   plugins: [nextui],
 });

@@ -21,11 +21,17 @@
   box-shadow: 0px -2px 10px 0px rgba(46, 111, 244, 0.2);
 }
 
+.box-shadow {
+  box-shadow: 0px 4px 6px 0px rgba(37, 114, 230, 0.2);
+}
+
 /* mobil menu */
 .calc-height {
   height: calc(100vh - 64px);
 }
-
+.calc-menu {
+  top: calc(100% + 10px);
+}
 /* users */
 
 th,
@@ -46,10 +52,6 @@ tr:not(:last-child):hover {
   height: calc(100vh - 128px);
 }
 
-.calc-menu {
-  top: calc(100% + 10px);
-}
-
 /* NavLink */
 a.active {
   background-color: #e0e6ee;
@@ -57,4 +59,10 @@ a.active {
 
 h2 {
   width: max-content;
+}
+
+@media (max-width: 900px) {
+  .home-screen {
+    width: 100vw !important;
+  }
 }
