@@ -4,7 +4,8 @@ import Graph from "../components/Graph";
 const Course = () => {
   return (
     <div>
-      <Graph />
+      {/* <Graph /> */}
+      hello
     </div>
   );
 };
