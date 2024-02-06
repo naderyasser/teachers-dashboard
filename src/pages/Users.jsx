@@ -1,24 +1,28 @@
-// import avatar from "../img/avatar.png";
-// import Pagination from "../components/Pagination";
-// import UsersFilter from "../components/UsersFilter";
 import { getAllUsers } from "../store/usersSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Table from "../components/Table";
+import Title from "../components/Title";
+
+import { UseUsersTable } from "../components/Tables";
+import SearchInput from "../components/SearchInput";
 
 const Users = () => {
+  const [searchText, setSearchText] = useState("");
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col">
-      {/* <div>
-        <UsersFilter />
-      </div> */}
-
-      <Table />
+    <div className="p-5 home-screen ">
+      <Title title={"المستخدمين"} />
+      <div className="mt-5">
+        <SearchInput searchText={searchText} setSearchText={setSearchText} />
+      </div>
+      <div className="overflow-x-auto box-shadow mt-5">
+        <UseUsersTable searchText={searchText} />
+      </div>
     </div>
   );
 };

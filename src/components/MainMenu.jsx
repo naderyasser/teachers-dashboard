@@ -2,7 +2,6 @@ import React from "react";
 // import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 const MainMenu = ({ openMenu }) => {
-  console.log(window.innerWidth);
   const windowWidth = window.innerWidth;
   const closeMenu = () => {
     if (windowWidth < 992) {

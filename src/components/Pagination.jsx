@@ -19,9 +19,9 @@ const Pagination = () => {
     "useOne12",
   ];
   let recordsNum = 6;
-  let indexOfLastRecord = currentPage * recordsNum;
-  let indexOfFirstRecord = indexOfLastRecord - recordsNum;
-  let currentRecords = fakeData.slice(indexOfFirstRecord, indexOfLastRecord);
+  // let indexOfLastRecord = currentPage * recordsNum;
+  // let indexOfFirstRecord = indexOfLastRecord - recordsNum;
+  // let currentRecords = fakeData.slice(indexOfFirstRecord, indexOfLastRecord);
   let pagesNum = Math.ceil(fakeData.length / recordsNum);
   const pageNumbers = [...Array(pagesNum + 1).keys()].slice(1);
   currentPage > pageNumbers[pageNumbers.length - 1] &&

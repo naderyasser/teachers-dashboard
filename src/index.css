@@ -66,3 +66,14 @@ h2 {
     width: 100vw !important;
   }
 }
+.back-icon {
+  padding-left: 20px;
+  background: url(./img/search-interface-symbol.png) no-repeat left;
+  background-size: 20px;
+  background-position-x: 15px;
+  background-color: #eef4fa;
+  transition: all;
+}
+.back-icon:focus {
+  background-color: #e0e6ee;
+}

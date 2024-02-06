@@ -1,43 +1,88 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = { users: [] };
+const initialState = {
+  users: [],
+  err: null,
+  courses: [],
+  oneUser: [],
+  isLoading: false,
+};
 
-export const getAllUsers = createAsyncThunk("users/getAllYsers", async () => {
+export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:3030/api/th/get_all_users");
+    const res = await axios.get(
+      "https://scholarsync.e3lanotopia.software/api/th/get_all_users"
+    );
     return res.data;
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 });
 
-// export const getAllUsers = createAsyncThunk("users/getAllYsers", async () => {
-//   let headersList = {
-//     Accept: "*/*",
-//   };
+export const getAllCourses = createAsyncThunk("getAllCources", async () => {
+  try {
+    const res = await axios.get(
+      "https://scholarsync.e3lanotopia.software/api/th/get_all_courses"
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
-//   let reqOptions = {
-//     url: "http://127.0.0.1:3030/api/th/get_all_users",
-//     method: "GET",
-//     headers: headersList,
-//   };
+export const getOneUser = createAsyncThunk("getOneUser", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://scholarsync.e3lanotopia.software/api/th/search/${args}`
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
-//   let response = await axios.request(reqOptions);
-//   console.log(response.data);
-//   return response;
-// });
+export const SearchByYearSectionLocation = createAsyncThunk(
+  "SearchByYearSectionLocation",
+  async (args) => {
+    try {
+      const res = await axios.get(
+        `https://scholarsync.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${args.location}`
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+);
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAllUsers.pending, (state, action) => {
+      state.isLoading = true;
+    });
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
       state.users = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(SearchByYearSectionLocation.fulfilled, (state, action) => {
+      state.users = action.payload;
+    });
+    builder.addCase(getAllCourses.fulfilled, (state, action) => {
+      state.courses = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(getAllCourses.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getOneUser.fulfilled, (state, action) => {
+      state.oneUser = action.payload;
     });
   },
 });
 
-export const { sayHello } = usersSlice.actions;
+export const { wow } = usersSlice.actions;
 export default usersSlice.reducer;

@@ -1,10 +1,11 @@
 import React from "react";
-import Table from "../components/Table";
+
+import Graph from "../components/Graph";
 
 const Exams = () => {
   return (
     <div className="med-outlet">
-      <Table type={"exams"} />
+      <Graph />
     </div>
   );
 };

@@ -2,14 +2,8 @@ import React from "react";
 import Pagination from "./Pagination";
 import avatar from "../img/avatar.png";
 import UsersFilter from "./UsersFilter";
-// import { useNavigate } from "react-router-dom";
-// import FilterMenu from "./FilterMenu";
-// import { IoIosArrowUp } from "react-icons/io";
 
 const Table = ({ type }) => {
-  // const navigate = useNavigate();
-  // const place = ["الكل", "الإسكندرية", "القاهرة"];
-
   return (
     <div className=" rounded-lg overflow-x-auto  mx-8 flex flex-col     med-outlet ">
       <div>{/* <UsersFilter /> */}</div>
