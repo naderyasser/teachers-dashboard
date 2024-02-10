@@ -1,58 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
-import FilterMenu from "../components/FilterMenu";
+import React from "react";
+import Stats from "../components/Stats";
+import Title from "../components/Title";
+import Graph from "../components/Graph";
 
 const Analysis = () => {
-  const divRef = useRef(null);
-  const [isClickedOutside, setIsClickedOutside] = useState(false);
-
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      // Check if the click is outside the div
-
-      if (divRef.current && !divRef.current.contains(e.target)) {
-        setIsClickedOutside(true);
-      } else {
-        setIsClickedOutside(false);
-      }
-    };
-
-    // Attach the click event listener to the document
-    document.addEventListener("click", handleOutsideClick);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
-
   return (
-    <div>
+    <div className="p-5">
       <div>
-        <div
-          ref={divRef}
-          style={{
-            width: "200px",
-            height: "100px",
-            backgroundColor: isClickedOutside ? "red" : "lightblue",
-            padding: "10px",
-            textAlign: "center",
-            margin: "50px auto",
-            cursor: "pointer",
-          }}
-        >
-          Click inside or outside this div
-        </div>
-        <p>
-          {isClickedOutside
-            ? "Clicked outside the div"
-            : "Clicked inside the div"}
-        </p>
+        <Title title={"الإحصائيات"} />
       </div>
-      <FilterMenu
-        title={"المكان هنا"}
-        data={["الكل", "الإسكندرية", "القاهرة"]}
-        selected={"الكل"}
-      />
+      <div className="mt-5">
+        <Stats />
+      </div>
+      <div className="my-5">
+        <Title title={"متوسط درجات الإختبارات"} />
+      </div>
+      <div className="mb-10">
+        <Graph />
+      </div>
+      <div className="my-5">
+        <Title title={"مشاهدات الطلاب"} />
+      </div>
+      <div className="mb-10">
+        <Graph />
+      </div>
     </div>
   );
 };

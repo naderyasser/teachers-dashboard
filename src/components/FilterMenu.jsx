@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
-const FilterMenu = ({ data, title, selected }) => {
+const FilterMenu = ({ data, title, selected, setAcadimcYearChoosed }) => {
   const [open, setopen] = useState(false);
   const [choosed, setChoosed] = useState(selected);
   const menuRef = useRef(null);
+
   useEffect(() => {
     const handleOutsideClick = (e) => {
       // Check if the click is outside the div
@@ -52,6 +53,7 @@ const FilterMenu = ({ data, title, selected }) => {
                 onClick={() => {
                   setChoosed(item);
                   setopen(!open);
+                  setAcadimcYearChoosed(item);
                 }}
                 className={`${
                   choosed === item && "bg-gray"
@@ -62,6 +64,7 @@ const FilterMenu = ({ data, title, selected }) => {
                   defaultChecked={item === choosed}
                   onClick={() => {
                     setChoosed(choosed);
+
                     setopen(!open);
                   }}
                   type="radio"

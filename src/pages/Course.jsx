@@ -1,34 +1,31 @@
 import React, { useState } from "react";
 import Title from "../components/Title";
-import TableHome from "../components/TableHome";
+
 import FilterMenu from "../components/FilterMenu";
 import SearchInput from "../components/SearchInput";
 import { UseCoursesTable } from "../components/Tables";
 
 const Course = () => {
   const [searchText, setSearchText] = useState("");
+  const [acadimcYearChoosed, setAcadimcYearChoosed] = useState("الكل");
+  // const [monthChoosed, setMonthChoosed] = useState("الكل");
 
-  const acadimcYear = [
-    "الكل",
-    "الاول الثانوي",
-    "الثاني الثانوي",
-    "الثالث الثانوي",
-  ];
-  const monthsArabic = [
-    "الكل",
-    "يناير",
-    "فبراير",
-    "مارس",
-    "إبريل",
-    "مايو",
-    "يونيو",
-    "يوليو",
-    "أغسطس",
-    "سبتمبر",
-    "أكتوبر",
-    "نوفمبر",
-    "ديسمبر",
-  ];
+  const acadimcYear = ["الكل", 1, 2, 3];
+  // const monthsArabic = [
+  //   "الكل",
+  //   "يناير",
+  //   "فبراير",
+  //   "مارس",
+  //   "إبريل",
+  //   "مايو",
+  //   "يونيو",
+  //   "يوليو",
+  //   "أغسطس",
+  //   "سبتمبر",
+  //   "أكتوبر",
+  //   "نوفمبر",
+  //   "ديسمبر",
+  // ];
   return (
     <div className="p-5 home-screen">
       <Title title="الكورسات" />
@@ -38,13 +35,24 @@ const Course = () => {
             title={"السنة الدراسية"}
             data={acadimcYear}
             selected={"الكل"}
+            setAcadimcYearChoosed={setAcadimcYearChoosed}
           />
-          <FilterMenu title={"الشهر"} data={monthsArabic} selected={"الكل"} />
+          {/* <FilterMenu
+            title={"الشهر"}
+            data={monthsArabic}
+            selected={"الكل"}
+            setMonthChoosed={setMonthChoosed}
+          /> */}
         </div>
         <SearchInput setSearchText={setSearchText} searchText={searchText} />
       </div>
       <div className="mt-5 overflow-x-auto box-shadow">
-        <UseCoursesTable searchText={searchText} />
+        <UseCoursesTable
+          searchText={searchText}
+          acadimcYearChoosed={acadimcYearChoosed}
+          // monthChoosed={monthChoosed}
+          filter={true}
+        />
       </div>
     </div>
   );

@@ -1,89 +1,80 @@
 import { Button } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Pagination = () => {
+const Pagination = ({
+  filter,
+  data,
+  setCurrentDate,
+  searchText,
+  acadimcYearChoosed,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
-  currentPage < 1 && setCurrentPage(1);
-  const fakeData = [
-    "useOne1",
-    "useOne2",
-    "useOne3",
-    "useOne4",
-    "useOne5",
-    "useOne6",
-    "useOne7",
-    "useOne8",
-    "useOne9",
-    "useOne10",
-    "useOne11",
-    "useOne12",
-  ];
-  let recordsNum = 6;
-  // let indexOfLastRecord = currentPage * recordsNum;
-  // let indexOfFirstRecord = indexOfLastRecord - recordsNum;
-  // let currentRecords = fakeData.slice(indexOfFirstRecord, indexOfLastRecord);
-  let pagesNum = Math.ceil(fakeData.length / recordsNum);
-  const pageNumbers = [...Array(pagesNum + 1).keys()].slice(1);
-  currentPage > pageNumbers[pageNumbers.length - 1] &&
-    setCurrentPage(pageNumbers[pageNumbers.length - 1]);
+
+  const filterdData = filter
+    ? data
+        .filter((item) =>
+          acadimcYearChoosed === "الكل"
+            ? item
+            : item.academic_year == acadimcYearChoosed
+        )
+        .filter((user) =>
+          user.name.toLowerCase().includes(searchText.toLowerCase())
+        )
+    : data.filter((user) =>
+        user.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+
+  console.log(data);
+
+  const recordsNum = 10;
+  const indexOfLastRecord = currentPage * recordsNum;
+  const indexOfFirstRecord = indexOfLastRecord - recordsNum;
+  const currentRecords = filterdData.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
+
+  useEffect(() => {
+    setCurrentDate(currentRecords);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, data, searchText, setCurrentDate, acadimcYearChoosed]); // Only run effect when currentPage or currentRecords change
+
+  const pagesNum = Math.ceil(filterdData.length / recordsNum);
+  const pageNumbers = Array.from({ length: pagesNum }, (_, i) => i + 1);
+
+  const handlePageClick = (num) => {
+    setCurrentPage(num);
+  };
 
   return (
-    <div className="flex gap-2  items-center mt-3">
+    <div className="flex gap-2 items-center">
       <Button
-        onClick={() => setCurrentPage(currentPage - 1)}
+        onClick={() => handlePageClick(currentPage - 1)}
         variant="text"
-        className="flex items-center gap-2 bg-gray py-2 px-3"
+        className="flex items-center gap-2 bg-gray py-2 px-3 font-noto font-normal text-sm"
+        disabled={currentPage === 1}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="h-5 w-5 "
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-          />
-        </svg>
-        <h1 className="font-medium text-sm">السابق</h1>
+        السابق
       </Button>
-      {/* ارقام الصفحات */}
-      {pageNumbers.map((num, inex) => {
-        return (
-          <div
-            onClick={() => setCurrentPage(num)}
-            key={inex}
-            className={`${
-              currentPage === num ? "bg-darkGray text-white" : ""
-            }  cursor-pointer flex justify-center items-center w-10 h-10 rounded-full  `}
-          >
-            <h1 className="">{num}</h1>
-          </div>
-        );
-      })}
-      <Button
-        onClick={() => setCurrentPage(currentPage + 1)}
-        variant="text"
-        className="flex items-center gap-2 bg-gray py-2 px-3"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="h-5 w-5 rotate-180"
+
+      {pageNumbers.map((num) => (
+        <div
+          key={num}
+          onClick={() => handlePageClick(num)}
+          className={`${
+            currentPage === num ? "bg-darkGray text-white" : ""
+          } cursor-pointer flex justify-center items-center w-10 h-10 rounded-full`}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-          />
-        </svg>
-        <h1 className="font-medium text-sm">التالي</h1>
+          {num}
+        </div>
+      ))}
+      <Button
+        onClick={() => handlePageClick(currentPage + 1)}
+        variant="text"
+        className="flex items-center gap-2 bg-gray py-2 px-3 font-noto font-normal text-sm"
+        disabled={currentPage === pagesNum || currentRecords.length === 0}
+      >
+        التالي
       </Button>
     </div>
   );

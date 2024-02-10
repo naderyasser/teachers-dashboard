@@ -7,6 +7,7 @@ const initialState = {
   courses: [],
   oneUser: [],
   isLoading: false,
+  pagination: {},
 };
 
 export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
