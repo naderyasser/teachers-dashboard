@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -5,9 +6,11 @@ const initialState = {
   users: [],
   err: null,
   courses: [],
-  oneUser: [],
+  oneUser: null,
+  userCourses: [],
   isLoading: false,
-  pagination: {},
+  isRejected: false,
+  message: "",
 };
 
 export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
@@ -17,7 +20,7 @@ export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
     );
     return res.data;
   } catch (err) {
-    console.log(err.message);
+    return err.message;
   }
 });
 
@@ -28,18 +31,7 @@ export const getAllCourses = createAsyncThunk("getAllCources", async () => {
     );
     return res.data;
   } catch (err) {
-    console.log(err.message);
-  }
-});
-
-export const getOneUser = createAsyncThunk("getOneUser", async (args) => {
-  try {
-    const res = await axios.get(
-      `https://scholarsync.e3lanotopia.software/api/th/search/${args}`
-    );
-    return res.data;
-  } catch (err) {
-    console.log(err.message);
+    return err.message;
   }
 });
 
@@ -56,34 +48,94 @@ export const SearchByYearSectionLocation = createAsyncThunk(
     }
   }
 );
+export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://scholarsync.e3lanotopia.software/api/th/get_user_data/${args.email}`
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
+export const getUserCourses = createAsyncThunk("userCourses", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://scholarsync.e3lanotopia.software/api/th/get_user_courses/${args}`
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    getUser: (state, action) => {
+      state.oneUser = state.users.users.filter((user) => user.id == 1)[0];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllUsers.pending, (state, action) => {
+      state.isRejected = false;
       state.isLoading = true;
     });
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
+      state.isRejected = false;
       state.users = action.payload;
       state.isLoading = false;
+      if (state.users === "Network Error") {
+        state.isRejected = true;
+        state.message = "مشكلة بالانترنت";
+      }
+    });
+    builder.addCase(getAllUsers.rejected, (state, action) => {
+      state.isRejected = true;
+      state.message = action.payload;
     });
     builder.addCase(SearchByYearSectionLocation.fulfilled, (state, action) => {
       state.users = action.payload;
+      if (state.users === "Network Error") {
+        state.isRejected = true;
+        state.message = "مشكلة بالانترنت";
+      }
     });
     builder.addCase(getAllCourses.fulfilled, (state, action) => {
       state.courses = action.payload;
       state.isLoading = false;
+      if (state.courses === "Network Error") {
+        state.isRejected = true;
+        state.message = "مشكلة بالانترنت";
+      }
     });
     builder.addCase(getAllCourses.pending, (state) => {
+      state.isRejected = false;
       state.isLoading = true;
+    });
+    builder.addCase(getAllCourses.rejected, (state, action) => {
+      state.isRejected = true;
+      state.message = action.payload;
     });
     builder.addCase(getOneUser.fulfilled, (state, action) => {
       state.oneUser = action.payload;
     });
+    builder.addCase(getOneUser.pending, (state, action) => {
+      state.isRejected = false;
+      state.isLoading = true;
+    });
+    builder.addCase(getOneUser.rejected, (state, action) => {
+      state.isRejected = true;
+      state.message = action.payload;
+    });
+    builder.addCase(getUserCourses.fulfilled, (state, action) => {
+      state.isRejected = false;
+      state.isLoading = false;
+      state.userCourses = action.payload;
+    });
   },
 });
 
-export const { wow } = usersSlice.actions;
+export const { getUser } = usersSlice.actions;
 export default usersSlice.reducer;

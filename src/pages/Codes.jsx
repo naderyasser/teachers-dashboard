@@ -1,26 +1,76 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Title from "../components/Title";
 import SearchInput from "../components/SearchInput";
 import { UseCodesTable } from "../components/Tables";
+import { useDispatch } from "react-redux";
+import { initCodes } from "../store/statsSlice";
 
 const Codes = () => {
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
+  const [isSend, setIsSend] = useState(false);
+
+  const handelInit = (e) => {
+    e.preventDefault();
+    setIsSend(true);
+    dispatch(
+      initCodes({
+        value: codePrice.current.value,
+        num: codeCount.current.value,
+      })
+    ).then(() => {
+      codeCount.current.value = "";
+      codePrice.current.value = "";
+      setIsSend(false);
+    });
+  };
+  const codePrice = useRef(null);
+  const codeCount = useRef(null);
 
   return (
     <div className="p-5 home-screen">
-      <div className="mb-5">
-        <Title title={"الأكواد"} />
+      <div className="border-b border-gray mb-5">
+        <Title title={"إنشاء كود"} />
+        <form
+          onSubmit={handelInit}
+          className=" felx-col justify-start items-center my-5 gap-4 md:flex "
+        >
+          <input
+            ref={codePrice}
+            placeholder="سعر الكود"
+            className="ref bg-lightGray focus:bg-gray w-full mb-3 md:1/4 border focus:border-gray border-lightGray rounded-2xl text-base py-1 px-5 outline-none "
+            type="number"
+            required
+          />
+          <input
+            ref={codeCount}
+            placeholder="عدد الاكواد"
+            className="ref bg-lightGray focus:bg-gray border w-full md:1/4 mb-3  focus:border-gray border-lightGray rounded-2xl text-base py-1 px-5 outline-none "
+            type="number"
+            required
+          />
+          <div className="  flex-grow md:w-full flex justify-end items-center   ">
+            <button
+              type="submit"
+              className="text-white font-medium text-base cursor-pointer py-2 px-3 gap-3 bg-buttonBlue rounded-full"
+            >
+              {isSend ? "جاري الإنشاء" : "إنشاء كود"}
+            </button>
+          </div>
+        </form>
       </div>
-      <div className="flex justify-between items-center">
-        <div className="w-1/2 md:w-3/4">
+      <div>
+        <div className="mb-5">
+          <Title title={"الأكواد"} />
+        </div>
+
+        <div className="w-full md:w-3/4">
           <SearchInput searchText={searchText} setSearchText={setSearchText} />
         </div>
-        <div className="py-2 px-3 gap-3 rounded-full bg-buttonBlue flex justify-center items-center  w-fit cursor-pointer">
-          <h1 className="text-white font-medium text-base">إنشاء كود</h1>
+
+        <div className="mt-5 overflow-x-auto box-shadow">
+          <UseCodesTable searchText={searchText} />
         </div>
-      </div>
-      <div className="mt-5 overflow-x-auto box-shadow">
-        <UseCodesTable searchText={searchText} />
       </div>
     </div>
   );

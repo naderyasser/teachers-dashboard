@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getExamsCount,
+  getLessonsCount,
+  getUsersCount,
+  getViews,
+} from "../store/statsSlice";
 
 function Stats() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUsersCount());
+    dispatch(getLessonsCount());
+    dispatch(getViews());
+    dispatch(getExamsCount());
+  }, [dispatch]);
+  const state = useSelector((state) => state.stats);
+
   return (
     <div className="  flex  justify-center items-center flex-col md:flex-row w-full gap-4 rounded-md mb-10">
       <div className="flex md:justify-between justify-center items-center gap-3 bg-white box-shadow md:w-1/4 w-full h-24 px-5 ">
@@ -23,7 +39,9 @@ function Stats() {
           </svg>
         </div>
         <h1 className="text-xl md:flex-grow-0 flex-grow">عدد المشاهدات</h1>
-        <h1 className="text-2xl font-bold">795</h1>
+        <h1 className="text-2xl font-bold">
+          {state ? state.views.count : "--"}
+        </h1>
       </div>
       <div className="flex justify-between items-center gap-3 bg-white box-shadow md:w-1/4 w-full h-24 px-5 ">
         <div className="bg-[#EFF5FD] p-1">
@@ -53,7 +71,9 @@ function Stats() {
           </svg>
         </div>
         <h1 className="text-xl md:flex-grow-0 flex-grow">عدد الطلاب</h1>
-        <h1 className="text-2xl font-bold">500</h1>
+        <h1 className="text-2xl font-bold">
+          {state ? state.usersCount.count : "--"}
+        </h1>
       </div>
       <div className="flex justify-between items-center gap-3 bg-white box-shadow md:w-1/4 w-full h-24 px-5 ">
         <div className="bg-[#EFF5FD] p-1">
@@ -77,7 +97,9 @@ function Stats() {
           </svg>
         </div>
         <h1 className="text-xl md:flex-grow-0 flex-grow">إجمالي عدد الحصص</h1>
-        <h1 className="text-2xl font-bold">50</h1>
+        <h1 className="text-2xl font-bold">
+          {state ? state.lessonsCount.count : "--"}
+        </h1>
       </div>
       <div className="flex justify-between items-center gap-3 bg-white box-shadow md:w-1/4 w-full h-24 px-5 ">
         <div className="bg-[#EFF5FD] p-1">
@@ -97,7 +119,9 @@ function Stats() {
         <h1 className="text-xl md:flex-grow-0 flex-grow">
           إجمالي عدد المتحانات
         </h1>
-        <h1 className="text-2xl font-bold">15</h1>
+        <h1 className="text-2xl font-bold">
+          {state ? state.examsCount.count : "--"}
+        </h1>
       </div>
     </div>
   );

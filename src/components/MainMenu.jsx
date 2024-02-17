@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Model from "./Model";
 const MainMenu = ({ openMenu }) => {
   const windowWidth = window.innerWidth;
   const closeMenu = () => {
@@ -8,8 +9,11 @@ const MainMenu = ({ openMenu }) => {
       openMenu(false);
     }
   };
+  const [close, setClose] = useState(false);
+
   return (
     <div className=" flex flex-col justify-between bg-lightGray h-full lg:w-full calc-height">
+      {close && <Model setClose={setClose} />}
       <div className=" flex flex-col ">
         <div
           onClick={closeMenu}
@@ -172,7 +176,7 @@ const MainMenu = ({ openMenu }) => {
         </NavLink>
       </div>
       <div className="flex flex-col pb-4 ">
-        <NavLink
+        {/* <NavLink
           onClick={closeMenu}
           to={"/settings"}
           className="flex items-center py-3 gap-7 px-6  hover:bg-gray cursor-pointer border-t-2 border-gray"
@@ -194,9 +198,12 @@ const MainMenu = ({ openMenu }) => {
             />
           </svg>
           <h1 className="text-xl font-medium text-darkGray  ">الإعدادات</h1>
-        </NavLink>
+        </NavLink> */}
 
-        <div className=" flex items-center py-3 px-6 gap-7 hover:bg-gray cursor-pointer">
+        <div
+          onClick={() => setClose(true)}
+          className=" flex items-center py-3 px-6 gap-7 hover:bg-gray cursor-pointer border-t-2 border-gray  "
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -212,7 +219,7 @@ const MainMenu = ({ openMenu }) => {
               strokeLinejoin="round"
             />
           </svg>
-          <h1 className="text-xl font-medium text-darkGray ">خروج</h1>
+          <h1 className="text-xl font-medium text-darkGray">خروج</h1>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ const Pagination = ({
   setCurrentDate,
   searchText,
   acadimcYearChoosed,
+  withoutSearch,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -20,11 +21,11 @@ const Pagination = ({
         .filter((user) =>
           user.name.toLowerCase().includes(searchText.toLowerCase())
         )
+    : withoutSearch
+    ? data
     : data.filter((user) =>
         user.name.toLowerCase().includes(searchText.toLowerCase())
       );
-
-  console.log(data);
 
   const recordsNum = 10;
   const indexOfLastRecord = currentPage * recordsNum;

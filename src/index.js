@@ -20,6 +20,7 @@ import Exams from "./pages/Exams.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 
 import { ThemeProvider } from "@material-tailwind/react";
+import User from "./pages/User.jsx";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/analysis",
         element: <Analysis />,
+      },
+      {
+        path: "/user/:email",
+        element: <User />,
       },
     ],
   },

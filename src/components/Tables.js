@@ -1,13 +1,18 @@
 /* eslint-disable eqeqeq */
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllCourses, getAllUsers } from "../store/usersSlice";
+import {
+  getAllCourses,
+  getAllUsers,
+  getUserCourses,
+} from "../store/usersSlice";
 import dateFormat from "dateformat";
 import avatar from "../img/avatar.png";
 import link from "../img/link.png";
 
 import { BeatLoader } from "react-spinners";
 import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";
 
 // last purches
 export const UseHomeTable = ({ searchText }) => {
@@ -18,6 +23,8 @@ export const UseHomeTable = ({ searchText }) => {
   const [currentData, setCurrentData] = useState([]);
   const state = useSelector((state) => state.users.users.users);
   const isLoading = useSelector((state) => state.users.isLoading);
+  const isRejected = useSelector((state) => state.users.isRejected);
+  const errMessage = useSelector((state) => state.users.message);
 
   return (
     <table className="  w-full flex-grow  h-fit ">
@@ -83,6 +90,15 @@ export const UseHomeTable = ({ searchText }) => {
               </tr>
             );
           })}
+        {isRejected && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <div>{errMessage}</div>
+              </div>
+            </td>
+          </tr>
+        )}
         {/* loading  */}
         {isLoading && (
           <tr>
@@ -140,6 +156,8 @@ export const UseCoursesTable = ({
   const [currentData, setCurrentData] = useState([]);
   const state = useSelector((state) => state.users.courses.courses);
   const isLoading = useSelector((state) => state.users.isLoading);
+  const isRejected = useSelector((state) => state.users.isRejected);
+  const errMessage = useSelector((state) => state.users.message);
 
   return (
     <table className="  w-full flex-grow   ">
@@ -206,6 +224,15 @@ export const UseCoursesTable = ({
               </tr>
             );
           })}
+        {isRejected && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <div>{errMessage}</div>
+              </div>
+            </td>
+          </tr>
+        )}
         {/* loading  */}
         {isLoading && (
           <tr>
@@ -259,7 +286,9 @@ export const UseUsersTable = ({ searchText }) => {
 
   const state = useSelector((state) => state.users.users.users);
   const isLoading = useSelector((state) => state.users.isLoading);
-
+  const isRejected = useSelector((state) => state.users.isRejected);
+  const errMessage = useSelector((state) => state.users.message);
+  const navigate = useNavigate();
   return (
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">
@@ -276,6 +305,7 @@ export const UseUsersTable = ({ searchText }) => {
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
             اسم الكورس
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -321,9 +351,26 @@ export const UseUsersTable = ({ searchText }) => {
                     اسم الكورس
                   </p>
                 </td>
+                <td>
+                  <p
+                    onClick={() => navigate(`/user/${user.email}`)}
+                    className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer"
+                  >
+                    فتح
+                  </p>
+                </td>
               </tr>
             );
           })}
+        {isRejected && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <div>{errMessage}</div>
+              </div>
+            </td>
+          </tr>
+        )}
         {/* loading  */}
         {isLoading && (
           <tr>
@@ -374,6 +421,8 @@ export const UseExamsTable = ({ searchText, acadimcYearChoosed }) => {
 
   const state = useSelector((state) => state.users.users.users);
   const isLoading = useSelector((state) => state.users.isLoading);
+  const isRejected = useSelector((state) => state.users.isRejected);
+  const errMessage = useSelector((state) => state.users.message);
 
   return (
     <table className="  w-full flex-grow   ">
@@ -439,6 +488,15 @@ export const UseExamsTable = ({ searchText, acadimcYearChoosed }) => {
               </tr>
             );
           })}
+        {isRejected && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <div>{errMessage}</div>
+              </div>
+            </td>
+          </tr>
+        )}
         {/* loading  */}
         {isLoading && (
           <tr>
@@ -496,7 +554,9 @@ export const UseCodesTable = ({ searchText }) => {
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">
         <tr>
-          <th className="text-tableHead font-normal text-x-[16px]">الطالب</th>
+          <th className="text-tableHead font-normal text-x-[16px] text-right">
+            الطالب
+          </th>
           <th className="text-tableHead font-normal text-x-[16px] text-right  min-w-32">
             الكود
           </th>
@@ -588,6 +648,123 @@ export const UseCodesTable = ({ searchText }) => {
                   searchText={searchText}
                   data={state}
                   setCurrentDate={setCurrentData}
+                />
+              )}
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  );
+};
+// one user courses
+export const UseOneUserCourses = ({ searchText, email }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserCourses(email.email));
+  }, [dispatch, email]);
+
+  const [currentData, setCurrentData] = useState([]);
+
+  const state = useSelector((state) => state.users.userCourses.courses);
+
+  const isLoading = useSelector((state) => state.users.isLoading);
+  const isRejected = useSelector((state) => state.users.isRejected);
+  const errMessage = useSelector((state) => state.users.message);
+  return (
+    <table className="  w-full flex-grow   ">
+      <thead className="bg-lightGray text-tableHead">
+        <tr>
+          <th className="text-tableHead font-normal text-x-[16px] ">
+            الكورسات
+          </th>
+          <th className="text-tableHead font-normal text-x-[16px] text-right  min-w-32">
+            سعر الكورس
+          </th>
+          <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32">
+            تاريخ الشراء
+          </th>
+          <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
+            السنة
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {state &&
+          !isLoading &&
+          state.map((course) => {
+            return (
+              <tr className="pl-3" key={course.id}>
+                <td className="min-w-60">
+                  <h1 className="font-medium  text-sm text-darkGray ">
+                    {course.name}
+                  </h1>
+                </td>
+                <td>100</td>
+                <td>
+                  <p className="text-xs text-lightText font-normal m-auto">
+                    التاؤيخ
+                  </p>
+                </td>
+                <td className=" ">
+                  <p
+                    className={`text-xs  text-white  font-normal m w-fit py-1 px-3 rounded-full ${
+                      course.academic_year === "1"
+                        ? "bg-[#F4CB3C]"
+                        : course.academic_year === "2"
+                        ? "bg-[#2E6FF4] "
+                        : course.academic_year === "3"
+                        ? "bg-[#18B477]"
+                        : "bg-transparent"
+                    }`}
+                  >
+                    {`${course.academic_year}ث`}
+                  </p>
+                </td>
+              </tr>
+            );
+          })}
+        {isRejected && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <div>{errMessage}</div>
+              </div>
+            </td>
+          </tr>
+        )}
+        {/* loading  */}
+        {isLoading && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <BeatLoader className="m-auto" color="#2E6FF4" />
+              </div>
+            </td>
+          </tr>
+        )}
+        {/* data not found  */}
+        {state && !isLoading && currentData.length === 0 && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <h1 className="text-lg ">لا توجد بيانات لعرضها</h1>
+              </div>
+            </td>
+          </tr>
+        )}
+      </tbody>
+      <tfoot className="text-center">
+        <tr>
+          <td colSpan={5}>
+            <div className="w-full flex justify-start items-start overflow-auto">
+              {state && (
+                <Pagination
+                  searchText={searchText}
+                  data={state}
+                  setCurrentDate={setCurrentData}
+                  withoutSearch={true}
                 />
               )}
             </div>

@@ -51,6 +51,7 @@ const Graph = () => {
       <Line
         className="w-3/4"
         data={{
+          
           labels: labels.map((month) => month),
           datasets: [
             {
@@ -60,7 +61,7 @@ const Graph = () => {
           ],
         }}
         options={{
-          elements: { line: { tension: 0.3 } },
+          elements: { line: { tension: 0.3}, },
         }}
       />
     </div>
