@@ -21,6 +21,8 @@ import PageNotFound from "./pages/PageNotFound.jsx";
 
 import { ThemeProvider } from "@material-tailwind/react";
 import User from "./pages/User.jsx";
+import Notifications from "./pages/Notifications.jsx";
+import Signin from "./pages/Signin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,10 +51,6 @@ const router = createBrowserRouter([
         element: <Codes />,
       },
       {
-        path: "/settings",
-        element: <Settings />,
-      },
-      {
         path: "/exams",
         element: <Exams />,
       },
@@ -64,7 +62,15 @@ const router = createBrowserRouter([
         path: "/user/:email",
         element: <User />,
       },
+      {
+        path: "/notifications",
+        element: <Notifications />,
+      },
     ],
+  },
+  {
+    path: "/signin",
+    element: <Signin />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));

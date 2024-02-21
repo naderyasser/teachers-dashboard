@@ -1,7 +1,9 @@
 import React from "react";
 import avatar from "../img/avatar.png";
 import logo from "../img/logo.png";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center z-20">
       {/* منصتي */}
@@ -24,7 +26,10 @@ const Navbar = () => {
         </div>
       </div>
       {/* الاشعارات */}
-      <div className="notify w-8 h-8 bg-gray flex justify-center items-center rounded-full cursor-pointer">
+      <div
+        onClick={() => navigate("/notifications")}
+        className="notify w-8 h-8 bg-gray flex justify-center items-center rounded-full cursor-pointer"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

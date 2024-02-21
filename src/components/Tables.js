@@ -297,14 +297,15 @@ export const UseUsersTable = ({ searchText }) => {
             <h2>الطالب</h2>
           </th>
           <th className="text-tableHead font-normal text-x-[16px] text-right  min-w-32">
-            السنة الدراسية
+            رقم الطالب
           </th>
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32">
-            سعر الكورس
+            رقم ولي الأمر
           </th>
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
-            اسم الكورس
+            التقييم
           </th>
+          <th>عدد الكورسات</th>
           <th></th>
         </tr>
       </thead>
@@ -330,6 +331,8 @@ export const UseUsersTable = ({ searchText }) => {
                     </div>
                   </div>
                 </td>
+                <td>{user.phone_number}</td>
+                <td>{user.father_number}</td>
                 <td className=" ">
                   <p
                     className={`text-xs  text-white  font-normal m w-fit py-1 px-3 rounded-full ${
@@ -345,12 +348,7 @@ export const UseUsersTable = ({ searchText }) => {
                     {`${user.academic_year}ث`}
                   </p>
                 </td>
-                <td>100</td>
-                <td>
-                  <p className="text-xs text-lightText font-normal m-auto">
-                    اسم الكورس
-                  </p>
-                </td>
+                <td></td>
                 <td>
                   <p
                     onClick={() => navigate(`/user/${user.email}`)}

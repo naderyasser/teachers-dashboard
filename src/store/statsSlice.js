@@ -8,6 +8,7 @@ const initialState = {
   examsCount: "",
   views: "",
   codes: [],
+  initCode: "",
 };
 
 export const getUsersCount = createAsyncThunk("getUsersCount", async () => {
@@ -89,7 +90,7 @@ const usersSlice = createSlice({
       state.examsCount = action.payload;
     });
     builder.addCase(initCodes.fulfilled, (state, action) => {
-      console.log(action.payload);
+      state.initCode = action.payload;
     });
   },
 });
