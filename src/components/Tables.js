@@ -688,6 +688,7 @@ export const UseOneUserCourses = ({ searchText, email }) => {
           <th></th>
         </tr>
       </thead>
+
       <tbody>
         {state &&
           !isLoading &&

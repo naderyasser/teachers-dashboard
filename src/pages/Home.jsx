@@ -17,7 +17,7 @@ const Home = () => {
     if (admin === "") {
       navigate("/signin");
     }
-  });
+  }, [navigate, admin]);
   return (
     <div className="p-5 home-screen ">
       <div className="">

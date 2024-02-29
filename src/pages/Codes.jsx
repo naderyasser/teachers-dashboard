@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Title from "../components/Title";
 import SearchInput from "../components/SearchInput";
 import { UseCodesTable } from "../components/Tables";
 import { useDispatch, useSelector } from "react-redux";
 import { initCodes } from "../store/statsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Codes = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,13 @@ const Codes = () => {
   const codeCount = useRef(null);
 
   const state = useSelector((state) => state.stats.initCode);
+  const admin = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (admin === "") {
+      navigate("/signin");
+    }
+  }, [admin, navigate]);
 
   return (
     <div className="p-5 home-screen">

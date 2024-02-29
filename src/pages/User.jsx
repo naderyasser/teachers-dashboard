@@ -1,7 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getOneUser } from "../store/usersSlice";
 import bg from "../img/Rectangle 5011.png";
 import avatar from "../img/avatar.png";
@@ -10,10 +10,15 @@ import { UseOneUserCourses } from "../components/Tables";
 const User = () => {
   const param = useParams();
   const dispatch = useDispatch();
+  const admin = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (admin === "") {
+      navigate("/signin");
+    }
     dispatch(getOneUser(param));
-  }, [dispatch, param]);
+  }, [dispatch, param, admin, navigate]);
   const [choosed, setChoosed] = useState(1);
   const state = useSelector((state) => state && state.users.oneUser);
 

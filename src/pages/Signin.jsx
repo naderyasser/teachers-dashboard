@@ -19,7 +19,7 @@ const Signin = () => {
     };
     dispatch(signin(data)).then((e) => {
       if (e.payload.States === true) {
-        document.cookie = true;
+        document.cookie = "";
         navigate("/home");
       }
     });

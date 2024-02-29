@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import avatar from "../img/avatar.png";
 import logo from "../img/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotificationsCount } from "../store/usersSlice";
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getNotificationsCount());
+  }, [dispatch]);
+  const count = useSelector((state) => state.users.notificationsCount.count);
+
   return (
     <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center z-20">
       {/* منصتي */}
@@ -28,8 +36,11 @@ const Navbar = () => {
       {/* الاشعارات */}
       <div
         onClick={() => navigate("/notifications")}
-        className="notify w-8 h-8 bg-gray flex justify-center items-center rounded-full cursor-pointer"
+        className="notify w-8 h-8 bg-gray flex justify-center items-center rounded-full cursor-pointer relative"
       >
+        <div className="bg-red-500 rounded-full w-5 h-5 absolute -top-3 -right-3 flex justify-center items-center text-white text-xs">
+          {count}
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

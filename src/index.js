@@ -13,16 +13,16 @@ import Home from "./pages/Home";
 import Course from "./pages/Course.jsx";
 import Users from "./pages/Users.jsx";
 import Codes from "./pages/Codes.jsx";
-import Settings from "./pages/Settings.jsx";
+
 import Analysis from "./pages/Analysis.jsx";
 import Exams from "./pages/Exams.jsx";
 
 import PageNotFound from "./pages/PageNotFound.jsx";
 
-import { ThemeProvider } from "@material-tailwind/react";
 import User from "./pages/User.jsx";
 import Notifications from "./pages/Notifications.jsx";
 import Signin from "./pages/Signin.jsx";
+import OneCource from "./pages/OneCource.jsx";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +66,10 @@ const router = createBrowserRouter([
         path: "/notifications",
         element: <Notifications />,
       },
+      {
+        path: "/onecourse",
+        element: <OneCource />,
+      },
     ],
   },
   {
@@ -78,9 +82,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

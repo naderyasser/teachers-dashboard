@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stats from "../components/Stats";
 import Title from "../components/Title";
 import Graph from "../components/Graph";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Analysis = () => {
+  const admin = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (admin === "") {
+      navigate("/signin");
+    }
+  }, [admin, navigate]);
   return (
     <div className="p-5">
       <div>

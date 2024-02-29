@@ -11,12 +11,28 @@ const initialState = {
   isLoading: false,
   isRejected: false,
   message: "",
+  notifications: [],
+  notificationsCount: "",
 };
+
+export const getNotifications = createAsyncThunk(
+  "getNotifications",
+  async () => {
+    try {
+      const res = await axios.get(
+        "https://walidelgendy.e3lanotopia.software/api/th/get_all_notificashen"
+      );
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  }
+);
 
 export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
   try {
     const res = await axios.get(
-      "https://scholarsync.e3lanotopia.software/api/th/get_all_users"
+      "https://walidelgendy.e3lanotopia.software/api/th/get_all_users"
     );
     return res.data;
   } catch (err) {
@@ -27,7 +43,7 @@ export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
 export const getAllCourses = createAsyncThunk("getAllCources", async () => {
   try {
     const res = await axios.get(
-      "https://scholarsync.e3lanotopia.software/api/th/get_all_courses"
+      "https://walidelgendy.e3lanotopia.software/api/th/get_all_courses"
     );
     return res.data;
   } catch (err) {
@@ -40,7 +56,7 @@ export const SearchByYearSectionLocation = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.get(
-        `https://scholarsync.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${args.location}`
+        `https://walidelgendy.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${args.location}`
       );
       return res.data;
     } catch (err) {
@@ -51,7 +67,7 @@ export const SearchByYearSectionLocation = createAsyncThunk(
 export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
   try {
     const res = await axios.get(
-      `https://scholarsync.e3lanotopia.software/api/th/get_user_data/${args.email}`
+      `https://walidelgendy.e3lanotopia.software/api/th/get_user_data/${args.email}`
     );
     return res.data;
   } catch (err) {
@@ -61,7 +77,7 @@ export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
 export const getUserCourses = createAsyncThunk("userCourses", async (args) => {
   try {
     const res = await axios.get(
-      `https://scholarsync.e3lanotopia.software/api/th/get_user_courses/${args}`
+      `https://walidelgendy.e3lanotopia.software/api/th/get_user_courses/${args}`
     );
     return res.data;
   } catch (err) {
@@ -69,15 +85,35 @@ export const getUserCourses = createAsyncThunk("userCourses", async (args) => {
   }
 });
 
+export const getNotificationsCount = createAsyncThunk(
+  "getNotificationsCount",
+  async () => {
+    try {
+      const res = await axios.get(
+        `https://walidelgendy.e3lanotopia.software/api/th/count_unread_notificashen`
+      );
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {
-    getUser: (state, action) => {
-      state.oneUser = state.users.users.filter((user) => user.id == 1)[0];
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getNotificationsCount.fulfilled, (state, action) => {
+      state.notificationsCount = action.payload;
+    });
+    builder.addCase(getNotifications.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getNotifications.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.notifications = action.payload;
+    });
     builder.addCase(getAllUsers.pending, (state, action) => {
       state.isRejected = false;
       state.isLoading = true;
@@ -137,5 +173,4 @@ const usersSlice = createSlice({
   },
 });
 
-export const { getUser } = usersSlice.actions;
 export default usersSlice.reducer;

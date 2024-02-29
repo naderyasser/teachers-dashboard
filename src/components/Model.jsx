@@ -1,13 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Model = ({ setClose }) => {
+  const navigate = useNavigate();
+  const signOutHandler = () => {
+    document.cookie = "";
+    navigate("/signin");
+  };
+
   return (
     <div
       className="flex flex-col justify-center items-center absolute top-0 left-0 w-screen h-screen   
      "
     >
       <div className="min-w-96 rounded-md bg-white min-h-52 flex flex-col justify-center items-center gap-5  z-30   ">
-        <h1 className="text-3xl text-darkGray">هل تريد الخروج</h1>
+        <h1 className="text-3xl text-darkGray">إضافة كورس</h1>
         <div className="flex justify-between items-center gap-12 ">
           <button
             onClick={() => setClose(false)}
@@ -17,6 +24,7 @@ const Model = ({ setClose }) => {
             إلغاء
           </button>
           <button
+            onClick={signOutHandler}
             type="submit"
             className="text-white font-medium text-base cursor-pointer py-2 px-4 gap-3 bg-red-500 rounded-full"
           >

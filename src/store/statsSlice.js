@@ -60,13 +60,35 @@ export const initCodes = createAsyncThunk("initCodes", async (args) => {
     let bodyContent = formdata;
 
     let reqOptions = {
-      url: "https://scholarsync.e3lanotopia.software/api/th/init_codes",
+      url: "https://walidelgendy.e3lanotopia.software/api/th/init_codes",
       method: "POST",
       data: bodyContent,
     };
 
     let response = await axios.request(reqOptions);
     return response.data;
+  } catch (err) {
+    return err.message;
+  }
+});
+export const initCourse = createAsyncThunk("initCourse", async (args) => {
+  try {
+    const res = await axios.post(
+      "https://walidelgendy.e3lanotopia.software/api/th/add_course",
+      args
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
+export const initLesson = createAsyncThunk("initLesson", async (args) => {
+  try {
+    const res = await axios.post(
+      "https://walidelgendy.e3lanotopia.software/api/th/add_lesson",
+      args
+    );
+    return res.data;
   } catch (err) {
     return err.message;
   }
@@ -91,6 +113,12 @@ const usersSlice = createSlice({
     });
     builder.addCase(initCodes.fulfilled, (state, action) => {
       state.initCode = action.payload;
+    });
+    builder.addCase(initCourse.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(initCourse.fulfilled, (state, action) => {
+      state.isLoading = false;
     });
   },
 });
