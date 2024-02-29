@@ -100,4 +100,76 @@ Welcome to the ScholarSync API documentation! This API allows you to interact wi
   }
   ```
 
+
+# API Documentation for Course Management
+
+## Add Course
+
+### Endpoint
+```
+POST /api/th/add_course
+```
+
+### Request
+
+- **Content-Type**: application/json
+
+#### Parameters
+
+| Name               | Type    | Description                             |
+|--------------------|---------|-----------------------------------------|
+| name               | string  | Name of the course                       |
+| academicYear       | string  | Academic year of the course             |
+| academicSection    | string  | Academic section of the course          |
+| price              | float   | Price of the course                     |
+| isFree (optional)  | boolean | Indicates if the course is free (default: false) |
+| bannerUrl          | string  | URL of the banner for the course        |
+| category           | string  | Category of the course                  |
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Add Lesson
+
+### Endpoint
+```
+POST /api/th/add_lesson
+```
+
+### Request
+
+- **Content-Type**: application/json
+
+#### Parameters
+
+| Name               | Type    | Description                             |
+|--------------------|---------|-----------------------------------------|
+| name               | string  | Name of the lesson                       |
+| courseId           | integer | ID of the course to which the lesson belongs |
+| iframeCode         | string  | Embed code or URL for the lesson        |
+| Ltype              | string  | Type of the lesson                      |
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
 ---
+
+
