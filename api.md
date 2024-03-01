@@ -172,4 +172,138 @@ POST /api/th/add_lesson
 
 ---
 
+## Edit Course
+
+### Endpoint
+```
+POST /api/th/edit_course/<int:id>
+```
+
+### Request
+
+- **Content-Type**: application/x-www-form-urlencoded
+
+#### Parameters
+
+| Name               | Type    | Description                             |
+|--------------------|---------|-----------------------------------------|
+| name               | string  | New name of the course                  |
+| academicYear       | string  | New academic year of the course         |
+| academicSection    | string  | New academic section of the course      |
+| price              | float   | New price of the course                 |
+| isFree (optional)  | boolean | (Optional) Indicates if the course is free (default: false) |
+| bannerUrl          | string  | New URL of the banner for the course    |
+| category           | string  | New category of the course              |
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Delete Course
+
+### Endpoint
+```
+GET /api/th/delete_course/<int:id>
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Get Lessons
+
+### Endpoint
+```
+GET /api/th/get_lessons/<int:id>
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Example
+
+```json
+{
+  "lessons": [
+    {
+      "name": "Lesson 1",
+      "iframeCode": "https://example.com",
+      "Ltype": "Video",
+      "lessonTime": "2024-03-01T12:00:00Z"
+    },
+    // ... (more lessons)
+  ]
+}
+```
+
+## Edit Lesson
+
+### Endpoint
+```
+POST /api/th/edit_lesson/<int:id>
+```
+
+### Request
+
+- **Content-Type**: application/x-www-form-urlencoded
+
+#### Parameters
+
+| Name               | Type    | Description                             |
+|--------------------|---------|-----------------------------------------|
+| name               | string  | New name of the lesson                  |
+| iframeCode         | string  | New embed code or URL for the lesson    |
+| Ltype              | string  | New type of the lesson                  |
+| lessonTime         | string  | New time for the lesson (format: "YYYY-MM-DDTHH:MM:SSZ") |
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Delete Lesson
+
+### Endpoint
+```
+GET /api/th/delete_lesson/<int:id>
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+---
+
 
