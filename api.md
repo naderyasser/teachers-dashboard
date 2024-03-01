@@ -172,7 +172,7 @@ POST /api/th/add_lesson
 
 ---
 
-## Edit Course
+## Edit Course Information
 
 ### Endpoint
 ```
@@ -181,19 +181,21 @@ POST /api/th/edit_course/<int:id>
 
 ### Request
 
-- **Content-Type**: application/x-www-form-urlencoded
+- **Content-Type**: application/json
 
 #### Parameters
 
-| Name               | Type    | Description                             |
-|--------------------|---------|-----------------------------------------|
-| name               | string  | New name of the course                  |
-| academicYear       | string  | New academic year of the course         |
-| academicSection    | string  | New academic section of the course      |
-| price              | float   | New price of the course                 |
-| isFree (optional)  | boolean | (Optional) Indicates if the course is free (default: false) |
-| bannerUrl          | string  | New URL of the banner for the course    |
-| category           | string  | New category of the course              |
+```json
+{
+  "name": "New Course Name",
+  "academic_year": "New Academic Year",
+  "academic_section": "New Academic Section",
+  "price": 29.99,
+  "is_free": true,
+  "banner_url": "https://example.com/banner",
+  "category": "New Category"
+}
+```
 
 ### Response
 
@@ -262,16 +264,18 @@ POST /api/th/edit_lesson/<int:id>
 
 ### Request
 
-- **Content-Type**: application/x-www-form-urlencoded
+- **Content-Type**: application/json
 
 #### Parameters
 
-| Name               | Type    | Description                             |
-|--------------------|---------|-----------------------------------------|
-| name               | string  | New name of the lesson                  |
-| iframeCode         | string  | New embed code or URL for the lesson    |
-| Ltype              | string  | New type of the lesson                  |
-| lessonTime         | string  | New time for the lesson (format: "YYYY-MM-DDTHH:MM:SSZ") |
+```json
+{
+  "name": "New Lesson Name",
+  "iframeCode": "https://new-example.com",
+  "Ltype": "Interactive",
+  "lessonTime": "2024-03-01T13:30:00Z"
+}
+```
 
 ### Response
 
@@ -304,6 +308,34 @@ GET /api/th/delete_lesson/<int:id>
 }
 ```
 
----
+## Enroll in a Course
 
+### Endpoint
+```
+POST /api/th/enroll_course
+```
 
+### Request
+
+- **Content-Type**: application/json
+
+#### Parameters
+
+```json
+{
+  "email": "user@example.com",
+  "course_id": 123
+}
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
