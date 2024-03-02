@@ -4,7 +4,7 @@ import { UseLessonsForOneCourse } from "../components/Tables";
 import SearchInput from "../components/SearchInput";
 import FilterMenu from "../components/FilterMenu";
 import { useDispatch } from "react-redux";
-import { initLesson } from "../store/statsSlice";
+import { getLessons, initLesson } from "../store/statsSlice";
 import { useParams } from "react-router-dom";
 
 const OneCource = () => {
@@ -27,11 +27,16 @@ const OneCource = () => {
     e.preventDefault();
     const data = {
       name: name.current.value,
-      courseId: 1,
+      courseId: param.id,
       iframeCode: videoURL.current.value,
       Ltype: finalMenu,
     };
-    dispatch(initLesson(data));
+
+    dispatch(initLesson(data)).then((e) => {
+      if (e.payload.success === true) {
+        dispatch(getLessons(param.id));
+      }
+    });
   };
 
   return (

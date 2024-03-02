@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initCourse } from "../store/statsSlice";
 import FilterMenu from "./FilterMenu";
+import { getAllCourses } from "../store/usersSlice";
 
 const CourseModel = ({ setOpenModel }) => {
   const [choosed, setChoosed] = useState("");
@@ -39,6 +40,9 @@ const CourseModel = ({ setOpenModel }) => {
         name.current.value = "";
         price.current.value = "";
         bannerUrl.current.value = "";
+        if (e.payload.success === true) {
+          dispatch(getAllCourses());
+        }
       });
     }
   };

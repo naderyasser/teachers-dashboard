@@ -13,7 +13,7 @@ import link from "../img/link.png";
 import { BeatLoader } from "react-spinners";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
-import { getLessons } from "../store/statsSlice";
+import { deleteCourse, getLessons } from "../store/statsSlice";
 import { IoIosArrowDown } from "react-icons/io";
 
 // last purches
@@ -149,6 +149,8 @@ export const UseCoursesTable = ({
   acadimcYearChoosed,
   filter,
   monthChoosed,
+  setClose,
+  setCourseId,
 }) => {
   const dispatch = useDispatch();
 
@@ -181,7 +183,8 @@ export const UseCoursesTable = ({
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
             السنة
           </th>
-          {/* <th></th> */}
+
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -224,11 +227,17 @@ export const UseCoursesTable = ({
                     {`${course.academic_year}ث`}
                   </p>
                 </td>
-                {/* <td>
-                  <p className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer">
-                    فتح
+                <td>
+                  <p
+                    onClick={() => {
+                      setClose(true);
+                      setCourseId(course.id);
+                    }}
+                    className=" m-auto py-1 px-5 border border-red-400 w-fit rounded-3xl text-black text-[16px] cursor-pointer"
+                  >
+                    حذف
                   </p>
-                </td> */}
+                </td>
               </tr>
             );
           })}

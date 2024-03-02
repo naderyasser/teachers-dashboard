@@ -122,6 +122,16 @@ export const enrollCourseForUser = createAsyncThunk(
   }
 );
 
+export const deleteCourse = createAsyncThunk("deleteCourse", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://eduazher.e3lanotopia.software/api/th/delete_course/${args}`
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
 const usersSlice = createSlice({
   name: "users",
   initialState,

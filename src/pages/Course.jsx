@@ -7,6 +7,7 @@ import { UseCoursesTable } from "../components/Tables";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CourseModel from "../components/CourseModel";
+import Model from "../components/Model";
 
 const Course = () => {
   const [searchText, setSearchText] = useState("");
@@ -22,10 +23,16 @@ const Course = () => {
     }
   }, [admin, navigate]);
   const [openModel, setOpenModel] = useState(false);
+  const [close, setClose] = useState(false);
+  const [courseId, setCourseId] = useState("");
 
   return (
     <div className="p-5 home-screen">
       {openModel && <CourseModel setOpenModel={setOpenModel} />}
+
+      {close && (
+        <Model setClose={setClose} deleteMode={true} courseId={courseId} />
+      )}
 
       <Title title="الكورسات" />
       <div className="flex justify-center items-start flex-col gap-3 mt-3">
@@ -55,9 +62,11 @@ const Course = () => {
       </div>
       <div className="mt-5 overflow-x-auto box-shadow">
         <UseCoursesTable
+          setClose={setClose}
           searchText={searchText}
           acadimcYearChoosed={acadimcYearChoosed}
           filter={true}
+          setCourseId={setCourseId}
         />
       </div>
     </div>

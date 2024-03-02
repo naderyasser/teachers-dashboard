@@ -71,7 +71,8 @@ const Codes = () => {
         {state && (
           <div className="w-full flex justify-center items-center">
             <a
-              href={`https://scholarsync.e3lanotopia.software/${state.url}`}
+              href={`https://eduazher.e3lanotopia.software${state.url}`}
+              // target="_blank"
               download
               className="text-white font-medium text-base cursor-pointer py-2 px-5 gap-3 bg-buttonBlue rounded-full mb-5"
             >
