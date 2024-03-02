@@ -6,6 +6,7 @@ import FilterMenu from "../components/FilterMenu";
 import { useDispatch } from "react-redux";
 import { getLessons, initLesson } from "../store/statsSlice";
 import { useParams } from "react-router-dom";
+import Model from "../components/Model";
 
 const OneCource = () => {
   const param = useParams();
@@ -39,8 +40,19 @@ const OneCource = () => {
     });
   };
 
+  const [close, setClose] = useState(false);
+  const [lessonId, setLessonId] = useState("");
+  const [deleteName, setDeleteName] = useState(true);
   return (
     <div className="home-screen">
+      {close && (
+        <Model
+          deleteMode={true}
+          setClose={setClose}
+          lessonId={lessonId}
+          deleteName={deleteName}
+        />
+      )}
       <div className="mt-5">
         <Title title={param.name} />
       </div>
@@ -84,7 +96,12 @@ const OneCource = () => {
         <SearchInput searchText={searchText} setSearchText={setSearchText} />
       </div>
       <div className="mt-5 overflow-x-auto box-shadow">
-        <UseLessonsForOneCourse searchText={searchText} id={param.id} />
+        <UseLessonsForOneCourse
+          searchText={searchText}
+          id={param.id}
+          setClose={setClose}
+          setLessonId={setLessonId}
+        />
       </div>
     </div>
   );

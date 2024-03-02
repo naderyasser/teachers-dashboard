@@ -13,8 +13,7 @@ import link from "../img/link.png";
 import { BeatLoader } from "react-spinners";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
-import { deleteCourse, getLessons } from "../store/statsSlice";
-import { IoIosArrowDown } from "react-icons/io";
+import { getLessons } from "../store/statsSlice";
 
 // last purches
 export const UseHomeTable = ({ searchText }) => {
@@ -791,7 +790,13 @@ export const UseOneUserCourses = ({ searchText, email }) => {
   );
 };
 
-export const UseLessonsForOneCourse = ({ searchText, id }) => {
+//UseLessonsForOneCourse
+export const UseLessonsForOneCourse = ({
+  searchText,
+  id,
+  setLessonId,
+  setClose,
+}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getLessons(id));
@@ -807,13 +812,16 @@ export const UseLessonsForOneCourse = ({ searchText, id }) => {
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">
         <tr>
-          <th className="text-tableHead font-normal text-x-[16px] ">الاسم</th>
-          <th className="text-tableHead font-normal text-x-[16px] text-right  min-w-32">
+          <th className="text-tableHead font-normal text-x-[16px] text-lg text-right">
+            الاسم
+          </th>
+          <th className="text-tableHead font-normal text-x-[16px] text-lg text-right  min-w-32">
             النوع
           </th>
-          <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32">
+          <th className="text-tableHead font-normal text-x-[16px] text-lg text-right min-w-32">
             التاريخ
           </th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -825,7 +833,7 @@ export const UseLessonsForOneCourse = ({ searchText, id }) => {
             return (
               <tr className="pl-3" key={lesson.id}>
                 <td className="min-w-60">
-                  <h1 className="font-medium  text-sm text-darkGray ">
+                  <h1 className="font-medium  text-sm text-darkGray  ">
                     {lesson.name}
                   </h1>
                 </td>
@@ -858,6 +866,17 @@ export const UseLessonsForOneCourse = ({ searchText, id }) => {
                 <td className=" ">
                   <p className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer">
                     تعديل
+                  </p>
+                </td>
+                <td className=" ">
+                  <p
+                    onClick={() => {
+                      setClose(true);
+                      setLessonId(lesson.id);
+                    }}
+                    className=" m-auto py-1 px-5 border border-red-500 w-fit rounded-3xl text-black text-[16px] cursor-pointer"
+                  >
+                    حذف
                   </p>
                 </td>
               </tr>

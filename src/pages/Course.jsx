@@ -31,7 +31,12 @@ const Course = () => {
       {openModel && <CourseModel setOpenModel={setOpenModel} />}
 
       {close && (
-        <Model setClose={setClose} deleteMode={true} courseId={courseId} />
+        <Model
+          setClose={setClose}
+          deleteMode={true}
+          courseId={courseId}
+          deleteName={false}
+        />
       )}
 
       <Title title="الكورسات" />

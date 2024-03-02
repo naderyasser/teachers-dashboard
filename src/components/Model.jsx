@@ -1,20 +1,26 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteCourse } from "../store/statsSlice";
+import { deleteCourse, deleteLesson, getLessons } from "../store/statsSlice";
 import { getAllCourses } from "../store/usersSlice";
 
-const Model = ({ setClose, deleteMode, courseId }) => {
+const Model = ({ setClose, deleteMode, courseId, deleteName, lessonId }) => {
   const navigate = useNavigate();
   const signOutHandler = () => {
     if (!deleteMode) {
       document.cookie = "";
       navigate("/signin");
     } else {
-      dispatch(deleteCourse(courseId)).then((e) => {
-        e.payload.success === true && setClose(false);
-        dispatch(getAllCourses());
-      });
+      if (deleteName) {
+        dispatch(deleteLesson(lessonId)).then((e) => {
+          e.payload.success === true && dispatch(getLessons(courseId));
+        });
+      } else {
+        dispatch(deleteCourse(courseId)).then((e) => {
+          e.payload.success === true && setClose(false);
+          dispatch(getAllCourses());
+        });
+      }
     }
   };
   const dispatch = useDispatch();
@@ -40,7 +46,7 @@ const Model = ({ setClose, deleteMode, courseId }) => {
             type="submit"
             className="text-white font-medium text-base cursor-pointer py-2 px-4 gap-3 bg-red-500 rounded-full"
           >
-            {deleteMode === true ? "خذف" : "خروج"}
+            {deleteMode === true ? "حذف" : "خروج"}
           </button>
         </div>
       </div>

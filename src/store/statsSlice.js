@@ -132,6 +132,16 @@ export const deleteCourse = createAsyncThunk("deleteCourse", async (args) => {
     return err.message;
   }
 });
+export const deleteLesson = createAsyncThunk("deleteLesson", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://eduazher.e3lanotopia.software/api/th/delete_lesson/${args}`
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
 const usersSlice = createSlice({
   name: "users",
   initialState,
