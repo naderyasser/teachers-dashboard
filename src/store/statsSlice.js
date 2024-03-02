@@ -9,12 +9,15 @@ const initialState = {
   views: "",
   codes: [],
   initCode: "",
+  lessonsForOneCourse: [],
 };
+
+const urlName = "eduazher";
 
 export const getUsersCount = createAsyncThunk("getUsersCount", async () => {
   try {
     const res = await axios.get(
-      "https://scholarsync.e3lanotopia.software/api/th/get_users_count"
+      "https://eduazher.e3lanotopia.software/api/th/get_users_count"
     );
     return res.data;
   } catch (err) {
@@ -24,7 +27,7 @@ export const getUsersCount = createAsyncThunk("getUsersCount", async () => {
 export const getViews = createAsyncThunk("getViews", async () => {
   try {
     const res = await axios.get(
-      "https://scholarsync.e3lanotopia.software/api/th/get_videos_views"
+      "https://eduazher.e3lanotopia.software/api/th/get_videos_views"
     );
     return res.data;
   } catch (err) {
@@ -34,7 +37,7 @@ export const getViews = createAsyncThunk("getViews", async () => {
 export const getLessonsCount = createAsyncThunk("getLessonsCount", async () => {
   try {
     const res = await axios.get(
-      "https://scholarsync.e3lanotopia.software/api/th/get_lessons_count"
+      "https://eduazher.e3lanotopia.software/api/th/get_lessons_count"
     );
     return res.data;
   } catch (err) {
@@ -44,7 +47,7 @@ export const getLessonsCount = createAsyncThunk("getLessonsCount", async () => {
 export const getExamsCount = createAsyncThunk("getExamsCount", async () => {
   try {
     const res = await axios.get(
-      "https://scholarsync.e3lanotopia.software/api/th/get_exames_count"
+      "https://eduazher.e3lanotopia.software/api/th/get_exames_count"
     );
     return res.data;
   } catch (err) {
@@ -93,6 +96,31 @@ export const initLesson = createAsyncThunk("initLesson", async (args) => {
     return err.message;
   }
 });
+export const getLessons = createAsyncThunk("getLessons", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://walidelgendy.e3lanotopia.software/api/th/get_lessons/${args}`
+    );
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
+export const enrollCourseForUser = createAsyncThunk(
+  "enrollCourseForUser",
+  async (args) => {
+    try {
+      const res = await axios.post(
+        `https://walidelgendy.e3lanotopia.software/api/th/enroll_course`,
+        args
+      );
+
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  }
+);
 
 const usersSlice = createSlice({
   name: "users",
@@ -118,6 +146,15 @@ const usersSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(initCourse.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(getLessons.fulfilled, (state, action) => {
+      state.lessonsForOneCourse = action.payload;
+    });
+    builder.addCase(enrollCourseForUser.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(enrollCourseForUser.fulfilled, (state, action) => {
       state.isLoading = false;
     });
   },

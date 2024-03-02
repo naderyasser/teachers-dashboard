@@ -22,7 +22,7 @@ const Course = () => {
     }
   }, [admin, navigate]);
   const [openModel, setOpenModel] = useState(false);
-  console.log("wow");
+
   return (
     <div className="p-5 home-screen">
       {openModel && <CourseModel setOpenModel={setOpenModel} />}

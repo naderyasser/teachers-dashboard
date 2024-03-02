@@ -67,7 +67,7 @@ const router = createBrowserRouter([
         element: <Notifications />,
       },
       {
-        path: "/onecourse",
+        path: "onecourse/:id/:name",
         element: <OneCource />,
       },
     ],

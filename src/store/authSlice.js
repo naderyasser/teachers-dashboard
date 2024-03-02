@@ -11,7 +11,7 @@ export const signin = createAsyncThunk("signIn", async (args) => {
   let bodyContent = formdata;
   try {
     let reqOptions = {
-      url: "https://scholarsync.e3lanotopia.software/api/th/login",
+      url: "https://eduazher.e3lanotopia.software/api/th/login",
       method: "POST",
       data: bodyContent,
     };

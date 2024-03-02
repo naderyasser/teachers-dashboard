@@ -2,15 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOneUser } from "../store/usersSlice";
+import { getAllCourses, getOneUser } from "../store/usersSlice";
 import bg from "../img/Rectangle 5011.png";
 import avatar from "../img/avatar.png";
 import { UseOneUserCourses } from "../components/Tables";
+import FilterMenu from "../components/FilterMenu";
+import { enrollCourseForUser } from "../store/statsSlice";
 
 const User = () => {
   const param = useParams();
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.auth.user);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,10 +21,28 @@ const User = () => {
       navigate("/signin");
     }
     dispatch(getOneUser(param));
+    dispatch(getAllCourses());
   }, [dispatch, param, admin, navigate]);
   const [choosed, setChoosed] = useState(1);
   const state = useSelector((state) => state && state.users.oneUser);
 
+  const courses = useSelector((state) => state && state.users.courses).courses;
+  const isLoading = useSelector((state) => state.stats.isLoading);
+
+  const [courseChoosed, setCourseChoosed] = useState([]);
+  const oneCourse =
+    courses && courses.find((ele) => ele.name === courseChoosed);
+
+  const data = {
+    email: state && state.user.email,
+    course_id: oneCourse && oneCourse.id,
+  };
+  const formHandler = (e) => {
+    e.preventDefault();
+    dispatch(enrollCourseForUser(data)).then((e) => {
+      e.payload.success && setCourseChoosed("");
+    });
+  };
   return (
     <div>
       {/* top */}
@@ -118,8 +139,31 @@ const User = () => {
             </div>
           </div>
         ) : choosed === 2 ? (
-          <div className="box-shadow w-full">
-            <UseOneUserCourses email={param} />
+          <div className="w-full">
+            <form
+              className=" p-5 my-5 mb-8 border-b border-gray "
+              onSubmit={formHandler}
+            >
+              <div className="flex justify-between items-center">
+                <FilterMenu
+                  data={courses}
+                  title={"الكورس"}
+                  selected={""}
+                  setAcadimcYearChoosed={setCourseChoosed}
+                  notName={true}
+                />
+
+                <button
+                  type="submit"
+                  className="text-white font-medium text-base cursor-pointer py-2 px-3 gap-3 bg-buttonBlue rounded-full"
+                >
+                  {isLoading ? "يتم الإنشاء" : "إضافة"}
+                </button>
+              </div>
+            </form>
+            <div className="box-shadow w-full">
+              <UseOneUserCourses email={param} />
+            </div>
           </div>
         ) : (
           <div>1</div>

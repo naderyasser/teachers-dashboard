@@ -20,7 +20,7 @@ export const getNotifications = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        "https://walidelgendy.e3lanotopia.software/api/th/get_all_notificashen"
+        "https://eduazher.e3lanotopia.software/api/th/get_all_notificashen"
       );
       return res.data;
     } catch (err) {
@@ -32,7 +32,7 @@ export const getNotifications = createAsyncThunk(
 export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
   try {
     const res = await axios.get(
-      "https://walidelgendy.e3lanotopia.software/api/th/get_all_users"
+      "https://eduazher.e3lanotopia.software/api/th/get_all_users"
     );
     return res.data;
   } catch (err) {
@@ -43,7 +43,7 @@ export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
 export const getAllCourses = createAsyncThunk("getAllCources", async () => {
   try {
     const res = await axios.get(
-      "https://walidelgendy.e3lanotopia.software/api/th/get_all_courses"
+      "https://eduazher.e3lanotopia.software/api/th/get_all_courses"
     );
     return res.data;
   } catch (err) {
@@ -56,7 +56,7 @@ export const SearchByYearSectionLocation = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.get(
-        `https://walidelgendy.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${args.location}`
+        `https://eduazher.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${args.location}`
       );
       return res.data;
     } catch (err) {
@@ -67,7 +67,7 @@ export const SearchByYearSectionLocation = createAsyncThunk(
 export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
   try {
     const res = await axios.get(
-      `https://walidelgendy.e3lanotopia.software/api/th/get_user_data/${args.email}`
+      `https://eduazher.e3lanotopia.software/api/th/get_user_data/${args.email}`
     );
     return res.data;
   } catch (err) {
@@ -77,7 +77,7 @@ export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
 export const getUserCourses = createAsyncThunk("userCourses", async (args) => {
   try {
     const res = await axios.get(
-      `https://walidelgendy.e3lanotopia.software/api/th/get_user_courses/${args}`
+      `https://eduazher.e3lanotopia.software/api/th/get_user_courses/${args}`
     );
     return res.data;
   } catch (err) {
@@ -90,7 +90,7 @@ export const getNotificationsCount = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        `https://walidelgendy.e3lanotopia.software/api/th/count_unread_notificashen`
+        `https://eduazher.e3lanotopia.software/api/th/count_unread_notificashen`
       );
       return res.data;
     } catch (err) {

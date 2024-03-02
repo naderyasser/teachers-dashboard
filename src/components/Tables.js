@@ -13,6 +13,8 @@ import link from "../img/link.png";
 import { BeatLoader } from "react-spinners";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
+import { getLessons } from "../store/statsSlice";
+import { IoIosArrowDown } from "react-icons/io";
 
 // last purches
 export const UseHomeTable = ({ searchText }) => {
@@ -158,6 +160,7 @@ export const UseCoursesTable = ({
   const isLoading = useSelector((state) => state.users.isLoading);
   const isRejected = useSelector((state) => state.users.isRejected);
   const errMessage = useSelector((state) => state.users.message);
+  const navigate = useNavigate();
 
   return (
     <table className="  w-full flex-grow   ">
@@ -178,7 +181,7 @@ export const UseCoursesTable = ({
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
             السنة
           </th>
-          <th></th>
+          {/* <th></th> */}
         </tr>
       </thead>
       <tbody>
@@ -192,7 +195,12 @@ export const UseCoursesTable = ({
                     <h1 className="font-medium  text-base  text-darkGray ">
                       {course.name}
                     </h1>
-                    <div className="flex justify-start items-center gap-2 cursor-pointer">
+                    <div
+                      onClick={() =>
+                        navigate(`/onecourse/${course.id}/${course.name}`)
+                      }
+                      className="flex justify-start items-center gap-2 cursor-pointer"
+                    >
                       <p className="text-darckBlue text-[12px]">لينك الكورس</p>
                       <img className="w-3 " src={link} alt="" />
                     </div>
@@ -216,11 +224,11 @@ export const UseCoursesTable = ({
                     {`${course.academic_year}ث`}
                   </p>
                 </td>
-                <td>
+                {/* <td>
                   <p className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer">
                     فتح
                   </p>
-                </td>
+                </td> */}
               </tr>
             );
           })}
@@ -719,6 +727,128 @@ export const UseOneUserCourses = ({ searchText, email }) => {
                     }`}
                   >
                     {`${course.academic_year}ث`}
+                  </p>
+                </td>
+              </tr>
+            );
+          })}
+        {isRejected && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <div>{errMessage}</div>
+              </div>
+            </td>
+          </tr>
+        )}
+        {/* loading  */}
+        {isLoading && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <BeatLoader className="m-auto" color="#2E6FF4" />
+              </div>
+            </td>
+          </tr>
+        )}
+        {/* data not found  */}
+        {state && !isLoading && currentData.length === 0 && (
+          <tr>
+            <td colSpan={6}>
+              <div className="flex justify-center items-center">
+                <h1 className="text-lg ">لا توجد بيانات لعرضها</h1>
+              </div>
+            </td>
+          </tr>
+        )}
+      </tbody>
+      <tfoot className="text-center">
+        <tr>
+          <td colSpan={5}>
+            <div className="w-full flex justify-start items-start overflow-auto">
+              {state && (
+                <Pagination
+                  searchText={searchText}
+                  data={state}
+                  setCurrentDate={setCurrentData}
+                  withoutSearch={true}
+                />
+              )}
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  );
+};
+
+export const UseLessonsForOneCourse = ({ searchText, id }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLessons(id));
+  }, [dispatch, id]);
+  const [currentData, setCurrentData] = useState([]);
+
+  const state = useSelector((state) => state.stats.lessonsForOneCourse).lessons;
+
+  const isLoading = useSelector((state) => state.users.isLoading);
+  const isRejected = useSelector((state) => state.users.isRejected);
+  const errMessage = useSelector((state) => state.users.message);
+  return (
+    <table className="  w-full flex-grow   ">
+      <thead className="bg-lightGray text-tableHead">
+        <tr>
+          <th className="text-tableHead font-normal text-x-[16px] ">الاسم</th>
+          <th className="text-tableHead font-normal text-x-[16px] text-right  min-w-32">
+            النوع
+          </th>
+          <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32">
+            التاريخ
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {state &&
+          !isLoading &&
+          state.map((lesson) => {
+            return (
+              <tr className="pl-3" key={lesson.id}>
+                <td className="min-w-60">
+                  <h1 className="font-medium  text-sm text-darkGray ">
+                    {lesson.name}
+                  </h1>
+                </td>
+                <td>
+                  <p
+                    className={`text-base  text-white  font-normal m w-fit text-center py-1 px-3  rounded-full ${
+                      lesson.Ltype === "section"
+                        ? "bg-[#F4CB3C]"
+                        : lesson.Ltype === "video"
+                        ? "bg-[#2E6FF4] "
+                        : lesson.Ltype === "exam"
+                        ? "bg-[#18B477]"
+                        : "bg-transparent"
+                    }`}
+                  >
+                    {`${
+                      lesson.Ltype === "section"
+                        ? `قسم`
+                        : lesson.Ltype === "video"
+                        ? "فيديو"
+                        : "اختبار"
+                    } `}
+                  </p>
+                </td>
+                <td>
+                  <p className="text-xs text-lightText font-normal m-auto">
+                    {dateFormat(lesson.created_at, "dd / mm / yyyy")}
+                  </p>
+                </td>
+                <td className=" ">
+                  <p className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer">
+                    تعديل
                   </p>
                 </td>
               </tr>

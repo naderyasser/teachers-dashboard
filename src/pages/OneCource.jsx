@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import Title from "../components/Title";
-import { UseCodesTable } from "../components/Tables";
+import { UseLessonsForOneCourse } from "../components/Tables";
 import SearchInput from "../components/SearchInput";
 import FilterMenu from "../components/FilterMenu";
 import { useDispatch } from "react-redux";
 import { initLesson } from "../store/statsSlice";
+import { useParams } from "react-router-dom";
 
-const OneCource = ({ courseName }) => {
+const OneCource = () => {
+  const param = useParams();
+
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
   const [menuSelected, setMenuSelected] = useState("");
@@ -28,19 +31,19 @@ const OneCource = ({ courseName }) => {
       iframeCode: videoURL.current.value,
       Ltype: finalMenu,
     };
-    dispatch(initLesson(data)).then((e) => console.log(e));
+    dispatch(initLesson(data));
   };
 
   return (
     <div className="home-screen">
-      <div>
-        <Title title={courseName} />
+      <div className="mt-5">
+        <Title title={param.name} />
       </div>
       <form
         className=" p-5 my-5 mb-8 border-b border-gray "
         onSubmit={formHandler}
       >
-        <div className=" flex-col md:flex justify-start items-center gap-3">
+        <div className=" flex flex-col md:flex-row justify-start items-center gap-3">
           <input
             required
             ref={name}
@@ -76,7 +79,7 @@ const OneCource = ({ courseName }) => {
         <SearchInput searchText={searchText} setSearchText={setSearchText} />
       </div>
       <div className="mt-5 overflow-x-auto box-shadow">
-        <UseCodesTable searchText={searchText} />
+        <UseLessonsForOneCourse searchText={searchText} id={param.id} />
       </div>
     </div>
   );

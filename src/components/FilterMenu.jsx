@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
-const FilterMenu = ({ data, title, selected, setAcadimcYearChoosed }) => {
+const FilterMenu = ({
+  data,
+  title,
+  selected,
+  setAcadimcYearChoosed,
+  notName,
+}) => {
   const [open, setopen] = useState(false);
   const [choosed, setChoosed] = useState(selected);
   const menuRef = useRef(null);
@@ -43,21 +49,22 @@ const FilterMenu = ({ data, title, selected, setAcadimcYearChoosed }) => {
       <div
         className={`absolute ${
           open ? "block" : "hidden"
-        }  right-0 bg-lightGray rounded-lg calc-menu p-3 z-20 box-shadow`}
+        }  right-0 bg-lightGray rounded-lg calc-menu p-3 z-20 box-shadow max-w-80 max-h-[500px] w-max overflow-auto`}
       >
         {open &&
+          data &&
           data.map((item, index) => {
             return (
               <div
                 key={index}
                 onClick={() => {
-                  setChoosed(item);
+                  setChoosed(notName ? item.name : item);
                   setopen(!open);
-                  setAcadimcYearChoosed(item);
+                  setAcadimcYearChoosed(notName ? item.name : item);
                 }}
                 className={`${
                   choosed === item && "bg-gray"
-                } py-2 px-3  hover:bg-gray flex justify-start items-center gap-2 rounded-lg `}
+                } py-2 px-3  hover:bg-gray flex justify-start items-center gap-2 rounded-lg w-full `}
               >
                 <input
                   className={`hidden `}
@@ -72,7 +79,9 @@ const FilterMenu = ({ data, title, selected, setAcadimcYearChoosed }) => {
                   value={choosed}
                   id="index"
                 />
-                <label htmlFor="index">{item}</label>
+                <label className="" htmlFor="index">
+                  {notName ? item.name : item}
+                </label>
               </div>
             );
           })}
