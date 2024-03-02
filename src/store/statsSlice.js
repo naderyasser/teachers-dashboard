@@ -63,7 +63,7 @@ export const initCodes = createAsyncThunk("initCodes", async (args) => {
     let bodyContent = formdata;
 
     let reqOptions = {
-      url: "https://walidelgendy.e3lanotopia.software/api/th/init_codes",
+      url: "https://eduazher.e3lanotopia.software/api/th/init_codes",
       method: "POST",
       data: bodyContent,
     };
@@ -77,7 +77,7 @@ export const initCodes = createAsyncThunk("initCodes", async (args) => {
 export const initCourse = createAsyncThunk("initCourse", async (args) => {
   try {
     const res = await axios.post(
-      "https://walidelgendy.e3lanotopia.software/api/th/add_course",
+      "https://eduazher.e3lanotopia.software/api/th/add_course",
       args
     );
     return res.data;
@@ -88,7 +88,7 @@ export const initCourse = createAsyncThunk("initCourse", async (args) => {
 export const initLesson = createAsyncThunk("initLesson", async (args) => {
   try {
     const res = await axios.post(
-      "https://walidelgendy.e3lanotopia.software/api/th/add_lesson",
+      "https://eduazher.e3lanotopia.software/api/th/add_lesson",
       args
     );
     return res.data;
@@ -99,7 +99,7 @@ export const initLesson = createAsyncThunk("initLesson", async (args) => {
 export const getLessons = createAsyncThunk("getLessons", async (args) => {
   try {
     const res = await axios.get(
-      `https://walidelgendy.e3lanotopia.software/api/th/get_lessons/${args}`
+      `https://eduazher.e3lanotopia.software/api/th/get_lessons/${args}`
     );
     return res.data;
   } catch (err) {
@@ -111,7 +111,7 @@ export const enrollCourseForUser = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.post(
-        `https://walidelgendy.e3lanotopia.software/api/th/enroll_course`,
+        `https://eduazher.e3lanotopia.software/api/th/enroll_course`,
         args
       );
 
