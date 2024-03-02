@@ -172,4 +172,170 @@ POST /api/th/add_lesson
 
 ---
 
+## Edit Course Information
 
+### Endpoint
+```
+POST /api/th/edit_course/<int:id>
+```
+
+### Request
+
+- **Content-Type**: application/json
+
+#### Parameters
+
+```json
+{
+  "name": "New Course Name",
+  "academic_year": "New Academic Year",
+  "academic_section": "New Academic Section",
+  "price": 29.99,
+  "is_free": true,
+  "banner_url": "https://example.com/banner",
+  "category": "New Category"
+}
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Delete Course
+
+### Endpoint
+```
+GET /api/th/delete_course/<int:id>
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Get Lessons
+
+### Endpoint
+```
+GET /api/th/get_lessons/<int:id>
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Example
+
+```json
+{
+  "lessons": [
+    {
+      "name": "Lesson 1",
+      "iframeCode": "https://example.com",
+      "Ltype": "Video",
+      "lessonTime": "2024-03-01T12:00:00Z"
+    },
+    // ... (more lessons)
+  ]
+}
+```
+
+## Edit Lesson
+
+### Endpoint
+```
+POST /api/th/edit_lesson/<int:id>
+```
+
+### Request
+
+- **Content-Type**: application/json
+
+#### Parameters
+
+```json
+{
+  "name": "New Lesson Name",
+  "iframeCode": "https://new-example.com",
+  "Ltype": "Interactive",
+  "lessonTime": "2024-03-01T13:30:00Z"
+}
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Delete Lesson
+
+### Endpoint
+```
+GET /api/th/delete_lesson/<int:id>
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
+
+## Enroll in a Course
+
+### Endpoint
+```
+POST /api/th/enroll_course
+```
+
+### Request
+
+- **Content-Type**: application/json
+
+#### Parameters
+
+```json
+{
+  "email": "user@example.com",
+  "course_id": 123
+}
+```
+
+### Response
+
+- **Content-Type**: application/json
+
+#### Success
+
+```json
+{
+  "success": true
+}
+```
