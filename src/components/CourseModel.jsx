@@ -5,6 +5,7 @@ import FilterMenu from "./FilterMenu";
 
 const CourseModel = ({ setOpenModel }) => {
   const [choosed, setChoosed] = useState("");
+  const [err, setErr] = useState(false);
 
   const final =
     choosed === "الاول الثانوي"
@@ -30,11 +31,16 @@ const CourseModel = ({ setOpenModel }) => {
       bannerUrl: bannerUrl.current.value,
       category: "category",
     };
-    dispatch(initCourse(data)).then((e) => {
-      name.current.value = "";
-      price.current.value = "";
-      bannerUrl.current.value = "";
-    });
+
+    if (choosed === "") {
+      setErr(true);
+    } else {
+      dispatch(initCourse(data)).then((e) => {
+        name.current.value = "";
+        price.current.value = "";
+        bannerUrl.current.value = "";
+      });
+    }
   };
 
   return (
@@ -68,12 +74,15 @@ const CourseModel = ({ setOpenModel }) => {
             required
           />
 
-          <FilterMenu
-            data={menuData}
-            title={"السنة الدراسية"}
-            selected={""}
-            setAcadimcYearChoosed={setChoosed}
-          />
+          <div className="flex justify-between items-center">
+            <FilterMenu
+              data={menuData}
+              title={"السنة الدراسية"}
+              selected={""}
+              setAcadimcYearChoosed={setChoosed}
+            />
+            {err && <p className="text-red-400">اختر السنة الدراسية</p>}
+          </div>
           <button
             type="submit"
             className={`text-white font-medium text-base cursor-pointer py-2 px-4 gap-3 
