@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CourseModel from "../components/CourseModel";
 import Model from "../components/Model";
+import { Toaster } from "sonner";
 
 const Course = () => {
   const [searchText, setSearchText] = useState("");
@@ -18,17 +19,27 @@ const Course = () => {
   const admin = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   useEffect(() => {
-    if (admin === "") {
-      navigate("/signin");
-    }
+    // if (admin === "") {
+    //   navigate("/signin");
+    // }
   }, [admin, navigate]);
   const [openModel, setOpenModel] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [close, setClose] = useState(false);
   const [courseId, setCourseId] = useState("");
+  const [editData, setEditData] = useState();
 
   return (
     <div className="p-5 home-screen">
-      {openModel && <CourseModel setOpenModel={setOpenModel} />}
+      {openModel && (
+        <CourseModel
+          editMode={editMode}
+          editData={editData}
+          setOpenModel={setOpenModel}
+          setEditMode={setEditMode}
+        />
+      )}
+      <Toaster position="top-center" richColors />
 
       {close && (
         <Model
@@ -72,6 +83,9 @@ const Course = () => {
           acadimcYearChoosed={acadimcYearChoosed}
           filter={true}
           setCourseId={setCourseId}
+          setOpenModel={setOpenModel}
+          setEditMode={setEditMode}
+          setEditData={setEditData}
         />
       </div>
     </div>

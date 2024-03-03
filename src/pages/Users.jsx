@@ -15,9 +15,9 @@ const Users = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (admin === "") {
-      navigate("/signin");
-    }
+    // if (admin === "") {
+    //   navigate("/signin");
+    // }
     dispatch(getAllUsers());
   }, [dispatch, admin, navigate]);
 

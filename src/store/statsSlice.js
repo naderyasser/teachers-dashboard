@@ -142,6 +142,31 @@ export const deleteLesson = createAsyncThunk("deleteLesson", async (args) => {
     return err.message;
   }
 });
+export const editLesson = createAsyncThunk("editLesson", async (args) => {
+  try {
+    const res = await axios.post(
+      `https://eduazher.e3lanotopia.software/api/th/edit_lesson/${args.id}`,
+      args.data
+    );
+
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
+export const editCourse = createAsyncThunk("editCourse", async (args) => {
+  console.log(args);
+  try {
+    const res = await axios.post(
+      `https://eduazher.e3lanotopia.software/api/th/edit_course/${args.id}`,
+      args.data
+    );
+
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -175,6 +200,12 @@ const usersSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(enrollCourseForUser.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(initLesson.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(initLesson.fulfilled, (state, action) => {
       state.isLoading = false;
     });
   },

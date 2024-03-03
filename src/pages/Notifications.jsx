@@ -10,9 +10,9 @@ const Notifications = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (admin === "") {
-      navigate("/signin");
-    }
+    // if (admin === "") {
+    //   navigate("/signin");
+    // }
     dispatch(getNotifications());
   }, [admin, navigate, dispatch]);
   const state = useSelector((state) => state.users.notifications.notification);

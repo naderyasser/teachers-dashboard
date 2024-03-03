@@ -6,6 +6,8 @@ const FilterMenu = ({
   selected,
   setAcadimcYearChoosed,
   notName,
+  editMode,
+  editData,
 }) => {
   const [open, setopen] = useState(false);
   const [choosed, setChoosed] = useState(selected);
@@ -22,6 +24,9 @@ const FilterMenu = ({
       }
     };
 
+    if (editMode) {
+      setChoosed(editData.Ltype);
+    }
     // Attach the click event listener to the document
     document.addEventListener("click", handleOutsideClick);
 
@@ -29,7 +34,8 @@ const FilterMenu = ({
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, []);
+  }, [editMode]);
+
   return (
     <div
       ref={menuRef}

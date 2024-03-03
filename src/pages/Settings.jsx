@@ -8,9 +8,9 @@ const Settings = () => {
   const admin = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   useEffect(() => {
-    if (admin === "") {
-      navigate("/signin");
-    }
+    // if (admin === "") {
+    //   navigate("/signin");
+    // }
   }, [admin, navigate]);
   return (
     <div>

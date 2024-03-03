@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCourse, deleteLesson, getLessons } from "../store/statsSlice";
 import { getAllCourses } from "../store/usersSlice";
+import { Toaster, toast } from "sonner";
 
 const Model = ({ setClose, deleteMode, courseId, deleteName, lessonId }) => {
   const navigate = useNavigate();
@@ -12,11 +13,14 @@ const Model = ({ setClose, deleteMode, courseId, deleteName, lessonId }) => {
       navigate("/signin");
     } else {
       if (deleteName) {
-        dispatch(deleteLesson(lessonId)).then((e) => {
-          e.payload.success === true && dispatch(getLessons(courseId));
+        dispatch(deleteLesson(lessonId.id)).then((e) => {
+          toast.error("تم الحذف");
+          e.payload.success === true && setClose(false);
+          dispatch(getLessons(courseId));
         });
       } else {
         dispatch(deleteCourse(courseId)).then((e) => {
+          toast.error("تم الحذف");
           e.payload.success === true && setClose(false);
           dispatch(getAllCourses());
         });

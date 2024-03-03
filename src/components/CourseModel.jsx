@@ -1,13 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initCourse } from "../store/statsSlice";
+import { editCourse, initCourse } from "../store/statsSlice";
 import FilterMenu from "./FilterMenu";
 import { getAllCourses } from "../store/usersSlice";
+import { Toaster, toast } from "sonner";
+import { BeatLoader } from "react-spinners";
 
-const CourseModel = ({ setOpenModel }) => {
+const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
+  console.log(editData);
   const [choosed, setChoosed] = useState("");
   const [err, setErr] = useState(false);
-
   const final =
     choosed === "الاول الثانوي"
       ? "1"
@@ -33,19 +35,54 @@ const CourseModel = ({ setOpenModel }) => {
       category: "category",
     };
 
-    if (choosed === "") {
+    if (false === "") {
       setErr(true);
     } else {
-      dispatch(initCourse(data)).then((e) => {
-        name.current.value = "";
-        price.current.value = "";
-        bannerUrl.current.value = "";
-        if (e.payload.success === true) {
-          dispatch(getAllCourses());
-        }
-      });
+      if (editMode) {
+        const data = {
+          id: editData.id,
+          data: {
+            name: name.current.value,
+            academic_year:
+              choosed === "الاول الثانوي"
+                ? "1"
+                : choosed === "الثاني الثانوي"
+                ? "2"
+                : choosed === "الثالث الثانوي" && "3",
+            academic_section: editData.academic_section,
+            price: price.current.value,
+            is_free: true,
+            banner_url: bannerUrl.current.value,
+            category: "",
+          },
+        };
+        dispatch(editCourse(data)).then((e) => {
+          if (e.payload.success === true) {
+            dispatch(getAllCourses());
+            setOpenModel(false);
+            toast.warning("تم التعديل");
+          }
+        });
+      } else {
+        dispatch(initCourse(data)).then((e) => {
+          name.current.value = "";
+          price.current.value = "";
+          bannerUrl.current.value = "";
+          toast.success("تم الاضافة");
+          if (e.payload.success === true) {
+            dispatch(getAllCourses());
+          }
+        });
+      }
     }
   };
+  useEffect(() => {
+    if (editMode) {
+      name.current.value = editData.name;
+      price.current.value = editData.price;
+      bannerUrl.current.value = editData.banner_url;
+    }
+  }, [editMode]);
 
   return (
     <div
@@ -53,7 +90,10 @@ const CourseModel = ({ setOpenModel }) => {
      "
     >
       <div className="min-w-96 rounded-md bg-white min-h-52 flex flex-col justify-center items-center gap-5 p-5 z-30   ">
-        <h1 className="text-3xl text-darkGray">إضافة كورس</h1>
+        <h1 className="text-3xl text-darkGray">
+          {editMode ? "تعديل الكورس" : "اضافة كورس"}
+        </h1>
+        <Toaster position="top-center" richColors />
         <form onSubmit={iniHandler} className="flex flex-col gap-4">
           <input
             ref={name}
@@ -82,7 +122,7 @@ const CourseModel = ({ setOpenModel }) => {
             <FilterMenu
               data={menuData}
               title={"السنة الدراسية"}
-              selected={""}
+              selected={editMode ? editData.academic_year : ""}
               setAcadimcYearChoosed={setChoosed}
             />
             {err && <p className="text-red-400">اختر السنة الدراسية</p>}
@@ -93,12 +133,25 @@ const CourseModel = ({ setOpenModel }) => {
         bg-light-blue-700
              hover:bg-darckBlue transition-all rounded-full`}
           >
-            {isLoading ? "..." : "إنشاء كود"}
+            {isLoading ? (
+              <BeatLoader color="#fff" />
+            ) : editMode ? (
+              "تعديل كورس"
+            ) : (
+              "اضافة كورس"
+            )}
           </button>
         </form>
       </div>
       <div
-        onClick={() => setOpenModel(false)}
+        onClick={() => {
+          setOpenModel(false);
+          setEditMode(false);
+          name.current.value = "";
+          price.current.value = "";
+          bannerUrl.current.value = "";
+          setChoosed("");
+        }}
         className="absolute top-0 left-0 w-screen h-screen bg-black opacity-30 z-20 "
       ></div>
     </div>

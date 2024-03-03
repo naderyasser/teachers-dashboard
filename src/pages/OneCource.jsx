@@ -1,48 +1,89 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Title from "../components/Title";
 import { UseLessonsForOneCourse } from "../components/Tables";
 import SearchInput from "../components/SearchInput";
 import FilterMenu from "../components/FilterMenu";
-import { useDispatch } from "react-redux";
-import { getLessons, initLesson } from "../store/statsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editLesson, getLessons, initLesson } from "../store/statsSlice";
 import { useParams } from "react-router-dom";
 import Model from "../components/Model";
+import { Toaster, toast } from "sonner";
+import { BeatLoader } from "react-spinners";
 
 const OneCource = () => {
   const param = useParams();
 
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
-  const [menuSelected, setMenuSelected] = useState("");
-  const finalMenu =
-    menuSelected === "قسم"
-      ? "section"
-      : menuSelected === "فيديو"
-      ? "video"
-      : "exam";
+  const [menuSelected, setMenuSelected] = useState("section");
+  // const finalMenu =
+  //   menuSelected === "قسم"
+  //     ? "section"
+  //     : menuSelected === "فيديو"
+  //     ? "video"
+  //     : "exam";
 
-  const menuData = ["قسم", "فيديو", "امتحان"];
+  const menuData = ["section", "video", "exam"];
   const name = useRef(null);
   const videoURL = useRef(null);
+  const isLaoding = useSelector((state) => state.stats.isLoading);
+
   const formHandler = (e) => {
     e.preventDefault();
     const data = {
       name: name.current.value,
       courseId: param.id,
       iframeCode: videoURL.current.value,
-      Ltype: finalMenu,
+      Ltype: menuSelected,
     };
 
-    dispatch(initLesson(data)).then((e) => {
-      if (e.payload.success === true) {
-        dispatch(getLessons(param.id));
-      }
-    });
+    if (editType) {
+      const data = {
+        id: lessonId.id,
+        data: {
+          name: name.current.value,
+          iframeCode: videoURL.current.value,
+          Ltype: menuSelected,
+          lessonTime: lessonId.created_at,
+        },
+      };
+      dispatch(editLesson(data)).then((e) => {
+        if (e.payload.success === true) {
+          toast.warning("تم التعديل");
+          dispatch(getLessons(param.id));
+          setEditType(false);
+          name.current.value = "";
+          videoURL.current.value = "";
+        }
+      });
+    } else {
+      dispatch(initLesson(data)).then((e) => {
+        if (e.payload.success === true) {
+          toast.success("تم الاضافة");
+          dispatch(getLessons(param.id));
+          name.current.value = "";
+          videoURL.current.value = "";
+        }
+      });
+    }
   };
 
   const [close, setClose] = useState(false);
   const [lessonId, setLessonId] = useState("");
   const [deleteName, setDeleteName] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState({});
+  const [editType, setEditType] = useState(false);
+
+  useEffect(() => {
+    if (editMode) {
+      name.current.value = editData.name;
+      videoURL.current.value = editData.iframeCode;
+      setMenuSelected(editData.Ltype);
+      setEditMode(false);
+    }
+  }, [editMode]);
+
   return (
     <div className="home-screen">
       {close && (
@@ -51,6 +92,7 @@ const OneCource = () => {
           setClose={setClose}
           lessonId={lessonId}
           deleteName={deleteName}
+          courseId={param.id}
         />
       )}
       <div className="mt-5">
@@ -80,18 +122,28 @@ const OneCource = () => {
           <FilterMenu
             data={menuData}
             title={"النوع"}
-            selected={"قسم"}
+            editMode={editMode}
+            editData={editData}
+            selected={menuSelected}
             setAcadimcYearChoosed={setMenuSelected}
           />
 
           <button
+            disabled={isLaoding}
             type="submit"
             className="text-white font-medium text-base cursor-pointer py-2 px-3 gap-3 bg-buttonBlue rounded-full"
           >
-            إنشاء
+            {isLaoding ? (
+              <BeatLoader color="#fff" />
+            ) : editType ? (
+              "تعديل"
+            ) : (
+              "إنشاء"
+            )}
           </button>
         </div>
       </form>
+      <Toaster position="top-center" richColors />
       <div className="w-full md:w-3/4">
         <SearchInput searchText={searchText} setSearchText={setSearchText} />
       </div>
@@ -101,6 +153,9 @@ const OneCource = () => {
           id={param.id}
           setClose={setClose}
           setLessonId={setLessonId}
+          setEditMode={setEditMode}
+          setEditData={setEditData}
+          setEditType={setEditType}
         />
       </div>
     </div>

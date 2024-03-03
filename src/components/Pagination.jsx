@@ -10,7 +10,6 @@ const Pagination = ({
   withoutSearch,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
   const filterdData = filter
     ? data
         .filter((item) =>

@@ -17,9 +17,9 @@ const User = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (admin === "") {
-      navigate("/signin");
-    }
+    // if (admin === "") {
+    //   navigate("/signin");
+    // }
     dispatch(getOneUser(param));
     dispatch(getAllCourses());
   }, [dispatch, param, admin, navigate]);

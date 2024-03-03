@@ -150,6 +150,9 @@ export const UseCoursesTable = ({
   monthChoosed,
   setClose,
   setCourseId,
+  setEditMode,
+  setOpenModel,
+  setEditData,
 }) => {
   const dispatch = useDispatch();
 
@@ -182,7 +185,7 @@ export const UseCoursesTable = ({
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
             السنة
           </th>
-
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -226,6 +229,19 @@ export const UseCoursesTable = ({
                     {`${course.academic_year}ث`}
                   </p>
                 </td>
+                <td>
+                  <p
+                    onClick={() => {
+                      setOpenModel(true);
+                      setEditMode(true);
+                      setEditData(course);
+                    }}
+                    className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer"
+                  >
+                    تعديل
+                  </p>
+                </td>
+
                 <td>
                   <p
                     onClick={() => {
@@ -796,6 +812,9 @@ export const UseLessonsForOneCourse = ({
   id,
   setLessonId,
   setClose,
+  setEditMode,
+  setEditData,
+  setEditType,
 }) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -829,7 +848,7 @@ export const UseLessonsForOneCourse = ({
       <tbody>
         {state &&
           !isLoading &&
-          state.map((lesson) => {
+          currentData.map((lesson) => {
             return (
               <tr className="pl-3" key={lesson.id}>
                 <td className="min-w-60">
@@ -864,7 +883,15 @@ export const UseLessonsForOneCourse = ({
                   </p>
                 </td>
                 <td className=" ">
-                  <p className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer">
+                  <p
+                    onClick={() => {
+                      setEditMode(true);
+                      setEditData(lesson);
+                      setEditType(true);
+                      setLessonId(lesson);
+                    }}
+                    className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer"
+                  >
                     تعديل
                   </p>
                 </td>
@@ -872,7 +899,7 @@ export const UseLessonsForOneCourse = ({
                   <p
                     onClick={() => {
                       setClose(true);
-                      setLessonId(lesson.id);
+                      setLessonId(lesson);
                     }}
                     className=" m-auto py-1 px-5 border border-red-500 w-fit rounded-3xl text-black text-[16px] cursor-pointer"
                   >
@@ -921,7 +948,7 @@ export const UseLessonsForOneCourse = ({
                   searchText={searchText}
                   data={state}
                   setCurrentDate={setCurrentData}
-                  withoutSearch={true}
+                  // withoutSearch={true}
                 />
               )}
             </div>
