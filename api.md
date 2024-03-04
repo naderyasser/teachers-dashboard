@@ -339,3 +339,155 @@ POST /api/th/enroll_course
   "success": true
 }
 ```
+
+
+---
+
+# User Management API
+
+## Edit User
+
+Edit user details based on user ID.
+
+- **Endpoint:** `/api/th/edit_user/<int:id>`
+- **Method:** `POST`
+
+### Request Parameters
+
+- **id (int):** User ID
+
+### Request Body
+
+```json
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "city": "New York",
+  "age": 25,
+  "phone_number": "123-456-7890",
+  "father_number": "987-654-3210",
+  "birthdate": "1999-01-01",
+  "academic_year": "Senior",
+  "academic_section": "A",
+  "profile_img": "https://example.com/profile.jpg"
+}
+```
+
+### Response
+
+- **Success:**
+  ```json
+  {
+    "success": true
+  }
+  ```
+
+- **Failure:**
+  ```json
+  {
+    "success": false
+  }
+  ```
+
+## Delete User
+
+Delete user based on user ID.
+
+- **Endpoint:** `/api/th/delete_user/<int:id>`
+- **Method:** `GET`
+
+### Request Parameters
+
+- **id (int):** User ID
+
+### Response
+
+- **Success:**
+  ```json
+  {
+    "success": true
+  }
+  ```
+
+- **Failure:**
+  ```json
+  {
+    "success": false
+  }
+  ```
+
+## Change Password
+
+Change the user password based on user ID.
+
+- **Endpoint:** `/api/th/change_password/<int:id>`
+- **Method:** `POST`
+
+### Request Parameters
+
+- **id (int):** User ID
+
+### Request Body
+
+```json
+{
+  "password": "new_password"
+}
+```
+
+### Response
+
+- **Success:**
+  ```json
+  {
+    "success": true
+  }
+  ```
+
+- **Failure:**
+  ```json
+  {
+    "success": false
+  }
+  ```
+
+---
+
+
+## Send Notification API
+
+### Endpoint
+
+`POST /api/th/send_notification/<int:id>`
+
+
+### Parameters
+
+- `id` (integer): The unique identifier for the user to whom the notification will be sent.
+
+### Request
+
+- **Method:** POST
+- **Headers:** Content-Type: application/json
+- **Body:**
+
+```json
+{
+  "notificashen": "Notification message content",
+  "type": "Notification type",
+  "url": "URL related to the notification"
+}
+```
+
+### Responses
+
+- **Success Response:**
+
+  - **Status Code:** 200 OK
+  - **Body:**
+
+  ```json
+  {
+    "success": true
+  }
+  ```
