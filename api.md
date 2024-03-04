@@ -453,3 +453,41 @@ Change the user password based on user ID.
 
 ---
 
+
+## Send Notification API
+
+### Endpoint
+
+`POST /api/th/send_notification/<int:id>`
+
+
+### Parameters
+
+- `id` (integer): The unique identifier for the user to whom the notification will be sent.
+
+### Request
+
+- **Method:** POST
+- **Headers:** Content-Type: application/json
+- **Body:**
+
+```json
+{
+  "notificashen": "Notification message content",
+  "type": "Notification type",
+  "url": "URL related to the notification"
+}
+```
+
+### Responses
+
+- **Success Response:**
+
+  - **Status Code:** 200 OK
+  - **Body:**
+
+  ```json
+  {
+    "success": true
+  }
+  ```
