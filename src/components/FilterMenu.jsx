@@ -49,7 +49,7 @@ const FilterMenu = ({
         <div className={`${open ? "rotate-180" : ""} transition-all`}>
           <IoIosArrowUp />
         </div>
-        <h2>{`${title} : ${choosed}`}</h2>
+        <h2 className="max-w-72">{`${title} : ${choosed}`}</h2>
       </div>
       {/* menu */}
       <div

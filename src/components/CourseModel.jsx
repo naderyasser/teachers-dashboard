@@ -7,7 +7,6 @@ import { Toaster, toast } from "sonner";
 import { BeatLoader } from "react-spinners";
 
 const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
-  console.log(editData);
   const [choosed, setChoosed] = useState("");
   const [err, setErr] = useState(false);
   const final =
@@ -21,6 +20,8 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
   const name = useRef(null);
   const price = useRef(null);
   const bannerUrl = useRef(null);
+  const category = useRef(null);
+
   const isLoading = useSelector((state) => state.stats.isLoading);
 
   const menuData = ["الاول الثانوي", "الثاني الثانوي", "الثالث الثانوي"];
@@ -32,10 +33,10 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
       academicSection: "nothing",
       price: price.current.value,
       bannerUrl: bannerUrl.current.value,
-      category: "category",
+      category: category.current.value,
     };
 
-    if (false === "") {
+    if (choosed === "") {
       setErr(true);
     } else {
       if (editMode) {
@@ -53,7 +54,7 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
             price: price.current.value,
             is_free: true,
             banner_url: bannerUrl.current.value,
-            category: "",
+            category: category.current.value,
           },
         };
         dispatch(editCourse(data)).then((e) => {
@@ -61,6 +62,7 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
             dispatch(getAllCourses());
             setOpenModel(false);
             toast.warning("تم التعديل");
+            setEditMode(false);
           }
         });
       } else {
@@ -81,6 +83,7 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
       name.current.value = editData.name;
       price.current.value = editData.price;
       bannerUrl.current.value = editData.banner_url;
+      category.current.value = editData.category;
     }
   }, [editMode]);
 
@@ -117,7 +120,13 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
             type="text"
             required
           />
-
+          <input
+            ref={category}
+            placeholder="القسم"
+            className="input w-full block"
+            type="text"
+            required
+          />
           <div className="flex justify-between items-center">
             <FilterMenu
               data={menuData}

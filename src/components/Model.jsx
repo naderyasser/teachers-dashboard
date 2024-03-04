@@ -2,10 +2,17 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCourse, deleteLesson, getLessons } from "../store/statsSlice";
-import { getAllCourses } from "../store/usersSlice";
-import { Toaster, toast } from "sonner";
+import { deleteUser, getAllCourses, getAllUsers } from "../store/usersSlice";
+import { toast } from "sonner";
 
-const Model = ({ setClose, deleteMode, courseId, deleteName, lessonId }) => {
+const Model = ({
+  setClose,
+  deleteMode,
+  courseId,
+  deleteName,
+  lessonId,
+  userMode,
+}) => {
   const navigate = useNavigate();
   const signOutHandler = () => {
     if (!deleteMode) {
@@ -19,11 +26,20 @@ const Model = ({ setClose, deleteMode, courseId, deleteName, lessonId }) => {
           dispatch(getLessons(courseId));
         });
       } else {
-        dispatch(deleteCourse(courseId)).then((e) => {
-          toast.error("تم الحذف");
-          e.payload.success === true && setClose(false);
-          dispatch(getAllCourses());
-        });
+        if (userMode) {
+          dispatch(deleteUser(courseId)).then((e) => {
+            e.payload.success === true && setClose(false);
+            toast.error("تم الحذف");
+            dispatch(getAllUsers());
+            navigate("/users");
+          });
+        } else {
+          dispatch(deleteCourse(courseId)).then((e) => {
+            toast.error("تم الحذف");
+            e.payload.success === true && setClose(false);
+            dispatch(getAllCourses());
+          });
+        }
       }
     }
   };

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = { user: "", isLoading: false };
+const initialState = { user: "", isLoading: false, apiUrl: "https://eu" };
 
 export const signin = createAsyncThunk("signIn", async (args) => {
   let formdata = new FormData();

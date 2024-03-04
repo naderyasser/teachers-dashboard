@@ -309,7 +309,7 @@ export const UseCoursesTable = ({
 };
 
 //users
-export const UseUsersTable = ({ searchText }) => {
+export const UseUsersTable = ({ searchText, setClose, setUserId }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
@@ -335,9 +335,9 @@ export const UseUsersTable = ({ searchText }) => {
             رقم ولي الأمر
           </th>
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
-            التقييم
+            السنة الدراسية
           </th>
-          <th>عدد الكورسات</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -380,7 +380,17 @@ export const UseUsersTable = ({ searchText }) => {
                     {`${user.academic_year}ث`}
                   </p>
                 </td>
-                <td></td>
+                <td>
+                  <p
+                    onClick={() => {
+                      setClose(true);
+                      setUserId(user.id);
+                    }}
+                    className=" m-auto py-1 px-5 border border-red-400 w-fit rounded-3xl text-black text-[16px] cursor-pointer"
+                  >
+                    حذف
+                  </p>
+                </td>
                 <td>
                   <p
                     onClick={() => navigate(`/user/${user.email}`)}

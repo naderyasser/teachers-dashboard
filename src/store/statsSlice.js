@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const initialState = {
   isLoading: false,
@@ -17,7 +18,9 @@ const urlName = "eduazher";
 export const getUsersCount = createAsyncThunk("getUsersCount", async () => {
   try {
     const res = await axios.get(
-      "https://eduazher.e3lanotopia.software/api/th/get_users_count"
+      `https://${Cookies.get(
+        "wow"
+      )}.e3lanotopia.software/api/th/get_users_count`
     );
     return res.data;
   } catch (err) {

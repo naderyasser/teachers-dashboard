@@ -26,7 +26,7 @@ const Pagination = ({
         user.name.toLowerCase().includes(searchText.toLowerCase())
       );
 
-  const recordsNum = 10;
+  const recordsNum = 50;
   const indexOfLastRecord = currentPage * recordsNum;
   const indexOfFirstRecord = indexOfLastRecord - recordsNum;
   const currentRecords = filterdData.slice(
