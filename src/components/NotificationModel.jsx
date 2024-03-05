@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Toaster, toast } from "sonner";
 import { sentNotification } from "../store/usersSlice";
@@ -22,6 +22,7 @@ const NotificationModel = ({ setNotiModel, data }) => {
       if (e.payload.success === true) {
         dispatch(sentNotification(notiData));
         setNotiModel(false);
+        console.log("wopwo");
         toast.success("تم الارسال");
       }
     });

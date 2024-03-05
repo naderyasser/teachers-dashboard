@@ -4,20 +4,20 @@ import Title from "../components/Title";
 import Stats from "../components/Stats";
 import { UseHomeTable } from "../components/Tables";
 import SearchInput from "../components/SearchInput";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [searchText, setSearchText] = useState("");
 
-  const admin = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
-  }, [navigate, admin]);
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+  }, [navigate]);
   return (
     <div className="p-5 home-screen ">
       <div className="">

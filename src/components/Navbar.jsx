@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import avatar from "../img/avatar.png";
 import logo from "../img/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotificationsCount } from "../store/usersSlice";
 import Cookies from "js-cookie";
@@ -12,18 +12,19 @@ const Navbar = () => {
     dispatch(getNotificationsCount());
   }, [dispatch]);
   const count = useSelector((state) => state.users.notificationsCount.count);
+
   const websiteHandler = (e) => {
-    console.log(e.target.value);
-    Cookies.set("wow", e.target.value);
-    window.open("/");
+    Cookies.set("website", e.target.value);
+    window.location.reload();
   };
+  const param = useParams();
 
   return (
     <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center z-20">
       {/* منصتي */}
       <div className="w-[300px] main-logo lg:flex gap-2 hidden ">
         <h1 className="text-2xl not-italic font-semibold  text-darckBlue">
-          {Cookies.get("wow")}
+          {Cookies.get("website")}
         </h1>
         <div className="w-8 h-8">
           <img src={logo} alt="" />
@@ -31,16 +32,47 @@ const Navbar = () => {
       </div>
       {/* لوجو و الاسم */}
       <div className="flex  gap-2 lg:flex-grow">
-        <div className="w-8 rounded-full overflow-hidden">
+        <div className="w-8 h-8 rounded-full overflow-hidden">
           <img src={avatar} alt="" />
         </div>
         <div className="subname">
           {/* <p className="font-normal text-xs">مساء الخير</p> */}
           <h3 className="text-lg">محمد هاني احمد</h3>
         </div>
-        <select defaultChecked="other" onChange={websiteHandler} name="" id="">
-          <option value="eduazher">eduazher</option>
-          <option value="walidelgendy">walidelgendy</option>
+
+        <select
+          className="  bg-lightGray rounded-md hover:bg-gray cursor-pointer transition-all pr-3 "
+          defaultValue={Cookies.get("website")}
+          onChange={websiteHandler}
+          // disabled={typeof param.email !== "string"}
+        >
+          <option className="hover:bg-gray cursor-pointer" value="eduazher">
+            eduazher
+          </option>
+          <option className="hover:bg-gray cursor-pointer" value="walidelgendy">
+            walidelgendy
+          </option>
+          <option
+            className="hover:bg-gray cursor-pointer"
+            value="thanawionline"
+          >
+            thanawionline
+          </option>
+          <option
+            className="hover:bg-gray cursor-pointer"
+            value="ahmedmalekacademy"
+          >
+            ahmedmalekacademy
+          </option>
+          <option className="hover:bg-gray cursor-pointer" value="elbasha">
+            elbasha
+          </option>
+          <option className="hover:bg-gray cursor-pointer" value="mraymanattia">
+            mraymanattia
+          </option>
+          <option className="hover:bg-gray cursor-pointer" value="awadouf">
+            awadouf
+          </option>
         </select>
       </div>
       {/* الاشعارات */}

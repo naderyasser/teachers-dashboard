@@ -5,6 +5,7 @@ import { UseCodesTable } from "../components/Tables";
 import { useDispatch, useSelector } from "react-redux";
 import { initCodes } from "../store/statsSlice";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Codes = () => {
   const dispatch = useDispatch();
@@ -23,19 +24,20 @@ const Codes = () => {
       codeCount.current.value = "";
       codePrice.current.value = "";
       setIsSend(false);
+      console.log(state.url, Cookies.get("website"));
     });
   };
   const codePrice = useRef(null);
   const codeCount = useRef(null);
 
   const state = useSelector((state) => state.stats.initCode);
-  const admin = useSelector((state) => state.auth.user);
+
   const navigate = useNavigate();
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
-  }, [admin, navigate]);
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+  }, [navigate]);
 
   return (
     <div className="p-5 home-screen">
@@ -71,7 +73,9 @@ const Codes = () => {
         {state && (
           <div className="w-full flex justify-center items-center">
             <a
-              href={`https://eduazher.e3lanotopia.software${state.url}`}
+              href={`https://${Cookies.get("website")}.e3lanotopia.software${
+                state.url
+              }`}
               // target="_blank"
               download
               className="text-white font-medium text-base cursor-pointer py-2 px-5 gap-3 bg-buttonBlue rounded-full mb-5"

@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const initialState = {
   users: [],
@@ -20,7 +21,9 @@ export const getNotifications = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        "https://eduazher.e3lanotopia.software/api/th/get_all_notificashen"
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/get_all_notificashen`
       );
       return res.data;
     } catch (err) {
@@ -32,7 +35,9 @@ export const getNotifications = createAsyncThunk(
 export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
   try {
     const res = await axios.get(
-      "https://eduazher.e3lanotopia.software/api/th/get_all_users"
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_all_users`
     );
     return res.data;
   } catch (err) {
@@ -43,7 +48,9 @@ export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
 export const getAllCourses = createAsyncThunk("getAllCources", async () => {
   try {
     const res = await axios.get(
-      "https://eduazher.e3lanotopia.software/api/th/get_all_courses"
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_all_courses`
     );
     return res.data;
   } catch (err) {
@@ -56,7 +63,11 @@ export const SearchByYearSectionLocation = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.get(
-        `https://eduazher.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${args.location}`
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/get_users/${args.year}/${args.section}/${
+          args.location
+        }`
       );
       return res.data;
     } catch (err) {
@@ -67,7 +78,9 @@ export const SearchByYearSectionLocation = createAsyncThunk(
 export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
   try {
     const res = await axios.get(
-      `https://eduazher.e3lanotopia.software/api/th/get_user_data/${args.email}`
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_user_data/${args.email}`
     );
     return res.data;
   } catch (err) {
@@ -77,7 +90,9 @@ export const getOneUser = createAsyncThunk("searchOneUser", async (args) => {
 export const getUserCourses = createAsyncThunk("userCourses", async (args) => {
   try {
     const res = await axios.get(
-      `https://eduazher.e3lanotopia.software/api/th/get_user_courses/${args}`
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_user_courses/${args}`
     );
     return res.data;
   } catch (err) {
@@ -90,7 +105,9 @@ export const getNotificationsCount = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        `https://eduazher.e3lanotopia.software/api/th/count_unread_notificashen`
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/count_unread_notificashen`
       );
       return res.data;
     } catch (err) {
@@ -101,7 +118,9 @@ export const getNotificationsCount = createAsyncThunk(
 export const deleteUser = createAsyncThunk("deleteUser", async (args) => {
   try {
     const res = await axios.get(
-      `https://eduazher.e3lanotopia.software/api/th/delete_user/${args}`
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/delete_user/${args}`
     );
     return res.data;
   } catch (err) {
@@ -111,7 +130,9 @@ export const deleteUser = createAsyncThunk("deleteUser", async (args) => {
 export const editUser = createAsyncThunk("editUser", async (args) => {
   try {
     const res = await axios.post(
-      `https://eduazher.e3lanotopia.software/api/th/edit_user/${args.id}`,
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/edit_user/${args.id}`,
       args.data
     );
     return res.data;
@@ -124,7 +145,9 @@ export const changePassword = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.post(
-        `https://eduazher.e3lanotopia.software/api/th/change_password/${args.id}`,
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/change_password/${args.id}`,
         args.data
       );
       return res.data;
@@ -138,7 +161,9 @@ export const sentNotification = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.post(
-        `https://eduazher.e3lanotopia.software/api/th/send_notification/${args.id}`,
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/send_notification/${args.id}`,
         args.data
       );
       return res.data;
@@ -205,6 +230,7 @@ const usersSlice = createSlice({
     });
     builder.addCase(getOneUser.fulfilled, (state, action) => {
       state.oneUser = action.payload;
+      state.isLoading = false;
     });
     builder.addCase(getOneUser.pending, (state, action) => {
       state.isRejected = false;

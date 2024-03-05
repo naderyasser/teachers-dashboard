@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteCourse, deleteLesson, getLessons } from "../store/statsSlice";
 import { deleteUser, getAllCourses, getAllUsers } from "../store/usersSlice";
 import { toast } from "sonner";
+import Cookies from "js-cookie";
 
 const Model = ({
   setClose,
@@ -12,11 +13,13 @@ const Model = ({
   deleteName,
   lessonId,
   userMode,
+  logout,
 }) => {
+  console.log();
   const navigate = useNavigate();
   const signOutHandler = () => {
-    if (!deleteMode) {
-      document.cookie = "";
+    if (logout) {
+      Cookies.set("user", "false");
       navigate("/signin");
     } else {
       if (deleteName) {

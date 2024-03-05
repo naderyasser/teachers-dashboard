@@ -7,6 +7,7 @@ import { UseExamsTable } from "../components/Tables";
 import FilterMenu from "../components/FilterMenu";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Exams = () => {
   const [searchText, setSearchText] = useState("");
@@ -29,13 +30,13 @@ const Exams = () => {
     "نوفمبر",
     "ديسمبر",
   ];
-  const admin = useSelector((state) => state.auth.user);
+
   const navigate = useNavigate();
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
-  }, [admin, navigate]);
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+  }, [navigate]);
 
   return (
     <div className="p-5 home-screen">

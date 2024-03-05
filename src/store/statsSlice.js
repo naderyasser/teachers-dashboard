@@ -13,13 +13,11 @@ const initialState = {
   lessonsForOneCourse: [],
 };
 
-const urlName = "eduazher";
-
 export const getUsersCount = createAsyncThunk("getUsersCount", async () => {
   try {
     const res = await axios.get(
       `https://${Cookies.get(
-        "wow"
+        "website"
       )}.e3lanotopia.software/api/th/get_users_count`
     );
     return res.data;
@@ -30,7 +28,9 @@ export const getUsersCount = createAsyncThunk("getUsersCount", async () => {
 export const getViews = createAsyncThunk("getViews", async () => {
   try {
     const res = await axios.get(
-      "https://eduazher.e3lanotopia.software/api/th/get_videos_views"
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_videos_views`
     );
     return res.data;
   } catch (err) {
@@ -40,7 +40,9 @@ export const getViews = createAsyncThunk("getViews", async () => {
 export const getLessonsCount = createAsyncThunk("getLessonsCount", async () => {
   try {
     const res = await axios.get(
-      "https://eduazher.e3lanotopia.software/api/th/get_lessons_count"
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_lessons_count`
     );
     return res.data;
   } catch (err) {
@@ -50,7 +52,9 @@ export const getLessonsCount = createAsyncThunk("getLessonsCount", async () => {
 export const getExamsCount = createAsyncThunk("getExamsCount", async () => {
   try {
     const res = await axios.get(
-      "https://eduazher.e3lanotopia.software/api/th/get_exames_count"
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_exames_count`
     );
     return res.data;
   } catch (err) {
@@ -66,7 +70,9 @@ export const initCodes = createAsyncThunk("initCodes", async (args) => {
     let bodyContent = formdata;
 
     let reqOptions = {
-      url: "https://eduazher.e3lanotopia.software/api/th/init_codes",
+      url: `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/init_codes`,
       method: "POST",
       data: bodyContent,
     };
@@ -80,7 +86,9 @@ export const initCodes = createAsyncThunk("initCodes", async (args) => {
 export const initCourse = createAsyncThunk("initCourse", async (args) => {
   try {
     const res = await axios.post(
-      "https://eduazher.e3lanotopia.software/api/th/add_course",
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/add_course`,
       args
     );
     return res.data;
@@ -91,7 +99,9 @@ export const initCourse = createAsyncThunk("initCourse", async (args) => {
 export const initLesson = createAsyncThunk("initLesson", async (args) => {
   try {
     const res = await axios.post(
-      "https://eduazher.e3lanotopia.software/api/th/add_lesson",
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/add_lesson`,
       args
     );
     return res.data;
@@ -102,7 +112,9 @@ export const initLesson = createAsyncThunk("initLesson", async (args) => {
 export const getLessons = createAsyncThunk("getLessons", async (args) => {
   try {
     const res = await axios.get(
-      `https://eduazher.e3lanotopia.software/api/th/get_lessons/${args}`
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/get_lessons/${args}`
     );
     return res.data;
   } catch (err) {
@@ -114,7 +126,9 @@ export const enrollCourseForUser = createAsyncThunk(
   async (args) => {
     try {
       const res = await axios.post(
-        `https://eduazher.e3lanotopia.software/api/th/enroll_course`,
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/enroll_course`,
         args
       );
 
@@ -128,7 +142,9 @@ export const enrollCourseForUser = createAsyncThunk(
 export const deleteCourse = createAsyncThunk("deleteCourse", async (args) => {
   try {
     const res = await axios.get(
-      `https://eduazher.e3lanotopia.software/api/th/delete_course/${args}`
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/delete_course/${args}`
     );
     return res.data;
   } catch (err) {
@@ -138,7 +154,9 @@ export const deleteCourse = createAsyncThunk("deleteCourse", async (args) => {
 export const deleteLesson = createAsyncThunk("deleteLesson", async (args) => {
   try {
     const res = await axios.get(
-      `https://eduazher.e3lanotopia.software/api/th/delete_lesson/${args}`
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/delete_lesson/${args}`
     );
     return res.data;
   } catch (err) {
@@ -148,7 +166,9 @@ export const deleteLesson = createAsyncThunk("deleteLesson", async (args) => {
 export const editLesson = createAsyncThunk("editLesson", async (args) => {
   try {
     const res = await axios.post(
-      `https://eduazher.e3lanotopia.software/api/th/edit_lesson/${args.id}`,
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/edit_lesson/${args.id}`,
       args.data
     );
 
@@ -161,7 +181,9 @@ export const editCourse = createAsyncThunk("editCourse", async (args) => {
   console.log(args);
   try {
     const res = await axios.post(
-      `https://eduazher.e3lanotopia.software/api/th/edit_course/${args.id}`,
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/edit_course/${args.id}`,
       args.data
     );
 

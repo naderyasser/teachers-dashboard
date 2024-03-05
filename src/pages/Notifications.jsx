@@ -4,15 +4,17 @@ import { useNavigate } from "react-router-dom";
 import Title from "../components/Title";
 import { getNotifications } from "../store/usersSlice";
 import { BeatLoader } from "react-spinners";
+import Cookies from "js-cookie";
 
 const Notifications = () => {
   const admin = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+
     dispatch(getNotifications());
   }, [admin, navigate, dispatch]);
   const state = useSelector((state) => state.users.notifications.notification);

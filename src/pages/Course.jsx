@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Title from "../components/Title";
 
 import FilterMenu from "../components/FilterMenu";
 import SearchInput from "../components/SearchInput";
 import { UseCoursesTable } from "../components/Tables";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 import CourseModel from "../components/CourseModel";
 import Model from "../components/Model";
 import { Toaster } from "sonner";
+import Cookies from "js-cookie";
 
 const Course = () => {
   const [searchText, setSearchText] = useState("");
@@ -16,13 +17,13 @@ const Course = () => {
 
   const acadimcYear = ["الكل", 1, 2, 3];
 
-  const admin = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
-  }, [admin, navigate]);
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+  }, [navigate]);
+
   const [openModel, setOpenModel] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [close, setClose] = useState(false);

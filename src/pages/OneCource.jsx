@@ -5,10 +5,11 @@ import SearchInput from "../components/SearchInput";
 import FilterMenu from "../components/FilterMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { editLesson, getLessons, initLesson } from "../store/statsSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Model from "../components/Model";
 import { Toaster, toast } from "sonner";
 import { BeatLoader } from "react-spinners";
+import Cookies from "js-cookie";
 
 const OneCource = () => {
   const param = useParams();
@@ -74,15 +75,19 @@ const OneCource = () => {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState({});
   const [editType, setEditType] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+
     if (editMode) {
       name.current.value = editData.name;
       videoURL.current.value = editData.iframeCode;
       setMenuSelected(editData.Ltype);
       setEditMode(false);
     }
-  }, [editMode]);
+  }, [editMode, navigate]);
 
   return (
     <div className="home-screen">

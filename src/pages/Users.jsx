@@ -8,6 +8,7 @@ import SearchInput from "../components/SearchInput";
 import { useNavigate } from "react-router-dom";
 import Model from "../components/Model";
 import { Toaster } from "sonner";
+import Cookies from "js-cookie";
 
 const Users = () => {
   const [searchText, setSearchText] = useState("");
@@ -19,9 +20,10 @@ const Users = () => {
   const [userId, setUserId] = useState();
 
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+
     dispatch(getAllUsers());
   }, [dispatch, admin, navigate]);
 

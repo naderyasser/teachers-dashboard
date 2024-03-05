@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const initialState = { user: "", isLoading: false, apiUrl: "https://eu" };
 
@@ -11,7 +12,9 @@ export const signin = createAsyncThunk("signIn", async (args) => {
   let bodyContent = formdata;
   try {
     let reqOptions = {
-      url: "https://eduazher.e3lanotopia.software/api/th/login",
+      url: `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/login`,
       method: "POST",
       data: bodyContent,
     };

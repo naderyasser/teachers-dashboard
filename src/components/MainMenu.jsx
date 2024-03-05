@@ -13,7 +13,7 @@ const MainMenu = ({ openMenu }) => {
 
   return (
     <div className=" flex flex-col justify-between bg-lightGray h-full lg:w-full calc-height">
-      {close && <Model setClose={setClose} />}
+      {close && <Model setClose={setClose} logout={true} />}
 
       <div className=" flex flex-col ">
         <div

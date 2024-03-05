@@ -3,6 +3,7 @@ import shape from "../img/shapes.png";
 import { useDispatch, useSelector } from "react-redux";
 import { signin } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Signin = () => {
     };
     dispatch(signin(data)).then((e) => {
       if (e.payload.States === true) {
-        document.cookie = "";
+        Cookies.set("user", "true");
         navigate("/home");
       }
     });

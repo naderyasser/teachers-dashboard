@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllCourses, getOneUser } from "../store/usersSlice";
+import { getAllCourses, getOneUser, getUserCourses } from "../store/usersSlice";
 import bg from "../img/Rectangle 5011.png";
 import avatar from "../img/avatar.png";
 import { UseOneUserCourses } from "../components/Tables";
 import FilterMenu from "../components/FilterMenu";
 import { enrollCourseForUser } from "../store/statsSlice";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import userRemove from "../img/remove-user.png";
 import userEdit from "../img/user-avatar.png";
 import editPassword from "../img/password.png";
@@ -17,6 +17,7 @@ import UserModel from "../components/UserModel";
 import PasswordModel from "../components/PasswordModel";
 import NotificationModel from "../components/NotificationModel";
 import sendImg from "../img/direct.png";
+import Cookies from "js-cookie";
 
 const User = () => {
   const param = useParams();
@@ -27,10 +28,12 @@ const User = () => {
   const navigate = useNavigate();
 
   const [choosed, setChoosed] = useState(1);
+  const state = useSelector((state) => state && state.users.oneUser);
   useEffect(() => {
-    // if (admin === "") {
-    //   navigate("/signin");
-    // }
+    if (Cookies.get("user") === "false") {
+      navigate("/signin");
+    }
+
     if (choosed === 2) {
       setCourseChoosed([]);
       setClassRed("");
@@ -38,7 +41,6 @@ const User = () => {
     dispatch(getOneUser(param));
     dispatch(getAllCourses());
   }, [dispatch, param, admin, navigate, choosed]);
-  const state = useSelector((state) => state && state.users.oneUser);
 
   const courses = useSelector((state) => state && state.users.courses).courses;
   const isLoading = useSelector((state) => state.stats.isLoading);
@@ -60,7 +62,12 @@ const User = () => {
     } else {
       setClassRed("");
       dispatch(enrollCourseForUser(data)).then((e) => {
-        e.payload.success && setCourseChoosed([]);
+        if (e.payload.success === true) {
+          setCourseChoosed([]);
+          setMenuSelected("");
+          dispatch(getUserCourses(param.email));
+          toast.success("تم الاضافة");
+        }
       });
     }
   };
@@ -221,7 +228,7 @@ const User = () => {
               className=" p-5 my-5 mb-8 border-b border-gray  "
               onSubmit={formHandler}
             >
-              <div className={`flex-col justify-center gap-2 items-center `}>
+              <div className={`flex justify-between gap-2 items-center `}>
                 <div className={`${classRed} `}>
                   <FilterMenu
                     data={courses}
