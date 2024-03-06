@@ -30,6 +30,10 @@ const User = () => {
   const [choosed, setChoosed] = useState(1);
   const state = useSelector((state) => state && state.users.oneUser);
   useEffect(() => {
+    if (Cookies.get("user") === undefined) {
+      Cookies.set("user", "false");
+      Cookies.set("website", "eduazher");
+    }
     if (Cookies.get("user") === "false") {
       navigate("/signin");
     }
@@ -49,6 +53,12 @@ const User = () => {
   const [menuSelected, setMenuSelected] = useState("");
   const oneCourse =
     courses && courses.find((ele) => ele.name === courseChoosed);
+
+  const coursesForOneUser =
+    courses &&
+    courses.filter(
+      (course) => course.academic_year == state.user.academic_year
+    );
 
   const data = {
     email: state && state.user.email,
@@ -228,10 +238,12 @@ const User = () => {
               className=" p-5 my-5 mb-8 border-b border-gray  "
               onSubmit={formHandler}
             >
-              <div className={`flex justify-between gap-2 items-center `}>
+              <div
+                className={`flex justify-between gap-2 items-center flex-wrap `}
+              >
                 <div className={`${classRed} `}>
                   <FilterMenu
-                    data={courses}
+                    data={coursesForOneUser}
                     title={"الكورس"}
                     selected={menuSelected}
                     setAcadimcYearChoosed={setCourseChoosed}

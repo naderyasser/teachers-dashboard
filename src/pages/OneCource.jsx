@@ -71,12 +71,17 @@ const OneCource = () => {
 
   const [close, setClose] = useState(false);
   const [lessonId, setLessonId] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [deleteName, setDeleteName] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState({});
   const [editType, setEditType] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
+    if (Cookies.get("user") === undefined) {
+      Cookies.set("user", "false");
+      Cookies.set("website", "eduazher");
+    }
     if (Cookies.get("user") === "false") {
       navigate("/signin");
     }
@@ -87,6 +92,7 @@ const OneCource = () => {
       setMenuSelected(editData.Ltype);
       setEditMode(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, navigate]);
 
   return (

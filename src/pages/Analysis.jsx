@@ -9,6 +9,10 @@ import Cookies from "js-cookie";
 const Analysis = () => {
   const navigate = useNavigate();
   useEffect(() => {
+    if (Cookies.get("user") === undefined) {
+      Cookies.set("user", "false");
+      Cookies.set("website", "eduazher");
+    }
     if (Cookies.get("user") === "false") {
       navigate("/signin");
     }

@@ -5,34 +5,22 @@ import Title from "../components/Title";
 import SearchInput from "../components/SearchInput";
 import { UseExamsTable } from "../components/Tables";
 import FilterMenu from "../components/FilterMenu";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Exams = () => {
   const [searchText, setSearchText] = useState("");
   const [acadimcYearChoosed, setAcadimcYearChoosed] = useState("الكل");
-  const [monthChoosed, setMonthChoosed] = useState("الكل");
 
   const acadimcYear = ["الكل", 1, 2, 3];
-  const monthsArabic = [
-    "الكل",
-    "يناير",
-    "فبراير",
-    "مارس",
-    "إبريل",
-    "مايو",
-    "يونيو",
-    "يوليو",
-    "أغسطس",
-    "سبتمبر",
-    "أكتوبر",
-    "نوفمبر",
-    "ديسمبر",
-  ];
 
   const navigate = useNavigate();
   useEffect(() => {
+    if (Cookies.get("user") === undefined) {
+      Cookies.set("user", "false");
+      Cookies.set("website", "eduazher");
+    }
     if (Cookies.get("user") === "false") {
       navigate("/signin");
     }
@@ -53,12 +41,6 @@ const Exams = () => {
           data={acadimcYear}
           selected={"الكل"}
           setAcadimcYearChoosed={setAcadimcYearChoosed}
-        />
-        <FilterMenu
-          title={"الشهر"}
-          data={monthsArabic}
-          selected={"الكل"}
-          setMonthChoosed={setMonthChoosed}
         />
       </div>
       <div className="my-5">

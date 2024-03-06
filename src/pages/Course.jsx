@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 
 import FilterMenu from "../components/FilterMenu";
@@ -19,6 +19,10 @@ const Course = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
+    if (Cookies.get("user") === undefined) {
+      Cookies.set("user", "false");
+      Cookies.set("website", "eduazher");
+    }
     if (Cookies.get("user") === "false") {
       navigate("/signin");
     }

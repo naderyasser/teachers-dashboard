@@ -17,7 +17,6 @@ const Navbar = () => {
     Cookies.set("website", e.target.value);
     window.location.reload();
   };
-  const param = useParams();
 
   return (
     <div className="nav-bar bg-white h-16 w-full  px-8 flex justify-between items-center z-20">
@@ -64,8 +63,11 @@ const Navbar = () => {
           >
             ahmedmalekacademy
           </option>
-          <option className="hover:bg-gray cursor-pointer" value="elbasha">
-            elbasha
+          <option
+            className="hover:bg-gray cursor-pointer"
+            value="elbashaacademy"
+          >
+            elbashaacademy
           </option>
           <option className="hover:bg-gray cursor-pointer" value="mraymanattia">
             mraymanattia
