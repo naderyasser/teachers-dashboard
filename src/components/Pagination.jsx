@@ -22,8 +22,12 @@ const Pagination = ({
         )
     : withoutSearch
     ? data
-    : data.filter((user) =>
-        user.name.toLowerCase().includes(searchText.toLowerCase())
+    : data.filter(
+        (user) =>
+          user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          user.phone_number.includes(searchText) ||
+          user.father_number.includes(searchText) ||
+          user.email.includes(searchText)
       );
 
   const recordsNum = 50;
