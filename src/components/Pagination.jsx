@@ -22,13 +22,21 @@ const Pagination = ({
         )
     : withoutSearch
     ? data
-    : data.filter(
+    : data &&
+      data.filter(
         (user) =>
-          user.name.toLowerCase().includes(searchText.toLowerCase()) ||
-          user.phone_number.includes(searchText) ||
-          user.father_number.includes(searchText) ||
-          user.email.includes(searchText)
+          user.phone_number !== null &&
+          user.father_number !== null &&
+          (user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            user.phone_number.includes(searchText) ||
+            user.email.includes(searchText) ||
+            user.father_number.includes(searchText))
       );
+
+  // ||
+  //     user.phone_number.includes(searchText) ||
+  //     user.father_number.includes(searchText) ||
+  //     user.email.includes(searchText)
 
   const recordsNum = 50;
   const indexOfLastRecord = currentPage * recordsNum;
