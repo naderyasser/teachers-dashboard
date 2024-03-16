@@ -31,13 +31,13 @@ const Navbar = () => {
       </div>
       {/* لوجو و الاسم */}
       <div className="flex  gap-2 lg:flex-grow">
-        <div className="w-8 h-8 rounded-full overflow-hidden">
+        {/* <div className="w-8 h-8 rounded-full overflow-hidden">
           <img src={avatar} alt="" />
         </div>
         <div className="subname">
-          {/* <p className="font-normal text-xs">مساء الخير</p> */}
+          
           <h3 className="text-lg">محمد هاني احمد</h3>
-        </div>
+        </div> */}
 
         <select
           className="  bg-lightGray rounded-md hover:bg-gray cursor-pointer transition-all pr-3 "
