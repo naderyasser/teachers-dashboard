@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   getAllCourses,
   getAllUsers,
+  getOneUser,
   getUserCourses,
 } from "../store/usersSlice";
 import dateFormat from "dateformat";
@@ -223,6 +224,8 @@ export const UseCoursesTable = ({
                         ? "bg-[#2E6FF4] "
                         : course.academic_year == "3"
                         ? "bg-[#18B477]"
+                        : course.academic_year == "4"
+                        ? "bg-red-600"
                         : "bg-transparent"
                     }`}
                   >
@@ -374,6 +377,8 @@ export const UseUsersTable = ({ searchText, setClose, setUserId }) => {
                         ? "bg-[#2E6FF4] "
                         : user.academic_year === "3"
                         ? "bg-[#18B477]"
+                        : user.academic_year === "4"
+                        ? "bg-red-500"
                         : "bg-transparent"
                     }`}
                   >
@@ -393,7 +398,9 @@ export const UseUsersTable = ({ searchText, setClose, setUserId }) => {
                 </td>
                 <td>
                   <p
-                    onClick={() => navigate(`/user/${user.email}`)}
+                    onClick={() =>
+                      navigate(`/user/${user.email}`, { state: user })
+                    }
                     className=" m-auto py-1 px-5 border border-darckBlue w-fit rounded-3xl text-darckBlue text-[16px] cursor-pointer"
                   >
                     فتح
@@ -698,7 +705,12 @@ export const UseCodesTable = ({ searchText }) => {
   );
 };
 // one user courses
-export const UseOneUserCourses = ({ searchText, email }) => {
+export const UseOneUserCourses = ({
+  searchText,
+  email,
+  setClose,
+  setDeleteCourseId,
+}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserCourses(email.email));
@@ -724,9 +736,6 @@ export const UseOneUserCourses = ({ searchText, email }) => {
           <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32">
             تاريخ الشراء
           </th>
-          <th className="text-tableHead font-normal text-x-[16px] text-right min-w-32 ">
-            السنة
-          </th>
           <th></th>
         </tr>
       </thead>
@@ -734,22 +743,18 @@ export const UseOneUserCourses = ({ searchText, email }) => {
       <tbody>
         {state &&
           !isLoading &&
-          state.map((course) => {
+          state.map((course, idex) => {
             return (
-              <tr className="pl-3" key={course.id}>
+              <tr className="pl-3" key={idex}>
                 <td className="min-w-60">
                   <h1 className="font-medium  text-sm text-darkGray ">
                     {course.name}
                   </h1>
                 </td>
-                <td>100</td>
-                <td>
-                  <p className="text-xs text-lightText font-normal m-auto">
-                    التاؤيخ
-                  </p>
-                </td>
+                <td>{course.price}</td>
+
                 <td className=" ">
-                  <p
+                  {/* <p
                     className={`text-xs  text-white  font-normal m w-fit py-1 px-3 rounded-full ${
                       course.academic_year === "1"
                         ? "bg-[#F4CB3C]"
@@ -761,6 +766,18 @@ export const UseOneUserCourses = ({ searchText, email }) => {
                     }`}
                   >
                     {`${course.academic_year}ث`}
+                  </p> */}
+                  <p>{dateFormat(course.date, "yyyy-mm-dd")}</p>
+                </td>
+                <td>
+                  <p
+                    onClick={() => {
+                      setClose(true);
+                      setDeleteCourseId(course.id);
+                    }}
+                    className=" m-auto py-1 px-5 border border-red-400 w-fit rounded-3xl text-black text-[16px] cursor-pointer"
+                  >
+                    حذف
                   </p>
                 </td>
               </tr>

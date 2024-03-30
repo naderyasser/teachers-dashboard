@@ -5,6 +5,7 @@ import FilterMenu from "./FilterMenu";
 import { getAllCourses } from "../store/usersSlice";
 import { Toaster, toast } from "sonner";
 import { BeatLoader } from "react-spinners";
+import Cookies from "js-cookie";
 
 const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
   const [choosed, setChoosed] = useState("");
@@ -14,6 +15,8 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
       ? "1"
       : choosed === "الثاني الثانوي"
       ? "2"
+      : choosed === "الرابع الثانوي"
+      ? "4"
       : choosed === "الثالث الثانوي" && "3";
 
   const dispatch = useDispatch();
@@ -24,7 +27,10 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
 
   const isLoading = useSelector((state) => state.stats.isLoading);
 
-  const menuData = ["الاول الثانوي", "الثاني الثانوي", "الثالث الثانوي"];
+  const menuData =
+    Cookies.get("website") === "thanawionline"
+      ? ["الاول الثانوي", "الثاني الثانوي", "الثالث الثانوي", "الرابع الثانوي"]
+      : ["الاول الثانوي", "الثاني الثانوي", "الثالث الثانوي"];
   const iniHandler = (e) => {
     e.preventDefault();
     const data = {
@@ -49,7 +55,9 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
                 ? "1"
                 : choosed === "الثاني الثانوي"
                 ? "2"
-                : choosed === "الثالث الثانوي" && "3",
+                : choosed === "الثالث الثانوي"
+                ? "3"
+                : choosed === "الرابع الثانوي" && "4",
             academic_section: editData.academic_section,
             price: price.current.value,
             is_free: true,

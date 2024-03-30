@@ -104,6 +104,7 @@ const OneCource = () => {
           lessonId={lessonId}
           deleteName={deleteName}
           courseId={param.id}
+          deleteLessonMode={true}
         />
       )}
       <div className="mt-5">

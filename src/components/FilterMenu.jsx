@@ -14,6 +14,9 @@ const FilterMenu = ({
   const menuRef = useRef(null);
 
   useEffect(() => {
+    if (selected.length >= 1) {
+      setopen(true);
+    }
     const handleOutsideClick = (e) => {
       // Check if the click is outside the div
 
@@ -34,7 +37,7 @@ const FilterMenu = ({
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [editMode]);
+  }, [editMode, selected]);
 
   return (
     <div
@@ -49,7 +52,7 @@ const FilterMenu = ({
         <div className={`${open ? "rotate-180" : ""} transition-all`}>
           <IoIosArrowUp />
         </div>
-        <h2 className="max-w-72">{`${title} : ${choosed}`}</h2>
+        <h2 className="max-w-56 overflow-hidden whitespace-nowrap">{`${title} : ${choosed}`}</h2>
       </div>
       {/* menu */}
       <div
@@ -69,7 +72,7 @@ const FilterMenu = ({
                   setAcadimcYearChoosed(notName ? item.name : item);
                 }}
                 className={`${
-                  choosed === item && "bg-gray"
+                  choosed === item.name && "bg-gray"
                 } py-2 px-3  hover:bg-gray flex justify-start items-center gap-2 rounded-lg w-full `}
               >
                 <input

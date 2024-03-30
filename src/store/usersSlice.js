@@ -7,7 +7,7 @@ const initialState = {
   users: [],
   err: null,
   courses: [],
-  oneUser: null,
+  oneUser: {},
   userCourses: [],
   isLoading: false,
   isRejected: false,
@@ -172,6 +172,22 @@ export const sentNotification = createAsyncThunk(
     }
   }
 );
+export const deleteUserCourse = createAsyncThunk(
+  "sentNotification",
+  async (args) => {
+    try {
+      const res = await axios.post(
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/delete_enrolment`,
+        args
+      );
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  }
+);
 
 const usersSlice = createSlice({
   name: "users",
@@ -244,6 +260,14 @@ const usersSlice = createSlice({
       state.isRejected = false;
       state.isLoading = false;
       state.userCourses = action.payload;
+    });
+    builder.addCase(deleteUserCourse.fulfilled, (state, action) => {
+      state.isRejected = false;
+      state.isLoading = false;
+    });
+    builder.addCase(deleteUserCourse.pending, (state, action) => {
+      state.isRejected = false;
+      state.isLoading = true;
     });
   },
 });

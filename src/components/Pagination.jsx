@@ -33,11 +33,6 @@ const Pagination = ({
             user.father_number.includes(searchText))
       );
 
-  // ||
-  //     user.phone_number.includes(searchText) ||
-  //     user.father_number.includes(searchText) ||
-  //     user.email.includes(searchText)
-
   const recordsNum = 50;
   const indexOfLastRecord = currentPage * recordsNum;
   const indexOfFirstRecord = indexOfLastRecord - recordsNum;
@@ -48,10 +43,15 @@ const Pagination = ({
 
   useEffect(() => {
     setCurrentDate(currentRecords);
+
+    if (pageNumbers.length === 1) {
+      setCurrentPage(1);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, data, searchText, setCurrentDate, acadimcYearChoosed]); // Only run effect when currentPage or currentRecords change
 
   const pagesNum = Math.ceil(filterdData.length / recordsNum);
+
   const pageNumbers = Array.from({ length: pagesNum }, (_, i) => i + 1);
 
   const handlePageClick = (num) => {

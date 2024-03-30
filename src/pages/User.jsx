@@ -1,7 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getAllCourses, getOneUser, getUserCourses } from "../store/usersSlice";
 import bg from "../img/Rectangle 5011.png";
 import avatar from "../img/avatar.png";
@@ -20,6 +20,8 @@ import sendImg from "../img/direct.png";
 import Cookies from "js-cookie";
 
 const User = () => {
+  const { state } = useLocation();
+
   const param = useParams();
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.auth.user);
@@ -28,8 +30,9 @@ const User = () => {
   const navigate = useNavigate();
 
   const [choosed, setChoosed] = useState(1);
-  const state = useSelector((state) => state && state.users.oneUser);
+
   useEffect(() => {
+    dispatch(getAllCourses());
     if (Cookies.get("user") === undefined) {
       Cookies.set("user", "false");
       Cookies.set("website", "eduazher");
@@ -42,8 +45,6 @@ const User = () => {
       setCourseChoosed([]);
       setClassRed("");
     }
-    dispatch(getOneUser(param));
-    dispatch(getAllCourses());
   }, [dispatch, param, admin, navigate, choosed]);
 
   const courses = useSelector((state) => state && state.users.courses).courses;
@@ -54,14 +55,22 @@ const User = () => {
   const oneCourse =
     courses && courses.find((ele) => ele.name === courseChoosed);
 
+  const userCourses = useSelector((state) => state.users.userCourses.courses);
+  const [searchText, setSearchText] = useState("");
+
   const coursesForOneUser =
     courses &&
-    courses.filter(
-      (course) => course.academic_year == state.user.academic_year
-    );
+    courses
+      .filter((course) => course.name.includes(searchText))
+      .filter((course) => course.academic_year == state.academic_year)
+      .filter(
+        (course) =>
+          userCourses &&
+          !userCourses.some((userCourse) => userCourse.id === course.id)
+      );
 
   const data = {
-    email: state && state.user.email,
+    email: state && state.email,
     course_id: oneCourse && oneCourse.id,
   };
 
@@ -82,15 +91,25 @@ const User = () => {
     }
   };
   const [close, setClose] = useState(false);
+  const [closeDelete, setCloseDlete] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [passwordModel, setPasswordModel] = useState(false);
   const [notiModel, setNotiModel] = useState(false);
-
+  const [deleteCourseId, setDeleteCourseId] = useState("");
+  console.log(state);
   return (
     <div className="home-screen ">
+      {closeDelete && (
+        <Model
+          setClose={setCloseDlete}
+          deleteUserSCourse={true}
+          courseDeleteDate={{ user: param.email, course: deleteCourseId }}
+          deleteMode={true}
+        />
+      )}
       <Toaster position="top-center" richColors />
       {notiModel && (
-        <NotificationModel setNotiModel={setNotiModel} data={state.user} />
+        <NotificationModel setNotiModel={setNotiModel} data={state} />
       )}
       {passwordModel && (
         <PasswordModel setPasswordModel={setPasswordModel} data={state} />
@@ -99,13 +118,13 @@ const User = () => {
         <Model
           setClose={setClose}
           deleteMode={true}
-          courseId={state.user.id}
-          deleteName={false}
+          courseId={state.id}
           userMode={true}
         />
       )}
+
       {openModel && (
-        <UserModel setOpenModel={setOpenModel} currentData={state.user} />
+        <UserModel setOpenModel={setOpenModel} currentData={state} />
       )}
       {/* top */}
       <div className="relative gap-3 h-1/3 flex flex-col justify-center items-center my-5 ">
@@ -148,16 +167,16 @@ const User = () => {
           </div>
           <div className="w-28 h-28 z-10 rounded-full overflow-hidden ">
             <img
-              src={state ? state.user.profile_img : avatar}
+              src={state ? state.profile_img : avatar}
               alt=""
               className="w-full"
             />
           </div>
         </div>
 
-        <h1 className="text-white z-10 text-2xl">{state && state.user.name}</h1>
+        <h1 className="text-white z-10 text-2xl">{state && state.name}</h1>
         <p className="text-white  z-10 text-xs opacity-70 ">
-          {state && state.user.email}
+          {state && state.email}
         </p>
       </div>
       {/* main */}
@@ -195,41 +214,39 @@ const User = () => {
           <div className="p-5 rounded-md bg-lightGray border border-gray flex flex-col gap-4 ">
             <div className="flex justify-between gap-7 items-center ">
               <h1>الاسم</h1>
-              <h1 className="flex-grow text-end">{state && state.user.name}</h1>
+              <h1 className="flex-grow text-end">{state && state.name}</h1>
             </div>
             <div className="flex justify-between gap-7 items-center ">
               <h1>السنة الدراسية</h1>
               <h1 className="flex-grow text-end">
-                {state && state.user.academic_year}
+                {state && state.academic_year}
               </h1>
             </div>
             <div className="flex justify-between gap-7 items-center ">
               <h1>التخصص</h1>
               <h1 className="flex-grow text-end">
-                {state && state.user.academic_section}
+                {state && state.academic_section}
               </h1>
             </div>
             <div className="flex justify-between gap-7 items-center ">
               <h1>البريد الاليكتروني</h1>
-              <h1 className="flex-grow text-end">
-                {state && state.user.email}
-              </h1>
+              <h1 className="flex-grow text-end">{state && state.email}</h1>
             </div>
             <div className="flex justify-between gap-7 items-center ">
               <h1>رقم التلفون</h1>
               <h1 className="flex-grow text-end">
-                {state && state.user.phone_number}
+                {state && state.phone_number}
               </h1>
             </div>
             <div className="flex justify-between gap-7 items-center ">
               <h1>رقم ولي الامر</h1>
               <h1 className="flex-grow text-end">
-                {state && state.user.father_number}
+                {state && state.father_number}
               </h1>
             </div>
             <div className="flex justify-between gap-7 items-center ">
               <h1>المحافظة</h1>
-              <h1 className="flex-grow text-end">{state && state.user.city}</h1>
+              <h1 className="flex-grow text-end">{state && state.city}</h1>
             </div>
           </div>
         ) : choosed === 2 ? (
@@ -245,23 +262,37 @@ const User = () => {
                   <FilterMenu
                     data={coursesForOneUser}
                     title={"الكورس"}
-                    selected={menuSelected}
+                    selected={searchText}
                     setAcadimcYearChoosed={setCourseChoosed}
                     notName={true}
                   />
                 </div>
-
-                <button
-                  type="submit"
-                  className="text-white font-medium text-base cursor-pointer py-2 px-3 gap-3 bg-buttonBlue rounded-full mt-3"
-                >
-                  {isLoading ? "يتم الإنشاء" : "إضافة"}
-                </button>
+                <div className="md:w-1/3 w-full">
+                  <input
+                    onChange={(e) => setSearchText(e.target.value)}
+                    value={searchText}
+                    placeholder="بحث ....."
+                    className="back-icon w-full border focus:border-gray border-lightGray rounded-2xl text-base py-1 px-5 outline-none "
+                    type="text"
+                  />
+                </div>
+                <div className="flex-grow flex justify-end items-center">
+                  <button
+                    type="submit"
+                    className=" text-white font-medium text-base cursor-pointer py-2 px-3 gap-3 bg-buttonBlue rounded-full mt-3 text-left"
+                  >
+                    {isLoading ? "يتم الإنشاء" : "إضافة"}
+                  </button>
+                </div>
               </div>
             </form>
 
             <div className="overflow-x-auto box-shadow mt-5 ">
-              <UseOneUserCourses email={param} />
+              <UseOneUserCourses
+                email={param}
+                setClose={setCloseDlete}
+                setDeleteCourseId={setDeleteCourseId}
+              />
             </div>
           </div>
         ) : (

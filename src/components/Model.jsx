@@ -2,7 +2,13 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCourse, deleteLesson, getLessons } from "../store/statsSlice";
-import { deleteUser, getAllCourses, getAllUsers } from "../store/usersSlice";
+import {
+  deleteUser,
+  deleteUserCourse,
+  getAllCourses,
+  getAllUsers,
+  getUserCourses,
+} from "../store/usersSlice";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 
@@ -14,37 +20,76 @@ const Model = ({
   lessonId,
   userMode,
   logout,
+  deleteUserSCourse,
+  courseDeleteDate,
+  deleteCourseMode,
+  deleteLessonMode,
 }) => {
-  console.log();
   const navigate = useNavigate();
   const signOutHandler = () => {
-    if (logout) {
-      Cookies.set("user", "false");
-      navigate("/signin");
-    } else {
-      if (deleteName) {
+    if (deleteMode && !logout) {
+      if (deleteLessonMode) {
         dispatch(deleteLesson(lessonId.id)).then((e) => {
           toast.error("تم الحذف");
           e.payload.success === true && setClose(false);
           dispatch(getLessons(courseId));
         });
-      } else {
-        if (userMode) {
-          dispatch(deleteUser(courseId)).then((e) => {
-            e.payload.success === true && setClose(false);
-            toast.error("تم الحذف");
-            dispatch(getAllUsers());
-            navigate("/users");
-          });
-        } else {
-          dispatch(deleteCourse(courseId)).then((e) => {
-            toast.error("تم الحذف");
-            e.payload.success === true && setClose(false);
-            dispatch(getAllCourses());
-          });
-        }
       }
+      if (userMode) {
+        dispatch(deleteUser(courseId)).then((e) => {
+          e.payload.success === true && setClose(false);
+          toast.error("تم الحذف");
+          dispatch(getAllUsers());
+          navigate("/users");
+        });
+      }
+      if (deleteCourseMode) {
+        dispatch(deleteCourse(courseId)).then((e) => {
+          toast.error("تم الحذف");
+          e.payload.success === true && setClose(false);
+          dispatch(getAllCourses());
+        });
+      }
+      if (deleteUserSCourse) {
+        dispatch(deleteUserCourse(courseDeleteDate)).then((e) => {
+          toast.error("تم الحذف");
+          e.payload.success === true && setClose(false);
+          dispatch(getUserCourses(courseDeleteDate.user));
+        });
+      }
+    } else {
+      Cookies.set("user", "false");
+      navigate("/signin");
     }
+    // if (logout) {
+    //   Cookies.set("user", "false");
+    //   navigate("/signin");
+    // } else {
+    //   if (deleteName) {
+    //     dispatch(deleteLesson(lessonId.id)).then((e) => {
+    //       toast.error("تم الحذف");
+    //       e.payload.success === true && setClose(false);
+    //       dispatch(getLessons(courseId));
+    //     });
+    //   } else {
+    //     if (userMode) {
+    //       dispatch(deleteUser(courseId)).then((e) => {
+    //         e.payload.success === true && setClose(false);
+    //         toast.error("تم الحذف");
+    //         dispatch(getAllUsers());
+    //         navigate("/users");
+    //       });
+    //     } else {
+    //       if (!deleteUserCourse) {
+    //         dispatch(deleteCourse(courseId)).then((e) => {
+    //           toast.error("تم الحذف");
+    //           e.payload.success === true && setClose(false);
+    //           dispatch(getAllCourses());
+    //         });
+    //       }
+    //     }
+    //   }
+    // }
   };
   const dispatch = useDispatch();
   return (

@@ -10,6 +10,7 @@ const UserModel = ({ setOpenModel, currentData }) => {
   const email = useRef(null);
   const phoneNumber = useRef(null);
   const fatherNumber = useRef(null);
+  console.log(currentData);
   useEffect(() => {
     name.current.value = currentData.name;
     acadmicYear.current.value = currentData.academic_year;

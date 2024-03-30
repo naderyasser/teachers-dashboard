@@ -15,7 +15,10 @@ const Course = () => {
   const [searchText, setSearchText] = useState("");
   const [acadimcYearChoosed, setAcadimcYearChoosed] = useState("الكل");
 
-  const acadimcYear = ["الكل", 1, 2, 3];
+  const acadimcYear =
+    Cookies.get("website") === "thanawionline"
+      ? ["الكل", 1, 2, 3, 4]
+      : ["الكل", 1, 2, 3];
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -51,7 +54,7 @@ const Course = () => {
           setClose={setClose}
           deleteMode={true}
           courseId={courseId}
-          deleteName={false}
+          userMode={true}
         />
       )}
 
