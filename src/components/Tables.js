@@ -169,7 +169,7 @@ export const UseCoursesTable = ({
   const isRejected = useSelector((state) => state.users.isRejected);
   const errMessage = useSelector((state) => state.users.message);
   const navigate = useNavigate();
-  console.log(state);
+
   return (
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">

@@ -23,8 +23,10 @@ const Home = () => {
       navigate("/signin");
     }
   }, [navigate]);
+
   return (
     <div className="p-5 home-screen ">
+      <div></div>
       <div className="">
         {/* title */}
         <div className="mb-5">

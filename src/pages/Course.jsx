@@ -5,7 +5,7 @@ import FilterMenu from "../components/FilterMenu";
 import SearchInput from "../components/SearchInput";
 import { UseCoursesTable } from "../components/Tables";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CourseModel from "../components/CourseModel";
 import Model from "../components/Model";
 import { Toaster } from "sonner";
@@ -21,7 +21,12 @@ const Course = () => {
       : ["الكل", 1, 2, 3];
 
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const [openModel, setOpenModel] = useState(false);
   useEffect(() => {
+    if (state) {
+      setOpenModel(true);
+    }
     if (Cookies.get("user") === undefined) {
       Cookies.set("user", "false");
       Cookies.set("website", "eduazher");
@@ -29,9 +34,8 @@ const Course = () => {
     if (Cookies.get("user") === "false") {
       navigate("/signin");
     }
-  }, [navigate]);
+  }, [navigate, state]);
 
-  const [openModel, setOpenModel] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [close, setClose] = useState(false);
   const [courseId, setCourseId] = useState("");

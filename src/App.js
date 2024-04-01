@@ -1,16 +1,21 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import MobilMenu from "./components/MobilMenu";
 import MainMenu from "./components/MainMenu";
 import { useState } from "react";
+import ReactShortcut from "react-shortcut";
 function App() {
   const screenWidth = window.innerWidth;
-
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
 
+  const AddCourseShortCut = () => {
+    navigate("/courses", { state: true });
+  };
   return (
     <div className="flex flex-col  h-full relative ">
+      <ReactShortcut keys="Shift+N" onKeysPressed={AddCourseShortCut} />
       <Navbar />
       {/* slid menu */}
       <div

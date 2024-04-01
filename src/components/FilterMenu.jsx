@@ -14,9 +14,6 @@ const FilterMenu = ({
   const menuRef = useRef(null);
 
   useEffect(() => {
-    if (selected.length >= 1) {
-      setopen(true);
-    }
     const handleOutsideClick = (e) => {
       // Check if the click is outside the div
 

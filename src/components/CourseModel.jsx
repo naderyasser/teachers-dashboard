@@ -70,7 +70,7 @@ const CourseModel = ({ setOpenModel, editMode, editData, setEditMode }) => {
             dispatch(getAllCourses());
             setOpenModel(false);
             toast.warning("تم التعديل");
-            setEditMode(false);
+            // setEditMode(false);
           }
         });
       } else {
