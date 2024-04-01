@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getAllCourses, getOneUser, getUserCourses } from "../store/usersSlice";
+import { getAllCourses, getUserCourses } from "../store/usersSlice";
 import bg from "../img/Rectangle 5011.png";
 import avatar from "../img/avatar.png";
 import { UseOneUserCourses } from "../components/Tables";

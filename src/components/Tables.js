@@ -15,6 +15,9 @@ import { BeatLoader } from "react-spinners";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
 import { getLessons } from "../store/statsSlice";
+import arrowImg from "../img/arrow-up.png";
+import { nextCourse, previousCourse } from "../store/authSlice";
+import { toast } from "sonner";
 
 // last purches
 export const UseHomeTable = ({ searchText }) => {
@@ -166,7 +169,7 @@ export const UseCoursesTable = ({
   const isRejected = useSelector((state) => state.users.isRejected);
   const errMessage = useSelector((state) => state.users.message);
   const navigate = useNavigate();
-
+  console.log(state);
   return (
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">
@@ -723,6 +726,7 @@ export const UseOneUserCourses = ({
   const isLoading = useSelector((state) => state.users.isLoading);
   const isRejected = useSelector((state) => state.users.isRejected);
   const errMessage = useSelector((state) => state.users.message);
+
   return (
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">
@@ -854,6 +858,7 @@ export const UseLessonsForOneCourse = ({
   const isLoading = useSelector((state) => state.users.isLoading);
   const isRejected = useSelector((state) => state.users.isRejected);
   const errMessage = useSelector((state) => state.users.message);
+
   return (
     <table className="  w-full flex-grow   ">
       <thead className="bg-lightGray text-tableHead">
@@ -878,8 +883,36 @@ export const UseLessonsForOneCourse = ({
           currentData.map((lesson) => {
             return (
               <tr className="pl-3" key={lesson.id}>
-                <td className="min-w-60">
-                  <h1 className="font-medium  text-sm text-darkGray  ">
+                <td className="min-w-60 flex justify-start items-center  w-auto">
+                  <div className="flex justify-start items-center gap-5 w-1/3">
+                    <img
+                      onClick={() =>
+                        dispatch(previousCourse(lesson.id)).then((e) => {
+                          if (e.payload.success === true) {
+                            dispatch(getLessons(id));
+                            toast.warning("تم التعديل");
+                          }
+                        })
+                      }
+                      className=" w-6 bg-light-blue-50  cursor-pointer hover:bg-light-blue-100 rounded-md transition-all"
+                      src={arrowImg}
+                      alt=""
+                    />
+                    <img
+                      onClick={() =>
+                        dispatch(nextCourse(lesson.id)).then((e) => {
+                          if (e.payload.success === true) {
+                            dispatch(getLessons(id));
+                            toast.warning("تم التعديل");
+                          }
+                        })
+                      }
+                      className="rotate-180 w-6 bg-light-blue-50  cursor-pointer hover:bg-light-blue-100 rounded-md transition-all"
+                      src={arrowImg}
+                      alt=""
+                    />
+                  </div>
+                  <h1 className="font-medium flex-grow text-sm text-darkGray  ">
                     {lesson.name}
                   </h1>
                 </td>

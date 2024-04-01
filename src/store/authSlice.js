@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { getAllUsers, getUserCourses } from "./usersSlice";
 
 const initialState = { user: "", isLoading: false, apiUrl: "https://eu" };
 
@@ -24,6 +25,35 @@ export const signin = createAsyncThunk("signIn", async (args) => {
     return console.log(err.message);
   }
 });
+export const previousCourse = createAsyncThunk(
+  "previousCourse",
+  async (args) => {
+    try {
+      const res = await axios.get(
+        `https://${Cookies.get(
+          "website"
+        )}.e3lanotopia.software/api/th/swap_with_previous_lesson/${args}`
+      );
+
+      return res.data;
+    } catch (err) {
+      return err.message;
+    }
+  }
+);
+export const nextCourse = createAsyncThunk("nextCourse", async (args) => {
+  try {
+    const res = await axios.get(
+      `https://${Cookies.get(
+        "website"
+      )}.e3lanotopia.software/api/th/swap_with_next_lesson/${args}`
+    );
+
+    return res.data;
+  } catch (err) {
+    return err.message;
+  }
+});
 
 const usersSlice = createSlice({
   name: "admin",
@@ -37,6 +67,10 @@ const usersSlice = createSlice({
     builder.addCase(signin.pending, (state, action) => {
       state.isLoading = true;
     });
+    // builder.addCase(nextCourse.fulfilled, (state, action) => {
+    //   state.isLoading = true;
+    //   getAllUsers();
+    // });
   },
 });
 
