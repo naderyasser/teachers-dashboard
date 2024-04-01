@@ -54,7 +54,7 @@ const Course = () => {
           setClose={setClose}
           deleteMode={true}
           courseId={courseId}
-          userMode={true}
+          deleteCourseMode={true}
         />
       )}
 
