@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getAllCourses, getUserCourses } from "../store/usersSlice";
+import {
+  getAllCourses,
+  getAllUsers,
+  getUserCourses,
+} from "../store/usersSlice";
 import bg from "../img/Rectangle 5011.png";
 import avatar from "../img/avatar.png";
 import { UseOneUserCourses } from "../components/Tables";
@@ -21,7 +25,12 @@ import Cookies from "js-cookie";
 
 const User = () => {
   const { state } = useLocation();
-
+  const [close, setClose] = useState(false);
+  const [closeDelete, setCloseDlete] = useState(false);
+  const [openModel, setOpenModel] = useState(false);
+  const [passwordModel, setPasswordModel] = useState(false);
+  const [notiModel, setNotiModel] = useState(false);
+  const [deleteCourseId, setDeleteCourseId] = useState("");
   const param = useParams();
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.auth.user);
@@ -44,6 +53,9 @@ const User = () => {
     if (choosed === 2) {
       setCourseChoosed([]);
       setClassRed("");
+    }
+    if (openModel) {
+      dispatch(getAllUsers());
     }
   }, [dispatch, param, admin, navigate, choosed]);
 
@@ -90,13 +102,7 @@ const User = () => {
       });
     }
   };
-  const [close, setClose] = useState(false);
-  const [closeDelete, setCloseDlete] = useState(false);
-  const [openModel, setOpenModel] = useState(false);
-  const [passwordModel, setPasswordModel] = useState(false);
-  const [notiModel, setNotiModel] = useState(false);
-  const [deleteCourseId, setDeleteCourseId] = useState("");
-  console.log(state);
+
   return (
     <div className="home-screen ">
       {closeDelete && (

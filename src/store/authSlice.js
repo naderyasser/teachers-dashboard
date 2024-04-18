@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { getAllUsers, getUserCourses } from "./usersSlice";
 
 const initialState = { user: "", isLoading: false, apiUrl: "https://eu" };
 

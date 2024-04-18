@@ -31,7 +31,7 @@ function App() {
           screenWidth > 960 ? "calc-height" : "med-outlet"
         }`}
       >
-        <div className="hidden w-[300px] lg:flex">
+        <div className="hidden w-[300px] lg:flex sticky top-0 right-0">
           <MainMenu />
         </div>
         <div className="bg-[#F6F8FC] flex-grow ">

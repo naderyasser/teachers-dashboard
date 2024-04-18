@@ -161,6 +161,14 @@ export const UseCoursesTable = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // const wow = async () => {
+    //   await console.log("get courses");
+    // };
+    // const students = async () => {
+    //   await console.log("get students");
+    // };
+
+    // const [] = await Promise.all([wow,students])
     dispatch(getAllCourses());
   }, [dispatch]);
   const [currentData, setCurrentData] = useState([]);

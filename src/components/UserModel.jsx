@@ -1,19 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Toaster, toast } from "sonner";
 import { editUser, getOneUser } from "../store/usersSlice";
+import FilterMenu from "./FilterMenu";
 
 const UserModel = ({ setOpenModel, currentData }) => {
+  const [academicYear, setAcadimcYear] = useState(currentData.academic_year);
+
   const name = useRef(null);
   const acadmicYear = useRef(null);
   const acadimcSection = useRef(null);
   const email = useRef(null);
   const phoneNumber = useRef(null);
   const fatherNumber = useRef(null);
-  console.log(currentData);
+
   useEffect(() => {
     name.current.value = currentData.name;
-    acadmicYear.current.value = currentData.academic_year;
+
     acadimcSection.current.value = currentData.academic_section;
     email.current.value = currentData.email;
     phoneNumber.current.value = currentData.phone_number;
@@ -26,7 +29,7 @@ const UserModel = ({ setOpenModel, currentData }) => {
       id: currentData.id,
       data: {
         name: name.current.value,
-        academic_year: acadmicYear.current.value,
+        academic_year: academicYear,
         academic_section: acadimcSection.current.value,
         email: currentData.email,
         phone_number: phoneNumber.current.value,
@@ -45,7 +48,7 @@ const UserModel = ({ setOpenModel, currentData }) => {
       }
     });
   };
-
+  const acadimcYear = [1, 2, 3];
   return (
     <div>
       <div
@@ -63,14 +66,20 @@ const UserModel = ({ setOpenModel, currentData }) => {
               type="text"
               required
             />
-            <input
-              ref={acadmicYear}
-              placeholder="السنة الدراسية"
-              className="input w-full block"
-              type="number"
-              min={1}
-              required
+            <FilterMenu
+              data={acadimcYear}
+              selected={academicYear}
+              title={"السنة الدراسية"}
+              setAcadimcYearChoosed={setAcadimcYear}
             />
+            {/* <input
+                ref={acadmicYear}
+                placeholder="السنة الدراسية"
+                className="input w-full block"
+                type="number"
+                min={1}
+                required
+              /> */}
             <input
               ref={acadimcSection}
               placeholder="التخصص"
@@ -115,7 +124,7 @@ const UserModel = ({ setOpenModel, currentData }) => {
           onClick={() => {
             setOpenModel(false);
             name.current.value = "";
-            acadmicYear.current.value = "";
+            // acadmicYear.current.value = "";
             acadimcSection.current.value = "";
             //   setChoosed("");
           }}

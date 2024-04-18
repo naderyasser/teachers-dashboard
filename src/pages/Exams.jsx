@@ -8,6 +8,7 @@ import FilterMenu from "../components/FilterMenu";
 
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import QuestionsTabs from "../components/exam/QuestionsTabs";
 
 const Exams = () => {
   const [searchText, setSearchText] = useState("");
@@ -31,7 +32,7 @@ const Exams = () => {
       <div className="mb-5">
         <Title title={"متوسط درجات الطلاب"} />
       </div>
-      <Graph />
+      <QuestionsTabs />
       <div className="my-5">
         <Title title={"الإختبارات"} />
       </div>

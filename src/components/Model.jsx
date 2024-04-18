@@ -25,7 +25,6 @@ const Model = ({
   deleteCourseMode,
   deleteLessonMode,
 }) => {
-  console.log(courseId);
   const navigate = useNavigate();
   const signOutHandler = () => {
     if (deleteMode && !logout) {
