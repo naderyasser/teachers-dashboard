@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Toaster, toast } from "sonner";
 import { editUser, getOneUser } from "../store/usersSlice";
 import FilterMenu from "./FilterMenu";
+import Cookies from "js-cookie";
 
 const UserModel = ({ setOpenModel, currentData }) => {
   const [academicYear, setAcadimcYear] = useState(currentData.academic_year);
@@ -48,7 +49,8 @@ const UserModel = ({ setOpenModel, currentData }) => {
       }
     });
   };
-  const acadimcYear = [1, 2, 3];
+  const acadimcYear =
+    Cookies.get("website") === "thanawionline" ? [1, 2, 3, 4] : [1, 2, 3];
   return (
     <div>
       <div
