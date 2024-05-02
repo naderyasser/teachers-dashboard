@@ -9,12 +9,14 @@ const PasswordModel = ({ setPasswordModel, data }) => {
   const iniHandler = (e) => {
     e.preventDefault();
     const newPassData = {
-      id: data.user.id,
+      id: data.id,
       data: { password: passwordRef.current.value },
     };
+    console.log("here");
+
     dispatch(changePassword(newPassData)).then((e) => {
       if (e.payload.success === true) {
-        dispatch(getOneUser(data.user));
+        dispatch(getOneUser(data));
         setPasswordModel(false);
         toast.warning(" تم التعديل كلمة السر");
       }
