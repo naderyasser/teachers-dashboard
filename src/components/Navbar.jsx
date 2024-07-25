@@ -48,33 +48,6 @@ const Navbar = () => {
           <option className="hover:bg-gray cursor-pointer" value="eduazher">
             eduazher
           </option>
-          <option className="hover:bg-gray cursor-pointer" value="walidelgendy">
-            walidelgendy
-          </option>
-          <option
-            className="hover:bg-gray cursor-pointer"
-            value="thanawionline"
-          >
-            thanawionline
-          </option>
-          <option
-            className="hover:bg-gray cursor-pointer"
-            value="ahmedmalekacademy"
-          >
-            ahmedmalekacademy
-          </option>
-          <option
-            className="hover:bg-gray cursor-pointer"
-            value="elbashaacademy"
-          >
-            elbashaacademy
-          </option>
-          <option className="hover:bg-gray cursor-pointer" value="mraymanattia">
-            mraymanattia
-          </option>
-          <option className="hover:bg-gray cursor-pointer" value="awadouf">
-            awadouf
-          </option>
         </select>
       </div>
       {/* الاشعارات */}
